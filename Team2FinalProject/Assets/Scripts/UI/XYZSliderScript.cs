@@ -1,7 +1,4 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using System;
 
 public enum EAxis
 {
@@ -10,37 +7,12 @@ public enum EAxis
     Z
 }
 
-public class XYZSliderScript : MonoBehaviour
+public class XYZSliderScript : SliderScript
 {
     public EAxis axis;
-    public TMP_Text label;
-    private string prefix;
-    public Slider slider;
     public bool cameraSlider = false;
-    private float lastValue;
-    private bool setUp = false;
 
-    void Start()
-    {
-        Debug.Assert(slider != null);
-
-        slider.value = 0f;
-        lastValue = slider.value;
-        SetPrefix();
-        UpdateLabel();
-        ObjectManager.curObjectChanged.AddListener(resetData);
-    }
-
-    private void Update()
-    {
-        if (!setUp)
-        {
-            resetData();
-            setUp = true;
-        }
-    }
-
-    private void SetPrefix()
+    protected override void SetPrefix()
     {
         switch (axis)
         {
@@ -52,22 +24,8 @@ public class XYZSliderScript : MonoBehaviour
         }
     }
 
-    // set the slider's label to the value
-    public void UpdateLabel() 
-    {
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-        {
-            // Unity sometimes lets keyboard input adjust the slider. Internet didn't yield much insight on why this happens, 
-            // so I'll just undo the slider update
-            slider.value = lastValue;
-            return;
-        }
-        label.text = prefix + " " + Math.Round(slider.value, 2, MidpointRounding.AwayFromZero).ToString();
-        lastValue = slider.value;
-    }
-
     // set the slider's values to the newly selected object's values
-    public void resetData()
+    public override void resetData()
     {
         float value;
         if (cameraSlider)
@@ -89,5 +47,25 @@ public class XYZSliderScript : MonoBehaviour
         slider.value = value;
         lastValue = value;
         UpdateLabel();
+    }
+
+
+    //user has moved the slider, update its label
+    //update the scene node's attributes or camera attributes
+    public override void SliderMoved(float value)
+    {
+        GameObject curSelected = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+        if (curSelected != null)
+        {
+            UpdateLabel();
+            if (cameraSlider)
+            {
+                CameraMovement.UpdateLookAt(axis, value);
+            }
+            else
+            {
+                ObjectManager.SetCurObjectValue(axis, value);
+            }
+        }
     }
 }

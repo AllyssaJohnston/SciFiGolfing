@@ -20,31 +20,7 @@ public class SliderManager : MonoBehaviour
         instance = this;
     }
 
-    //user has moved the slider, update its label
-    //update the scene node's attributes
-    public static void SceneNodeUpdateLabel()
-    {
-        GameObject curSelected = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
-        if (curSelected != null && curSelected.GetComponent<XYZSliderScript>() != null)
-        {
-            XYZSliderScript sliderScript = curSelected.GetComponent<XYZSliderScript>();
-            sliderScript.UpdateLabel();
-            ObjectManager.SetCurObjectValue(sliderScript.axis, (float)sliderScript.slider.value);
-        }
-    }
-
-    //user has moved the slider, update its label
-    //update the camera's attributes
-    public static void CameraUpdateLabel()
-    {
-        GameObject curSelected = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
-        if (curSelected != null && curSelected.GetComponent<XYZSliderScript>() != null)
-        {
-            XYZSliderScript sliderScript = curSelected.GetComponent<XYZSliderScript>();
-            sliderScript.UpdateLabel();
-            CameraMovement.UpdateLookAt(sliderScript.axis, (float)sliderScript.slider.value);
-        }
-    }
+    
 
 
     public void Reset()
