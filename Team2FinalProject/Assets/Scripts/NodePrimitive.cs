@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 
+
+
 public class NodePrimitive: MonoBehaviour {
-    [SerializeField] Color MyColor = new Color(0.1f, 0.1f, 0.2f, 1.0f);
+    [SerializeField] EColor color;
+    private Color MyColor = new Color(0.1f, 0.1f, 0.2f, 1.0f);
     private Color startingColor;
     public Vector3 Pivot;
     private Vector3 startingPos;
@@ -15,6 +18,8 @@ public class NodePrimitive: MonoBehaviour {
         startingPos = transform.localPosition;
         startingRot = transform.localRotation;
         startingScale = transform.localScale;
+        MyColor = ColorManager.GetColor(color);
+
         startingColor = MyColor;
         if (init == false || material == null) // initialize
         {
@@ -32,6 +37,7 @@ public class NodePrimitive: MonoBehaviour {
         if (init == false || material == null ) // initialize
         {
             material = GetComponent<Renderer>().material;
+            MyColor = ColorManager.GetColor(color);
             init = true;
         }
         material.SetMatrix("MyXformMat", m);
