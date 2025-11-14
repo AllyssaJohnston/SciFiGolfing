@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,15 +16,13 @@ public class XYZSliderScript : MonoBehaviour
     public TMP_Text label;
     private string prefix;
     public Slider slider;
-    public bool singleSliderMode = false;
-    [SerializeField] List<SliderMode> sliderModes = new List<SliderMode>();
+    public bool cameraSlider = false;
     private float lastValue;
     private bool setUp = false;
 
     void Start()
     {
         Debug.Assert(slider != null);
-        Debug.Assert(sliderModes.Count > 0);
 
         slider.value = 0f;
         lastValue = slider.value;
@@ -55,16 +52,6 @@ public class XYZSliderScript : MonoBehaviour
         }
     }
 
-    // the user has entered a new mode, update the slider to the currently selected object, and update the slider's values, parameters
-    public void updateSliderMode(EModifierType type)
-    {
-        slider.minValue = sliderModes[(int)type].min;
-        slider.maxValue = sliderModes[(int)type].max;
-
-        resetData();
-        UpdateLabel();
-    }
-
     // set the slider's label to the value
     public void UpdateLabel() 
     {
@@ -83,7 +70,7 @@ public class XYZSliderScript : MonoBehaviour
     public void resetData()
     {
         float value;
-        if (singleSliderMode)
+        if (cameraSlider)
         {
             Vector3 position = CameraMovement.GetPosition();
             value = position.x;
@@ -97,7 +84,7 @@ public class XYZSliderScript : MonoBehaviour
         }
         else
         {
-            value = ObjectManager.GetCurObjectValue(SliderManager.getCurSliderMode(), axis);
+            value = ObjectManager.GetCurObjectValue(axis);
         }
         slider.value = value;
         lastValue = value;

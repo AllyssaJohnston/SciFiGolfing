@@ -34,101 +34,19 @@ public class ObjectManager : MonoBehaviour
     public static SceneNode GetCurObject() { return curSceneObj; }
 
     // get a value of the scene node
-    public static float GetCurObjectValue(EModifierType attribute, EAxis axis)
+    public static float GetCurObjectValue(EAxis axis)
     {
-        switch (attribute)
+        switch (axis)
         {
-            case EModifierType.POSITION:
-                switch (axis)
-                {
-                    case EAxis.X: return curSceneObj.transform.localPosition.x;
-                    case EAxis.Y: return curSceneObj.transform.localPosition.y;
-                    case EAxis.Z: return curSceneObj.transform.localPosition.z;
-                    default: Debug.Log("unrecognized axis " + axis); break;
-                }
-                break;
-
-            case EModifierType.ROTATION:
-                switch (axis)
-                {
-                    case EAxis.X: return curSceneObj.rotation.x;
-                    case EAxis.Y: return curSceneObj.rotation.y;
-                    case EAxis.Z: return curSceneObj.rotation.z;
-                    default: Debug.Log("unrecognized axis " + axis); break;
-                }
-                break;
-
-            case EModifierType.SCALE:
-                switch (axis)
-                {
-                    case EAxis.X: return curSceneObj.transform.localScale.x;
-                    case EAxis.Y: return curSceneObj.transform.localScale.y;
-                    case EAxis.Z: return curSceneObj.transform.localScale.z;
-                    default: Debug.Log("unrecognized axis " + axis); break;
-                }
-                break;
-
-            default:
-                Debug.Log("unrecognized attribute " + attribute);
-                break;
-        }
-        return 0;
+            case EAxis.X: return curSceneObj.rotation.x;
+            case EAxis.Y: return curSceneObj.rotation.y;
+            case EAxis.Z: return curSceneObj.rotation.z;
+            default: Debug.Log("unrecognized axis " + axis); return 0f;
+        } 
     }
 
     // set a value of the scene node
-    public static void SetCurObjectValue(EModifierType attribute, EAxis axis, float value)
-    {
-        switch (attribute)
-        {
-            case EModifierType.POSITION:
-                switch (axis)
-                {
-                    case EAxis.X:
-                        curSceneObj.transform.localPosition = new Vector3(value, curSceneObj.transform.localPosition.y, curSceneObj.transform.localPosition.z);
-                        break;
-                    case EAxis.Y:
-                        curSceneObj.transform.localPosition = new Vector3(curSceneObj.transform.localPosition.x, value, curSceneObj.transform.localPosition.z);
-                        break;
-                    case EAxis.Z:
-                        curSceneObj.transform.localPosition = new Vector3(curSceneObj.transform.localPosition.x, curSceneObj.transform.localPosition.y, value);
-                        break;
-                    default:
-                        Debug.Log("unrecognized axis " + axis);
-                        break;
-                }
-                break;
-
-            case EModifierType.ROTATION:
-                SetCurObjectRot(attribute, axis, value);
-                break;
-
-            case EModifierType.SCALE:
-                switch (axis)
-                {
-                    case EAxis.X:
-                        curSceneObj.transform.localScale = new Vector3(value, curSceneObj.transform.localScale.y, curSceneObj.transform.localScale.z);
-                        break;
-                    case EAxis.Y:
-                        curSceneObj.transform.localScale = new Vector3(curSceneObj.transform.localScale.x, value, curSceneObj.transform.localScale.z);
-                        break;
-                    case EAxis.Z:
-                        curSceneObj.transform.localScale = new Vector3(curSceneObj.transform.localScale.x, curSceneObj.transform.localScale.y, value);
-                        break;
-                    default:
-                        Debug.Log("unrecognized axis " + axis);
-                        break;
-                }
-                break;
-            default:
-                Debug.Log("unrecognized attribute " + attribute);
-                break;
-        }
-
-        curSceneObjectValuesChanged.Invoke();
-    }
-
-    // set the scene node rotation
-    private static void SetCurObjectRot(EModifierType attribute, EAxis axis, float value)
+    public static void SetCurObjectValue(EAxis axis, float value)
     {
         float deltaAngle = 0f;
         SceneNode nodeScript = curSceneObj.GetComponent<SceneNode>();
@@ -153,5 +71,7 @@ public class ObjectManager : MonoBehaviour
                 Debug.Log("unrecognized axis " + axis);
                 break;
         }
+
+        curSceneObjectValuesChanged.Invoke();
     }
 }
