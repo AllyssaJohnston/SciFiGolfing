@@ -29,7 +29,6 @@ public class World : MonoBehaviour
         Matrix4x4 i = Matrix4x4.identity;
         instance.root.ResetNode(ref i);
         ObjectManager.SetCurObject(instance.root);
-        ObjectManager.SetCurPrimObject(instance.root.PrimitiveList[0]);
     }
 
 }

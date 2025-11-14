@@ -5,10 +5,8 @@ public class ObjectManager : MonoBehaviour
 {
     private static ObjectManager instance;
     private static SceneNode curSceneObj; // SceneNode of the selected scene node
-    private static NodePrimitive curPrimObj; // NodePrim of the current primitive node
     public static UnityEvent curObjectChanged;
     public static UnityEvent curSceneObjectValuesChanged;
-    public static UnityEvent curPrimObjectChanged;
     public GameObject axes;
     public GameObject forwardLine;
     
@@ -23,11 +21,8 @@ public class ObjectManager : MonoBehaviour
         instance = this;
         curObjectChanged = new UnityEvent();
         curSceneObjectValuesChanged = new UnityEvent();
-        curPrimObjectChanged = new UnityEvent();
         curSceneObj = World.GetRoot();
-        curPrimObj = World.GetRoot().PrimitiveList[0];
         Debug.Assert(curSceneObj != null);
-        Debug.Assert(curPrimObj != null);
     }
 
     public static void SetCurObject(SceneNode obj) 
@@ -36,15 +31,7 @@ public class ObjectManager : MonoBehaviour
         curObjectChanged.Invoke();
     }
 
-    public static void SetCurPrimObject(NodePrimitive obj) 
-    {
-        curPrimObj = obj;
-        curPrimObjectChanged.Invoke();
-    }
-
     public static SceneNode GetCurObject() { return curSceneObj; }
-
-    public static NodePrimitive GetCurPrimObject() { return curPrimObj; }
 
     // get a value of the scene node
     public static float GetCurObjectValue(EModifierType attribute, EAxis axis)
@@ -86,18 +73,6 @@ public class ObjectManager : MonoBehaviour
                 break;
         }
         return 0;
-    }
-
-    // get a component of the primitive's color
-    public static float GetCurPrimObjectValue(EColorComp colorComp)
-    {
-        switch (colorComp)
-        {
-            case EColorComp.R: return curPrimObj.GetColor().r;
-            case EColorComp.G: return curPrimObj.GetColor().g;
-            case EColorComp.B: return curPrimObj.GetColor().b;
-            default: Debug.Log("unrecognized color component " + colorComp); return 0;
-        }
     }
 
     // set a value of the scene node
@@ -179,28 +154,4 @@ public class ObjectManager : MonoBehaviour
                 break;
         }
     }
-
-    // change the color of the currently selected primitive
-    public static void SetCurPrimObjectValue(EColorComp colorComp, float value)
-    {
-        Color c = curPrimObj.GetColor();
-        switch (colorComp)
-        {
-            case EColorComp.R:
-                c = new Color(value, c.g, c.b);
-                break;
-            case EColorComp.G:
-                c = new Color(c.r, value, c.b);
-                break;
-            case EColorComp.B:
-                c = new Color(c.r, c.g, value);
-                break;
-            default:
-                Debug.Log("unrecognized color comp " + colorComp);
-                break;
-        }
-        curPrimObj.UpdateColor(c);
-    }
-
-
 }

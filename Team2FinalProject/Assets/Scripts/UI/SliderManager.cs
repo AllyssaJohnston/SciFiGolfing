@@ -13,10 +13,9 @@ public class SliderManager : MonoBehaviour
     private static SliderManager instance;
     private static EModifierType curSliderMode = EModifierType.ROTATION;
 
-    [SerializeField] RGBSliderScript[] rgbSliders = new RGBSliderScript[3];
-    [SerializeField] XYZSliderScript[] xyzSliders = new XYZSliderScript[3];
-    [SerializeField] XYZSliderScript[] lookAtSliders = new XYZSliderScript[3];
-
+    [SerializeField] XYZSliderScript[] xyzSliders = new XYZSliderScript[3]; //rotation sliders
+    [SerializeField] XYZSliderScript[] lookAtSliders = new XYZSliderScript[3]; //camera sliders
+     
     void Awake()
     {
         if (instance != null && instance != this)
@@ -26,9 +25,7 @@ public class SliderManager : MonoBehaviour
             return;
         }
         instance = this;
-
         UpdateModesForSliders();
-        
     }
 
     //user has moved the slider, update its label
@@ -41,19 +38,6 @@ public class SliderManager : MonoBehaviour
             XYZSliderScript sliderScript = curSelected.GetComponent<XYZSliderScript>();
             sliderScript.UpdateLabel();
             ObjectManager.SetCurObjectValue(curSliderMode, sliderScript.axis, (float)sliderScript.slider.value);
-        }
-    }
-
-    //user has moved the slider, update its label
-    //update the prim object's attributes
-    public static void RGBUpdateLabel()
-    {
-        GameObject curSelected = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
-        if (curSelected != null && curSelected.GetComponent<RGBSliderScript>() != null)
-        {
-            RGBSliderScript sliderScript = curSelected.GetComponent<RGBSliderScript>();
-            sliderScript.UpdateLabel();
-            ObjectManager.SetCurPrimObjectValue(sliderScript.colorComp, (float)sliderScript.slider.value);
         }
     }
 
@@ -96,7 +80,6 @@ public class SliderManager : MonoBehaviour
         {
             instance.xyzSliders[i].resetData();
             instance.lookAtSliders[i].resetData();
-            instance.rgbSliders[i].resetData();
         }
     }
 }
