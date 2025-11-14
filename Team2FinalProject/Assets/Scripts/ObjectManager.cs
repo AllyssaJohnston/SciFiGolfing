@@ -7,8 +7,7 @@ public class ObjectManager : MonoBehaviour
     private static SceneNode curSceneObj; // SceneNode of the selected scene node
     public static UnityEvent curObjectChanged;
     public static UnityEvent curSceneObjectValuesChanged;
-    public GameObject axes;
-    public GameObject forwardLine;
+
     
 
     public void Awake()

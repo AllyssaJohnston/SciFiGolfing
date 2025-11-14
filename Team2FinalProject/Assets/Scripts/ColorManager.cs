@@ -7,7 +7,8 @@ public enum EColor
     ESKIN = 0,
     EMAIN,
     ESECONDARY,
-    ESPHERE
+    ESPHERE,
+    ECLUB
 }
 
 [ExecuteInEditMode]
@@ -18,6 +19,7 @@ public class ColorManager : MonoBehaviour
     [SerializeField] Color Main = Color.cyan;
     [SerializeField] Color Secondary = Color.white;
     [SerializeField] Color Sphere = Color.yellow;
+    [SerializeField] Color Club = Color.lightCyan;
 
     public void Awake()
     {
@@ -41,6 +43,8 @@ public class ColorManager : MonoBehaviour
                 return instance.Secondary;
             case EColor.ESPHERE:
                 return instance.Sphere;
+            case EColor.ECLUB:
+                return instance.Club;
             default:
                 Debug.Log("invalid color " + color);
                 return Color.blue;
