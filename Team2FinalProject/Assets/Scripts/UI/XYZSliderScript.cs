@@ -12,6 +12,16 @@ public class XYZSliderScript : SliderScript
     public EAxis axis;
     public bool cameraSlider = false;
 
+    private void Start()
+    {
+        if (cameraSlider)
+        {
+            slider.minValue = -1 * CameraMovement.getMaxTransVal();
+            slider.maxValue = CameraMovement.getMaxTransVal();
+            resetData();
+        }
+    }
+
     protected override void SetPrefix()
     {
         switch (axis)

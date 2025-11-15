@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 
 public enum EColor
@@ -19,7 +18,7 @@ public class ColorManager : MonoBehaviour
     [SerializeField] Color Main = Color.cyan;
     [SerializeField] Color Secondary = Color.white;
     [SerializeField] Color Sphere = Color.yellow;
-    [SerializeField] Color Club = Color.lightCyan;
+    [SerializeField] Color Club = new Color(199f, 220f, 255f, 1f);
 
     public void Awake()
     {
