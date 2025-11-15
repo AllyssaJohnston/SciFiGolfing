@@ -14,9 +14,11 @@ public class CameraMovement : MonoBehaviour
     public float degreePerSec = 15f;
     public float zoomPerSec = 20f;
     public float transPerSec = 15f;
+    public float startRadius = 1f;
+    public float maxTransVal = 20f;
 
-    private static float startRadius = 1f;
     private static float radius = 1f;
+    private static Vector3 startLookAtPos = Vector3.zero;
     private static Vector3 lookAtPos = Vector3.zero;
     private static Vector3 startingAngle = Vector3.zero;
     private static Vector3 angle = Vector3.zero;
@@ -36,11 +38,12 @@ public class CameraMovement : MonoBehaviour
 
     private void Start()
     {
+        angle.x = -transform.localRotation.eulerAngles.y;
         angle.y = transform.localRotation.eulerAngles.x;
-        startingAngle.x = angle.x;
-        startingAngle.y = angle.y;
-        radius = Mathf.Pow(Mathf.Pow(transform.localPosition.z, 2) + Mathf.Pow(transform.localPosition.y, 2), .5f);
-        startRadius = radius;
+        startingAngle = angle;
+        radius = startRadius;
+        lookAtPos = transform.localPosition + radius * transform.forward;
+        startLookAtPos = lookAtPos;
     }
 
     private void Update()
@@ -81,7 +84,6 @@ public class CameraMovement : MonoBehaviour
             // get the mouse position and compare it to the last mouse position
             mousePos = Input.mousePosition;
             transPos = (mousePos - lastMousePos) * transPerSec * Time.deltaTime;
-
         }
 
 
@@ -97,21 +99,13 @@ public class CameraMovement : MonoBehaviour
         }
 
         radius += zoom;
-        lookAtPos += transPos;
+        SetLookAt(transPos);
         angle += angleChangeVect;
         Move();
         lastMousePos = mousePos;
     }
 
-    public void Reset()
-    {
-        // go back to lookat pos
-        lookAtPos = Vector3.zero;
-        transform.localPosition = lookAtPos;
-        angle = startingAngle;
-        radius = startRadius;
-        Move();
-    }
+    
 
     // move & rotate the camera based on the current angle, radius, and lookAtPos
     private void Move()
@@ -123,6 +117,19 @@ public class CameraMovement : MonoBehaviour
         // move out from pivot
         transform.localPosition = lookAtPos - (radius * transform.forward);
     }
+
+    public static void SetLookAt(Vector3 transPos)
+    {
+        Vector3 oldLookAt = lookAtPos;
+        lookAtPos += transPos;
+        lookAtPos = new Vector3(Mathf.Max(-instance.maxTransVal, lookAtPos.x), Mathf.Max(-instance.maxTransVal, lookAtPos.y), Mathf.Max(-instance.maxTransVal, lookAtPos.z));
+        lookAtPos = new Vector3(Mathf.Min(instance.maxTransVal, lookAtPos.x), Mathf.Min(instance.maxTransVal, lookAtPos.y), Mathf.Min(instance.maxTransVal, lookAtPos.z));
+        if (oldLookAt != lookAtPos)
+        {
+            SliderManager.ResetCameraSliders();
+        }
+    }
+
 
     public static void UpdateLookAt(EAxis axis, float value)
     {
@@ -137,4 +144,15 @@ public class CameraMovement : MonoBehaviour
 
     public static Vector3 GetPosition() { return lookAtPos; }
 
+    public void Reset()
+    {
+        // go back to lookat pos
+        lookAtPos = startLookAtPos;
+        transform.localPosition = lookAtPos;
+        angle = startingAngle;
+        radius = startRadius;
+        Move();
+    }
+
+    public static float getMaxTransVal() { return instance.maxTransVal; }
 }
