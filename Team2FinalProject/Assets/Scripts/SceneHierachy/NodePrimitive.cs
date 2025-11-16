@@ -105,6 +105,9 @@ public class NodePrimitive: MonoBehaviour {
         {
             Debug.Log("unrecognized collider type");
         }
+        Rigidbody rb = colliderObj.AddComponent<Rigidbody>();
+        rb.useGravity = false;
+        rb.mass = 5.0f;
 
     }
 

@@ -62,7 +62,7 @@ public class AnimationManager : MonoBehaviour
                 rightShoulder.localRotation *= Quaternion.AngleAxis(speed * Time.deltaTime, Vector3.forward);
                 leftShoulder.localRotation *= Quaternion.AngleAxis(2.0f * speed * Time.deltaTime, Vector3.forward);
                 leftElbow.localRotation *= Quaternion.AngleAxis(1.75f * speed * Time.deltaTime, Vector3.forward);
-                if (curAngle < 0)
+                if (curAngle < -25)
                 {
                     playing = false;
                 }
@@ -72,13 +72,20 @@ public class AnimationManager : MonoBehaviour
 
     public static void PlayAnimation()
     {
-        Debug.Log(instance.range);
+        //Debug.Log(instance.range);
         float radius = instance.golfClub.localScale.y * 2;
         maxAngle = Mathf.PI * 2 * instance.range / radius;
-        Debug.Log(maxAngle);
+        //Debug.Log(maxAngle);
         playing = true;
         forward = true;
 
+    }
+
+    public static void StopAnimation()
+    {
+        playing = false;
+        forward = false;
+        Debug.Log("stop");
     }
 
     public static void Reset()
