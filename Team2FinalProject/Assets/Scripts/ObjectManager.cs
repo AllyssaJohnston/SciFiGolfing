@@ -20,8 +20,6 @@ public class ObjectManager : MonoBehaviour
         instance = this;
         curObjectChanged = new UnityEvent();
         curSceneObjectValuesChanged = new UnityEvent();
-        curSceneObj = World.GetRoot();
-        Debug.Assert(curSceneObj != null);
     }
 
     public static void SetCurObject(SceneNode obj) 

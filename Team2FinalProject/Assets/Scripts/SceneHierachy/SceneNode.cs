@@ -15,6 +15,8 @@ public class SceneNode : MonoBehaviour
     public List<NodePrimitive> PrimitiveList;
     public List<SceneNode> ChildrenList;
 
+    public bool editable = true;
+
 	protected void Start () 
     { 
         mCombinedParentXform = Matrix4x4.identity;

@@ -5,6 +5,7 @@ public class AnimationManager : MonoBehaviour
     private static AnimationManager instance;
     public Transform rightShoulder;
     public Transform leftShoulder;
+    public Transform leftElbow;
     public Transform golfClub;
     public float range = 40f;
     public float force = 10f;
@@ -47,8 +48,9 @@ public class AnimationManager : MonoBehaviour
             if (forward)
             {
                 curAngle += speed * Time.deltaTime;
-                rightShoulder.localRotation *= Quaternion.AngleAxis(-1 * speed * Time.deltaTime, Vector3.forward);
-                leftShoulder.localRotation *= Quaternion.AngleAxis(-1 * speed * Time.deltaTime, Vector3.forward);
+                rightShoulder.localRotation *= Quaternion.AngleAxis(-1.0f * speed * Time.deltaTime, Vector3.forward);
+                leftShoulder.localRotation *= Quaternion.AngleAxis(-2.0f * speed * Time.deltaTime, Vector3.forward);
+                leftElbow.localRotation *= Quaternion.AngleAxis(-1.75f * speed * Time.deltaTime, Vector3.forward);
                 if (curAngle > maxAngle) 
                 { 
                     forward = false;  
@@ -58,7 +60,8 @@ public class AnimationManager : MonoBehaviour
             {
                 curAngle -= speed * Time.deltaTime;
                 rightShoulder.localRotation *= Quaternion.AngleAxis(speed * Time.deltaTime, Vector3.forward);
-                leftShoulder.localRotation *= Quaternion.AngleAxis(speed * Time.deltaTime, Vector3.forward);
+                leftShoulder.localRotation *= Quaternion.AngleAxis(2.0f * speed * Time.deltaTime, Vector3.forward);
+                leftElbow.localRotation *= Quaternion.AngleAxis(1.75f * speed * Time.deltaTime, Vector3.forward);
                 if (curAngle < 0)
                 {
                     playing = false;
