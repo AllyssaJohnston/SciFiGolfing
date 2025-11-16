@@ -7,8 +7,7 @@ public class ObjectManager : MonoBehaviour
     private static SceneNode curSceneObj; // SceneNode of the selected scene node
     public static UnityEvent curObjectChanged;
     public static UnityEvent curSceneObjectValuesChanged;
-
-    
+    public static UnityEvent resetWorld;
 
     public void Awake()
     {
@@ -20,8 +19,7 @@ public class ObjectManager : MonoBehaviour
         instance = this;
         curObjectChanged = new UnityEvent();
         curSceneObjectValuesChanged = new UnityEvent();
-        curSceneObj = World.GetRoot();
-        Debug.Assert(curSceneObj != null);
+        resetWorld = new UnityEvent();
     }
 
     public static void SetCurObject(SceneNode obj) 
@@ -73,4 +71,6 @@ public class ObjectManager : MonoBehaviour
 
         curSceneObjectValuesChanged.Invoke();
     }
+
+    public static void Reset() { resetWorld.Invoke(); }
 }

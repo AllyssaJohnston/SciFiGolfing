@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -29,14 +30,17 @@ public class SceneNodeDropDownControl : MonoBehaviour
 
         GetOptions();
         menu.onValueChanged.AddListener(SelectionChange);
-        ObjectManager.SetCurObject(World.GetRoot());
+        ObjectManager.SetCurObject(listSceneNodes[0]);
     }
 
     private static void GetOptions()
     {
         instance.menu.ClearOptions();
-        selectMenuOptions.Add(new TMP_Dropdown.OptionData(World.GetRoot().transform.name));
-        listSceneNodes.Add(World.GetRoot());
+        if (World.GetRoot().editable)
+        {
+            selectMenuOptions.Add(new TMP_Dropdown.OptionData(World.GetRoot().transform.name));
+            listSceneNodes.Add(World.GetRoot());
+        }
         GetChildrenNames("", World.GetRoot());
         instance.menu.AddOptions(selectMenuOptions); // adds all options
     }
@@ -47,9 +51,12 @@ public class SceneNodeDropDownControl : MonoBehaviour
         List<SceneNode> children = node.ChildrenList;
         for (int i = children.Count - 1; i >= 0; i--)
         {
-            TMP_Dropdown.OptionData d = new TMP_Dropdown.OptionData(space + children[i].transform.name);
-            selectMenuOptions.Add(d);
-            listSceneNodes.Add(children[i]);
+            if (node.ChildrenList[i].editable)
+            {
+                TMP_Dropdown.OptionData d = new TMP_Dropdown.OptionData(space + children[i].transform.name);
+                selectMenuOptions.Add(d);
+                listSceneNodes.Add(children[i]);
+            }
             GetChildrenNames(space, children[i]);
         }
     }
