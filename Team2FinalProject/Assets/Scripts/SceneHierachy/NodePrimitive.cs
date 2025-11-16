@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-
+﻿using System.Runtime.CompilerServices;
+using UnityEngine;
 
 
 public class NodePrimitive: MonoBehaviour {
@@ -10,6 +10,7 @@ public class NodePrimitive: MonoBehaviour {
     private Quaternion startingRot;
     private Vector3 startingScale;
     private Material material = null;
+    [SerializeField] private GameObject colliderObj = null;
     private bool init = false;
 
     protected void Awake()
@@ -25,6 +26,8 @@ public class NodePrimitive: MonoBehaviour {
         MyColor = ColorManager.GetColor(color);
         if (init == false || material == null) // initialize
         {
+            setUpCollider();
+
             material = GetComponent<Renderer>().material;
             init = true;
         }
@@ -43,6 +46,7 @@ public class NodePrimitive: MonoBehaviour {
             init = true;
         }
         material.SetMatrix("MyXformMat", m);
+        moveCollider(m);
         material.SetColor("MyColor", MyColor);
     }
 
@@ -73,4 +77,46 @@ public class NodePrimitive: MonoBehaviour {
     }
 
     public Color GetColor() { return MyColor; }
+
+    private void setUpCollider()
+    {   
+        if (!Application.isPlaying)
+        {
+            return;
+        }
+        colliderObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        colliderObj.transform.parent = transform;
+        DestroyImmediate(colliderObj.GetComponent<Collider>());
+        colliderObj.GetComponent<MeshRenderer>().enabled = false;
+        Collider nodeCollider = GetComponent<Collider>();
+        if (nodeCollider is SphereCollider)
+        {
+            colliderObj.AddComponent<SphereCollider>();
+        }
+        else if (nodeCollider is CapsuleCollider)
+        {
+            colliderObj.AddComponent<CapsuleCollider>();
+        }
+        else if (nodeCollider is BoxCollider)
+        {
+            colliderObj.AddComponent<BoxCollider>();
+        }
+        else
+        {
+            Debug.Log("unrecognized collider type");
+        }
+
+    }
+
+    private void moveCollider(Matrix4x4 m)
+    {
+        if (colliderObj == null)
+        {
+            return;
+        }
+        Vector4 fourthColumn = m.GetColumn(3);
+        Vector3 position = new Vector3(fourthColumn.x, fourthColumn.y, fourthColumn.z);
+        colliderObj.transform.position = position;
+        colliderObj.transform.localRotation = transform.rotation;
+    }
 }
