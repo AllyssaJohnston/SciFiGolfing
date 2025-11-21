@@ -10,6 +10,7 @@ public class NodePrimitive: MonoBehaviour {
     private Quaternion startingRot;
     private Vector3 startingScale;
     private Material material = null;
+    private Matrix4x4 m;
     [SerializeField] private GameObject colliderObj = null;
     private bool init = false;
 
@@ -38,7 +39,7 @@ public class NodePrimitive: MonoBehaviour {
         Matrix4x4 p = Matrix4x4.TRS(Pivot, Quaternion.identity, Vector3.one);
         Matrix4x4 invp = Matrix4x4.TRS(-Pivot, Quaternion.identity, Vector3.one);
         Matrix4x4 trs = Matrix4x4.TRS(transform.localPosition, transform.localRotation, transform.localScale);
-        Matrix4x4 m = nodeMatrix * p * trs * invp;
+        m = nodeMatrix * p * trs * invp;
         if (init == false || material == null ) // initialize
         {
             material = GetComponent<Renderer>().material;
@@ -77,6 +78,8 @@ public class NodePrimitive: MonoBehaviour {
     }
 
     public Color GetColor() { return MyColor; }
+
+    public Matrix4x4 getXForm() { return m; }
 
     private void setUpCollider()
     {   

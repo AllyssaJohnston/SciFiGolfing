@@ -1,3 +1,4 @@
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
 public enum EMouseButton
@@ -26,6 +27,8 @@ public class CameraMovement : MonoBehaviour
     private static Vector2 mousePos = Vector3.zero;
     private static Vector2 lastMousePos = Vector3.zero;
 
+    public Vector3 playModePos = new Vector3(0, 10, 300);
+
     public void Awake()
     {
         if (instance != null && instance != this)
@@ -44,6 +47,7 @@ public class CameraMovement : MonoBehaviour
         radius = startRadius;
         lookAtPos = transform.localPosition + radius * transform.forward;
         startLookAtPos = lookAtPos;
+        GameManager.gameModeChanged.AddListener(gameModeChanged);
     }
 
     private void Update()
@@ -155,4 +159,23 @@ public class CameraMovement : MonoBehaviour
     }
 
     public static float getMaxTransVal() { return instance.maxTransVal; }
+
+    private static void gameModeChanged()
+    {
+        EGameMode gameMode = GameManager.GetGameMode();
+
+        switch(gameMode)
+        {
+            case EGameMode.SETUP:
+                instance.Reset();
+                break;
+            case EGameMode.PLAY:
+                instance.Reset();
+                lookAtPos = Vector3.right * 20;
+                radius = (instance.playModePos - lookAtPos).magnitude;
+                angle = new Vector3(0, startingAngle.y, 0);
+                instance.transform.position = instance.playModePos;
+                break;
+        }
+    }
 }
