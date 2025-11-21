@@ -78,6 +78,8 @@ public class NodePrimitive: MonoBehaviour {
 
     public Color GetColor() { return MyColor; }
 
+    public Matrix4x4 getXForm() { return material.GetMatrix("MyXformMat"); }
+
     private void setUpCollider()
     {   
         if (!Application.isPlaying)
