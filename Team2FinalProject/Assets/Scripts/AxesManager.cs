@@ -15,6 +15,7 @@ public class AxesManager : MonoBehaviour
         instance = this;
         ObjectManager.curObjectChanged.AddListener(SetAxes);
         ObjectManager.curSceneObjectValuesChanged.AddListener(SetAxes);
+        GameManager.gameModeChanged.AddListener(GameModeChanged);
     }
 
     // set the axes position
@@ -27,6 +28,9 @@ public class AxesManager : MonoBehaviour
         instance.axes.transform.localRotation = node.transform.rotation;
     }
 
+    public static void GameModeChanged() { SetAxisVisibility(GameManager.GetGameMode() == EGameMode.SETUP); }
+
     // change the axes visibility
     public static void SetAxisVisibility(bool visible) { instance.axes.SetActive(visible); }
+
 }
