@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -5,6 +6,7 @@ public class World : MonoBehaviour
 {
     private static World instance;
     public SceneNode root;
+    private static bool tickYet;
 
     public void Awake()
     {
@@ -20,6 +22,10 @@ public class World : MonoBehaviour
     {
         Matrix4x4 i = Matrix4x4.identity;
         root.CompositeXform(ref i);
+        if (!tickYet && EditorApplication.isPlaying)
+        {
+            ObjectManager.SetCurObject(instance.root);
+        }
     }
 
     public static SceneNode GetRoot() { return instance.root; }

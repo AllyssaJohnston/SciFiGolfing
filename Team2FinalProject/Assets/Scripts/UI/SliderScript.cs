@@ -17,10 +17,14 @@ public abstract class SliderScript : MonoBehaviour
 
         slider.value = 0f;
         lastValue = slider.value;
+        subSetUp();
         SetPrefix();
         UpdateLabel();
         ObjectManager.curObjectChanged.AddListener(resetData);
+        
     }
+
+    protected virtual void subSetUp() {; }
 
     protected void Update()
     {

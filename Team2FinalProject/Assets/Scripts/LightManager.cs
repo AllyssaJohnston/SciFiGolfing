@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-
-
+﻿using UnityEngine;
 
 
 public class LightManager : MonoBehaviour
@@ -33,10 +30,8 @@ public class LightManager : MonoBehaviour
     private void Start()
     {
         GameManager.lightModeChanged.AddListener(changeLighting);
-        //GameManager.gameModeChanged.AddListener(changeLighting);
         setUpPointLight();
         changeLighting(GameManager.GetLightMode());
-        //InputManager.resetOp.AddListener(Reset);
 
     }
 

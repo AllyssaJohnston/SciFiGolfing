@@ -12,6 +12,7 @@ public class NodePrimitive: MonoBehaviour {
     private Material material = null;
     private Matrix4x4 m;
     [SerializeField] private GameObject colliderObj = null;
+    private int nodeColliderLayer;
     private bool init = false;
 
     protected void Awake()
@@ -21,6 +22,7 @@ public class NodePrimitive: MonoBehaviour {
 
     protected void Start()
     {
+        nodeColliderLayer = LayerMask.NameToLayer("NodeCollider");
         startingPos = transform.localPosition;
         startingRot = transform.localRotation;
         startingScale = transform.localScale;
@@ -88,6 +90,7 @@ public class NodePrimitive: MonoBehaviour {
             return;
         }
         colliderObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        colliderObj.layer = nodeColliderLayer;
         colliderObj.transform.parent = transform;
         DestroyImmediate(colliderObj.GetComponent<Collider>());
         colliderObj.GetComponent<MeshRenderer>().enabled = false;
@@ -125,4 +128,5 @@ public class NodePrimitive: MonoBehaviour {
         colliderObj.transform.position = position;
         colliderObj.transform.localRotation = transform.rotation;
     }
+
 }
