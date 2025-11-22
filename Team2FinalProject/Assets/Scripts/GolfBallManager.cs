@@ -41,35 +41,9 @@ public class GolfBallManager : MonoBehaviour
         ScoreTracker.increaseBalls();
     }
 
-    //private static GameObject AddBall(GameObject org)
-    //{
-    //    GameObject g = GameObject.Instantiate(org, instance.ballTemplate.transform.parent);
-    //    numCreated++;
-    //    g.name = "GolfBall" + numCreated;
-    //    golfBalls.Add(g);
-    //    return g;
-    //}
-
     public static void Duplicate()
     {
-        //for (int i = golfBalls.Count - 1; i > -1; i--)
-        //{
-        //    if (golfBalls[i] == null) { continue; }
-        //    Vector3 startingPos = golfBalls[i].transform.position;
-        //    Vector3 dir = new Vector3(golfBalls[i].transform.forward.x, 0, golfBalls[i].transform.forward.z).normalized;
-        //    Debug.Log(dir);
-        //    Rigidbody orgRB = golfBalls[i].GetComponent<Rigidbody>();
-        //    float v = orgRB.linearVelocity.magnitude;
-
-        //    golfBalls[i].GetComponent<GolfBall>().Rotate(duplicationRotation, v, dir);
-
-        //    GameObject twin = AddBall(golfBalls[i]);
-        //    twin.transform.position = startingPos;
-        //    twin.GetComponent<GolfBall>().SetUp();
-
-        //    twin.GetComponent<GolfBall>().Rotate(-1 * duplicationRotation, v, dir);
-        //}
-
+        
     }
 
     public static void Reset()
