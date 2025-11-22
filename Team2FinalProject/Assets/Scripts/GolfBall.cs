@@ -1,10 +1,8 @@
 using UnityEngine;
-using System.Collections;
 
 public class GolfBall : MonoBehaviour
 {
     Rigidbody rb;
-    ScoreTracker scoreTracker;
 
     bool collisionActive = false;
     public float collisionChangeTime = 0.1f;
@@ -14,8 +12,7 @@ public class GolfBall : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         ObjectManager.resetWorld.AddListener(Reset);
-        scoreTracker = GameObject.Find("Canvas").transform.Find("BallsAndScoreTracker").GetComponent<ScoreTracker>();
-        scoreTracker.increaseBalls();
+        
     }
 
     // Update is called once per frame
@@ -37,7 +34,7 @@ public class GolfBall : MonoBehaviour
         {
             // hit a hole
             //Debug.Log("hit a hole");
-            scoreTracker.IncreaseScore();
+            ScoreTracker.IncreaseScore();
             RemoveSelf();
         }
         if (collisionActive){
@@ -53,8 +50,9 @@ public class GolfBall : MonoBehaviour
         RemoveSelf();
     }
 
-    private void RemoveSelf(){
-        scoreTracker.decreaseBalls();
+    private void RemoveSelf()
+    {
+        ScoreTracker.decreaseBalls();
         Destroy(gameObject);
     
     }

@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class GolfBallManager : MonoBehaviour
 {
@@ -10,6 +8,9 @@ public class GolfBallManager : MonoBehaviour
     public GameObject ballTemplate;
     private static int numCreated = 0;
     private static float duplicationRotation = 15f;
+
+    public GameObject BallPrefab;
+    public SceneNode SpawnPos;
 
     public void Awake()
     {
@@ -30,22 +31,24 @@ public class GolfBallManager : MonoBehaviour
 
     public static void AddBall()
     {
-        //GameObject g = Instantiate(instance.ballTemplate);
-        //g.SetActive(true);
-        //numCreated++;
-        //g.name = "GolfBall" + numCreated;
-        //g.transform.parent = instance.ballTemplate.transform.parent;
-        //golfBalls.Add(g);
+        Vector3 spawnPosForward = new Vector3(instance.SpawnPos.getXForm()[0, 2], instance.SpawnPos.getXForm()[1, 2], instance.SpawnPos.getXForm()[2, 2]).normalized * -1;
+        Vector3 spawnPosRight = new Vector3(instance.SpawnPos.getXForm()[0, 0], instance.SpawnPos.getXForm()[1, 0], instance.SpawnPos.getXForm()[2, 0]).normalized * -1.25f;
+        Vector3 spawnPosition = instance.SpawnPos.getXForm().GetPosition() + spawnPosForward + spawnPosRight;
+        GameObject ball = Instantiate(instance.BallPrefab, spawnPosition, instance.SpawnPos.transform.rotation);
+        numCreated++;
+        ball.name = "Ball " + numCreated;
+        golfBalls.Add(ball);
+        ScoreTracker.increaseBalls();
     }
 
-    private static GameObject AddBall(GameObject org)
-    {
-        GameObject g = GameObject.Instantiate(org, instance.ballTemplate.transform.parent);
-        numCreated++;
-        g.name = "GolfBall" + numCreated;
-        golfBalls.Add(g);
-        return g;
-    }
+    //private static GameObject AddBall(GameObject org)
+    //{
+    //    GameObject g = GameObject.Instantiate(org, instance.ballTemplate.transform.parent);
+    //    numCreated++;
+    //    g.name = "GolfBall" + numCreated;
+    //    golfBalls.Add(g);
+    //    return g;
+    //}
 
     public static void Duplicate()
     {
