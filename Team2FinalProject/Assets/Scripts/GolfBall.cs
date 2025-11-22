@@ -14,6 +14,7 @@ public class GolfBall : MonoBehaviour
         startPos = transform.position;
         ObjectManager.resetWorld.AddListener(Reset);
         scoreTracker = GameObject.Find("Canvas").transform.Find("BallsAndScoreTracker").GetComponent<ScoreTracker>();
+        scoreTracker.increaseBalls();
     }
 
     // Update is called once per frame
@@ -30,7 +31,7 @@ public class GolfBall : MonoBehaviour
             // hit a hole
             //Debug.Log("hit a hole");
             scoreTracker.IncreaseScore();
-            Destroy(gameObject);
+            RemoveSelf();
         }
         AnimationManager.StopAnimation();
         Debug.Log(collision.gameObject.transform.parent.gameObject.name);
@@ -40,8 +41,11 @@ public class GolfBall : MonoBehaviour
 
     public void Reset()
     {
-        rb.angularVelocity = Vector3.zero;
-        rb.linearVelocity = Vector3.zero;
-        transform.position = startPos;
+        RemoveSelf();
+    }
+
+    private void RemoveSelf(){
+        scoreTracker.decreaseBalls();
+        Destroy(gameObject);
     }
 }

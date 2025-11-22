@@ -20,8 +20,6 @@ public class AnimationManager : MonoBehaviour
     private static float startingForce = 10f;
     private static float startingSpeed = 5f;
 
-
-
     void Awake()
     {
         if (instance != null && instance != this)
@@ -78,7 +76,6 @@ public class AnimationManager : MonoBehaviour
         //Debug.Log(maxAngle);
         playing = true;
         forward = true;
-
     }
 
     public static void StopAnimation()
