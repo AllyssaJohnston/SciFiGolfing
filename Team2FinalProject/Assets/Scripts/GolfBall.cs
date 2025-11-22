@@ -4,7 +4,6 @@ using System.Collections;
 public class GolfBall : MonoBehaviour
 {
     Rigidbody rb;
-    Vector3 startPos;
     ScoreTracker scoreTracker;
 
     bool collisionActive = false;
@@ -14,7 +13,6 @@ public class GolfBall : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        startPos = transform.position;
         ObjectManager.resetWorld.AddListener(Reset);
         scoreTracker = GameObject.Find("Canvas").transform.Find("BallsAndScoreTracker").GetComponent<ScoreTracker>();
         scoreTracker.increaseBalls();
