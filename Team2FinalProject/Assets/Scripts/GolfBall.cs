@@ -5,7 +5,10 @@ public class GolfBall : MonoBehaviour
 {
     Rigidbody rb;
     Vector3 startPos;
-    public ScoreTracker scoreTracker;
+    ScoreTracker scoreTracker;
+
+    bool collisionActive = false;
+    public float collisionChangeTime = 0.1f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -14,12 +17,19 @@ public class GolfBall : MonoBehaviour
         startPos = transform.position;
         ObjectManager.resetWorld.AddListener(Reset);
         scoreTracker = GameObject.Find("Canvas").transform.Find("BallsAndScoreTracker").GetComponent<ScoreTracker>();
+        scoreTracker.increaseBalls();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (!collisionActive)
+        {
+            collisionChangeTime -= Time.deltaTime;
+        }
+        if (collisionChangeTime <= 0){
+            collisionActive = true;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -30,18 +40,24 @@ public class GolfBall : MonoBehaviour
             // hit a hole
             //Debug.Log("hit a hole");
             scoreTracker.IncreaseScore();
-            Destroy(gameObject);
+            RemoveSelf();
         }
-        AnimationManager.StopAnimation();
-        Debug.Log(collision.gameObject.transform.parent.gameObject.name);
-        Vector3 dir = (transform.position - collision.gameObject.transform.position).normalized;
-        rb.AddForce(dir * AnimationManager.getForce(), ForceMode.Impulse);
+        if (collisionActive){
+            AnimationManager.StopAnimation();
+            Debug.Log(collision.gameObject.transform.parent.gameObject.name);
+            Vector3 dir = (transform.position - collision.gameObject.transform.position).normalized;
+            rb.AddForce(dir * AnimationManager.getForce(), ForceMode.Impulse);
+        }
     }
 
     public void Reset()
     {
-        rb.angularVelocity = Vector3.zero;
-        rb.linearVelocity = Vector3.zero;
-        transform.position = startPos;
+        RemoveSelf();
+    }
+
+    private void RemoveSelf(){
+        scoreTracker.decreaseBalls();
+        Destroy(gameObject);
+    
     }
 }
