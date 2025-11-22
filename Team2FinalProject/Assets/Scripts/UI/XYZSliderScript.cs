@@ -12,7 +12,8 @@ public class XYZSliderScript : SliderScript
     public EAxis axis;
     public bool cameraSlider = false;
 
-    private void Start()
+    // called at start
+    protected override void subSetUp()
     {
         if (cameraSlider)
         {

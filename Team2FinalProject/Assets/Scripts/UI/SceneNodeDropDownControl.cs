@@ -64,5 +64,13 @@ public class SceneNodeDropDownControl : MonoBehaviour
     // called when drop down menu value changes
     public static void SelectionChange(int index) { ObjectManager.SetCurObject(listSceneNodes[index]); }
 
+    // called from other sources
+    public static void SelectionChange(SceneNode sceneNode) 
+    {
+        int i = listSceneNodes.IndexOf(sceneNode);
+        instance.menu.value = i;
+        SelectionChange(i); 
+    }
+
     public static void ResetData() { instance.menu.value = 0; }
 }

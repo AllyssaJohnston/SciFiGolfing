@@ -10,17 +10,12 @@ public enum ESliderAttribute
 public class AttributeSliderScript : SliderScript
 {
 
-    void Start()
-    {
-        Debug.Assert(slider != null);
-        resetData();
-        SetPrefix();
-        UpdateLabel();
-        ObjectManager.curObjectChanged.AddListener(resetData);
-    }
-
-
     public ESliderAttribute attribute;
+
+    protected override void subSetUp()
+    {
+        resetData();
+    }
 
     protected override void SetPrefix()
     {
