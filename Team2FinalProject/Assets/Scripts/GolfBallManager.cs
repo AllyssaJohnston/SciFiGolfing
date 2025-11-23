@@ -76,7 +76,7 @@ public class GolfBallManager : MonoBehaviour
         bool hitAny = false;
         for (int i = -1; i <= 1; i++)
         {
-            RaycastHit[] hits = Physics.RaycastAll(rayStartPos, rayStartForward + (Vector3.right * i * .1f), rayDist, instance.ballLayer);
+            RaycastHit[] hits = Physics.RaycastAll(rayStartPos + (Vector3.right * i * .1f), rayStartForward + (Vector3.right * i * .1f), rayDist, instance.ballLayer);
             hitAny = hitAny || hits.Length > 0;
             foreach(RaycastHit hit in hits)
             {

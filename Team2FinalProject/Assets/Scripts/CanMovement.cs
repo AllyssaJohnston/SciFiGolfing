@@ -11,12 +11,8 @@ public class CanMovement : MonoBehaviour
     {
         ObjectManager.resetWorld.AddListener(Reset);
         rb = GetComponent<Rigidbody>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        startingPos = transform.position;
+        startingRot = transform.rotation;
     }
 
     public void Reset()
