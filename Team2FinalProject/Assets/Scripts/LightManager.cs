@@ -44,7 +44,7 @@ public class LightManager : MonoBehaviour
 
     void setUpDiffuseLight()
     {
-        Shader.SetGlobalFloat("minDifffuse", .4f);
+        Shader.SetGlobalFloat("minDiffuse", .6f);
         Shader.SetGlobalFloat("noDiffuse", .2f);
     }
 

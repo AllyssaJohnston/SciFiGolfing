@@ -88,7 +88,7 @@ Shader "Custom/StandardShaderWithLighting"
             float  LightFar;
 			int UsePointLight;
 
-            float minDifffuse;
+            float minDiffuse;
             float noDiffuse;
 			
 			v2f vert (appdata v)
@@ -111,7 +111,7 @@ Shader "Custom/StandardShaderWithLighting"
 				if (UseDiffuseLight)
 				{
 					float3 l = normalize(LightPosition - i.vertexWC);
-					return clamp(dot(i.normal, l), minDifffuse, 1);
+					return clamp(dot(i.normal, l), minDiffuse, 1);
 				}
   
                 return noDiffuse;
