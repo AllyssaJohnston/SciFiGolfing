@@ -20,6 +20,10 @@ public class AnimationManager : MonoBehaviour
     private static float startingForce = 10f;
     private static float startingSpeed = 5f;
 
+    private static Quaternion rightShoulderQ;
+    private static Quaternion leftShoulderQ;
+    private static Quaternion leftElbowQ;
+    private static Quaternion golfClubQ;
 
 
     void Awake()
@@ -38,6 +42,11 @@ public class AnimationManager : MonoBehaviour
         startingRange = range;
         startingForce = force;
         startingSpeed = speed;
+        rightShoulderQ = instance.rightShoulder.localRotation;
+        leftShoulderQ = instance.leftShoulder.localRotation;
+        leftElbowQ = instance.leftElbow.localRotation;
+        golfClubQ = instance.golfClub.localRotation;
+        ObjectManager.resetWorld.AddListener(Reset);
     }
 
     // Update is called once per frame
@@ -72,13 +81,18 @@ public class AnimationManager : MonoBehaviour
 
     public static void PlayAnimation()
     {
-        //Debug.Log(instance.range);
+        startingRange = instance.range;
+        startingForce = instance.force;
+        startingSpeed = instance.speed;
+
         float radius = instance.golfClub.localScale.y * 2;
         maxAngle = Mathf.PI * 2 * instance.range / radius;
-        //Debug.Log(maxAngle);
         playing = true;
         forward = true;
-
+        rightShoulderQ = instance.rightShoulder.localRotation;
+        leftShoulderQ = instance.leftShoulder.localRotation;
+        leftElbowQ = instance.leftElbow.localRotation;
+        golfClubQ = instance.golfClub.localRotation;
     }
 
     public static void StopAnimation()
@@ -90,10 +104,16 @@ public class AnimationManager : MonoBehaviour
 
     public static void Reset()
     {
+        StopAnimation();
+        instance.rightShoulder.localRotation = rightShoulderQ;
+        instance.leftShoulder.localRotation = leftShoulderQ;
+        instance.leftElbow.localRotation = leftElbowQ;
+        instance.golfClub.localRotation = golfClubQ;
+
         instance.range = startingRange;
         instance.force = startingForce;
         instance.speed = startingSpeed;
-        SliderManager.ResetAttributeSliders();
+        //SliderManager.ResetAttributeSliders();
     }
 
     public static float getRange() { return instance.range; }

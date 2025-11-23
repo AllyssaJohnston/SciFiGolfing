@@ -15,8 +15,7 @@ public abstract class SliderScript : MonoBehaviour
     {
         Debug.Assert(slider != null);
 
-        slider.value = 0f;
-        lastValue = slider.value;
+        
         subSetUp();
         SetPrefix();
         UpdateLabel();

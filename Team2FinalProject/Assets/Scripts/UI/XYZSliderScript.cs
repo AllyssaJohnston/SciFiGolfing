@@ -15,6 +15,8 @@ public class XYZSliderScript : SliderScript
     // called at start
     protected override void subSetUp()
     {
+        slider.value = 0f;
+        lastValue = slider.value;
         if (cameraSlider)
         {
             slider.minValue = -1 * CameraMovement.getMaxTransVal();
