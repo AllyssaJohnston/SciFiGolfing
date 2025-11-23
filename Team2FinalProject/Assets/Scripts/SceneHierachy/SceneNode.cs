@@ -43,11 +43,6 @@ public class SceneNode : MonoBehaviour
         foreach (NodePrimitive p in PrimitiveList)
         {
             p.LoadShaderMatrix(ref mCombinedParentXform);
-            AnimatePrimitive ap = p.gameObject.GetComponent <AnimatePrimitive>();
-            if (ap != null && !Application.isPlaying)
-            {
-                ap.UpdateRotationInEditor();
-            }
         }
     }
 

@@ -30,14 +30,22 @@ public class LightManager : MonoBehaviour
     private void Start()
     {
         GameManager.lightModeChanged.AddListener(changeLighting);
+        setUpDiffuseLight();
         setUpPointLight();
         changeLighting(GameManager.GetLightMode());
 
+        
     }
 
     public void Reset()
     {
         changeLighting(GameManager.GetLightMode());
+    }
+
+    void setUpDiffuseLight()
+    {
+        Shader.SetGlobalFloat("minDifffuse", .4f);
+        Shader.SetGlobalFloat("noDiffuse", .2f);
     }
 
     void setUpPointLight()

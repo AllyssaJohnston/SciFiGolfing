@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
     private static EGameMode gameMode = EGameMode.SETUP;
-    private static ELightMode lightMode = ELightMode.DIFFUSE_AND_POINT;
+    private static ELightMode lightMode = ELightMode.DIFFUSE;
     public static UnityEvent gameModeChanged;
     public static UnityEvent lightModeChanged;
 
