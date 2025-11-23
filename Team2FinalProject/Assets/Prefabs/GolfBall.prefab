@@ -152,4 +152,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1a8e5ae971fd774b9c52160d7bce5c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GolfBall
-  collisionChangeTime: 0.1
+  collisionActive: 0
+  collisionChangeTimeLength: 0.2
