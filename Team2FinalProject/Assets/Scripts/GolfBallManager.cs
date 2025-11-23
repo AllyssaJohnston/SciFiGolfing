@@ -55,6 +55,8 @@ public class GolfBallManager : MonoBehaviour
             Vector3 ballOriginalPos = hit.transform.position;
             GameObject ball1 = Instantiate(instance.BallPrefab, ballOriginalPos, hit.transform.rotation);
             GameObject ball2 = Instantiate(instance.BallPrefab, ballOriginalPos, hit.transform.rotation);
+            ScoreTracker.increaseBalls();
+            ScoreTracker.increaseBalls();
 
             Rigidbody rb1 = ball1.GetComponent<Rigidbody>();
             Vector3 dir1 =  Quaternion.AngleAxis(duplicationRotation, rayStartUp) * rayStartForward;
@@ -63,7 +65,6 @@ public class GolfBallManager : MonoBehaviour
             Vector3 dir2 =  Quaternion.AngleAxis(-duplicationRotation, rayStartUp) *rayStartForward;
             rb2.AddForce(dir2 * 7, ForceMode.Impulse);
             hit.transform.gameObject.GetComponent<GolfBall>().Reset();
-            ScoreTracker.decreaseBalls();
         }
         else{
             Debug.DrawRay(rayStartPos, rayStartForward * 200, Color.red);
