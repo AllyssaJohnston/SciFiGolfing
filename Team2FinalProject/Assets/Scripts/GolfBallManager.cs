@@ -65,7 +65,7 @@ public class GolfBallManager : MonoBehaviour
     {
         Vector3 rayStartForward = new Vector3(instance.SpawnPos.getXForm()[0, 2], instance.SpawnPos.getXForm()[1, 2], instance.SpawnPos.getXForm()[2, 2]).normalized * -1;
         Vector3 rayStartRight = new Vector3(instance.SpawnPos.getXForm()[0, 0], instance.SpawnPos.getXForm()[1, 0], instance.SpawnPos.getXForm()[2, 0]).normalized * -1.25f;
-        Vector3 rayStartUp = new Vector3(instance.SpawnPos.getXForm()[0, 1], instance.SpawnPos.getXForm()[1, 1], instance.SpawnPos.getXForm()[2, 1]).normalized * -4.5f;
+        Vector3 rayStartUp = new Vector3(instance.SpawnPos.getXForm()[0, 1], instance.SpawnPos.getXForm()[1, 1], instance.SpawnPos.getXForm()[2, 1]).normalized * -4f;
         Vector3 rayStartPos = instance.SpawnPos.getXForm().GetPosition() + rayStartForward + rayStartRight + rayStartUp;
 
         instance.rayCylinder.SetActive(true);
@@ -76,7 +76,7 @@ public class GolfBallManager : MonoBehaviour
         bool hitAny = false;
         for (int i = -1; i <= 1; i++)
         {
-            RaycastHit[] hits = Physics.RaycastAll(rayStartPos + (Vector3.right * i * .1f), rayStartForward + (Vector3.right * i * .1f), rayDist, instance.ballLayer);
+            RaycastHit[] hits = Physics.RaycastAll(rayStartPos + (Vector3.right * i * .2f), rayStartForward + (Vector3.right * i * .2f), rayDist, instance.ballLayer);
             hitAny = hitAny || hits.Length > 0;
             foreach(RaycastHit hit in hits)
             {

@@ -79,6 +79,7 @@ public class AnimationManager : MonoBehaviour
                 if (curAngle < -25)
                 {
                     playing = false;
+                    StopAnimation();
                 }
             }  
         }
@@ -86,6 +87,7 @@ public class AnimationManager : MonoBehaviour
 
     public static void PlayAnimation()
     {
+        // record the state of the attribute sliders to reset back to when doen
         startingRange = instance.range;
         startingForce = instance.force;
         startingSpeed = instance.speed;
@@ -105,21 +107,20 @@ public class AnimationManager : MonoBehaviour
         playing = false;
         forward = false;
         doneAnimation.Invoke();
+        // reset everything to starting rotation
+        instance.rightShoulder.localRotation = rightShoulderQ;
+        instance.leftShoulder.localRotation = leftShoulderQ;
+        instance.leftElbow.localRotation = leftElbowQ;
+        instance.golfClub.localRotation = golfClubQ;
         Debug.Log("stop");
     }
 
     public static void Reset()
     {
         StopAnimation();
-        instance.rightShoulder.localRotation = rightShoulderQ;
-        instance.leftShoulder.localRotation = leftShoulderQ;
-        instance.leftElbow.localRotation = leftElbowQ;
-        instance.golfClub.localRotation = golfClubQ;
-
         instance.range = startingRange;
         instance.force = startingForce;
         instance.speed = startingSpeed;
-        //SliderManager.ResetAttributeSliders();
     }
 
     public static float getRange() { return instance.range; }
