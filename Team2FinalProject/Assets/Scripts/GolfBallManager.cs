@@ -11,6 +11,7 @@ public class GolfBallManager : MonoBehaviour
     private static float duplicationRotation = 15f;
 
     public GameObject BallPrefab;
+    public GameObject BallParentObj;
     public SceneNode SpawnPos;
     public LayerMask ballLayer;
 
@@ -53,7 +54,7 @@ public class GolfBallManager : MonoBehaviour
         Vector3 spawnPosForward = new Vector3(instance.SpawnPos.getXForm()[0, 2], instance.SpawnPos.getXForm()[1, 2], instance.SpawnPos.getXForm()[2, 2]).normalized * -1;
         Vector3 spawnPosRight = new Vector3(instance.SpawnPos.getXForm()[0, 0], instance.SpawnPos.getXForm()[1, 0], instance.SpawnPos.getXForm()[2, 0]).normalized * -1.25f;
         Vector3 spawnPosition = instance.SpawnPos.getXForm().GetPosition() + spawnPosForward + spawnPosRight;
-        GameObject ball = Instantiate(instance.BallPrefab, spawnPosition, instance.SpawnPos.transform.rotation);
+        GameObject ball = Instantiate(instance.BallPrefab, spawnPosition, instance.SpawnPos.transform.rotation, instance.BallParentObj.transform);
         numCreated++;
         ball.name = "Ball " + numCreated;
         golfBalls.Add(ball);
@@ -75,7 +76,7 @@ public class GolfBallManager : MonoBehaviour
         bool hitAny = false;
         for (int i = -1; i <= 1; i++)
         {
-            RaycastHit[] hits = Physics.RaycastAll(rayStartPos, rayStartForward + (Vector3.right * i * .1f), rayDist, instance.ballLayer);
+            RaycastHit[] hits = Physics.RaycastAll(rayStartPos + (Vector3.right * i * .1f), rayStartForward + (Vector3.right * i * .1f), rayDist, instance.ballLayer);
             hitAny = hitAny || hits.Length > 0;
             foreach(RaycastHit hit in hits)
             {
@@ -86,8 +87,8 @@ public class GolfBallManager : MonoBehaviour
                 Debug.DrawRay(rayStartPos, rayStartForward * rayDist, Color.yellow);
                 Vector3 ballOriginalPos = hit.transform.position;
                 hit.collider.gameObject.SetActive(false);
-                GameObject ball1 = Instantiate(instance.BallPrefab, ballOriginalPos, hit.transform.rotation);
-                GameObject ball2 = Instantiate(instance.BallPrefab, ballOriginalPos, hit.transform.rotation);
+                GameObject ball1 = Instantiate(instance.BallPrefab, ballOriginalPos, hit.transform.rotation, instance.BallParentObj.transform);
+                GameObject ball2 = Instantiate(instance.BallPrefab, ballOriginalPos, hit.transform.rotation, instance.BallParentObj.transform);
                 ball1.GetComponent<GolfBall>().resetTimer();
                 ball2.GetComponent<GolfBall>().resetTimer();
                 ScoreTracker.increaseBalls();

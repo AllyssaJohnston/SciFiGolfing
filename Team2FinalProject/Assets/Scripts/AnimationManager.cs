@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AnimationManager : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class AnimationManager : MonoBehaviour
     private static Quaternion leftElbowQ;
     private static Quaternion golfClubQ;
 
+    public static UnityEvent doneAnimation;
+
 
     void Awake()
     {
@@ -35,6 +38,7 @@ public class AnimationManager : MonoBehaviour
             return;
         }
         instance = this;
+        doneAnimation = new UnityEvent();
     }
 
     private void Start()
@@ -47,6 +51,7 @@ public class AnimationManager : MonoBehaviour
         leftElbowQ = instance.leftElbow.localRotation;
         golfClubQ = instance.golfClub.localRotation;
         ObjectManager.resetWorld.AddListener(Reset);
+        
     }
 
     // Update is called once per frame
@@ -99,6 +104,7 @@ public class AnimationManager : MonoBehaviour
     {
         playing = false;
         forward = false;
+        doneAnimation.Invoke();
         Debug.Log("stop");
     }
 
