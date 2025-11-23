@@ -22,4 +22,12 @@ public class QuatScript : MonoBehaviour
         }
         return Quaternion.AngleAxis(deltaAngle, v);
     }
+
+    public static Quaternion GetRotation(Vector3 direction)
+    {
+        Vector3 rotationAxis = Vector3.Cross(Vector3.up, direction).normalized;
+        float angle = Vector3.Angle(Vector3.up, direction);
+
+        return Quaternion.AngleAxis(angle, rotationAxis);
+    }
 }
