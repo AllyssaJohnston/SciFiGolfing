@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 
 public class GolfBallManager : MonoBehaviour
@@ -13,6 +14,11 @@ public class GolfBallManager : MonoBehaviour
     public SceneNode SpawnPos;
     public LayerMask ballLayer;
 
+    private static int rayDist = 200;
+    private static float rayTimer = 0f;
+    private static float rayTimerLength = 2f;
+    public GameObject rayCylinder;
+
     public void Awake()
     {
         if (instance != null && instance != this)
@@ -25,8 +31,20 @@ public class GolfBallManager : MonoBehaviour
 
     public void Start()
     {
+        rayCylinder.SetActive(false);
+        instance.rayCylinder.transform.localScale = new Vector3(.5f, rayDist / 2, .5f);
         GameManager.gameModeChanged.AddListener(AddBall);
         ObjectManager.resetWorld.AddListener(Reset);
+
+    }
+
+    public void Update()
+    {
+        rayTimer -= Time.deltaTime;
+        if (rayTimer <= 0)
+        {
+            rayCylinder.SetActive(false);
+        }
     }
 
 
@@ -48,8 +66,14 @@ public class GolfBallManager : MonoBehaviour
         Vector3 rayStartRight = new Vector3(instance.SpawnPos.getXForm()[0, 0], instance.SpawnPos.getXForm()[1, 0], instance.SpawnPos.getXForm()[2, 0]).normalized * -1.25f;
         Vector3 rayStartUp = new Vector3(instance.SpawnPos.getXForm()[0, 1], instance.SpawnPos.getXForm()[1, 1], instance.SpawnPos.getXForm()[2, 1]).normalized * -4f;
         Vector3 rayStartPos = instance.SpawnPos.getXForm().GetPosition() + rayStartForward + rayStartRight + rayStartUp;
+
+        instance.rayCylinder.SetActive(true);
+        instance.rayCylinder.transform.position = rayStartPos + (rayStartForward * rayDist / 2f);
+        instance.rayCylinder.transform.rotation = QuatScript.GetRotation(rayStartForward);
+        rayTimer = rayTimerLength;
+
         RaycastHit hit;
-        bool hitBall = Physics.Raycast(rayStartPos, rayStartForward, out hit, 200, instance.ballLayer);
+        bool hitBall = Physics.Raycast(rayStartPos, rayStartForward, out hit, rayDist, instance.ballLayer);
         if (hitBall){
             Debug.DrawRay(rayStartPos, rayStartForward * 200, Color.yellow);
             Vector3 ballOriginalPos = hit.transform.position;
