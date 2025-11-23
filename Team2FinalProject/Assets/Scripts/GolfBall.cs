@@ -4,12 +4,14 @@ public class GolfBall : MonoBehaviour
 {
     Rigidbody rb;
 
-    bool collisionActive = false;
-    public float collisionChangeTime = 0.1f;
+    public bool collisionActive = false;
+    public float collisionChangeTimeLength = 0.2f;
+    private float collisionChangeTimer = .1f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        collisionChangeTimer = collisionChangeTimeLength;
         rb = GetComponent<Rigidbody>();
         ObjectManager.resetWorld.AddListener(Reset);
         
@@ -20,11 +22,17 @@ public class GolfBall : MonoBehaviour
     {
         if (!collisionActive)
         {
-            collisionChangeTime -= Time.deltaTime;
+            collisionChangeTimer -= Time.deltaTime;
         }
-        if (collisionChangeTime <= 0){
+        if (collisionChangeTimer <= 0){
             collisionActive = true;
         }
+    }
+
+    public void resetTimer()
+    {
+        collisionActive = false;
+        collisionChangeTimer = collisionChangeTimeLength;
     }
 
     private void OnCollisionEnter(Collision collision)

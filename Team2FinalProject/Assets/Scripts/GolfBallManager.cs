@@ -64,7 +64,7 @@ public class GolfBallManager : MonoBehaviour
     {
         Vector3 rayStartForward = new Vector3(instance.SpawnPos.getXForm()[0, 2], instance.SpawnPos.getXForm()[1, 2], instance.SpawnPos.getXForm()[2, 2]).normalized * -1;
         Vector3 rayStartRight = new Vector3(instance.SpawnPos.getXForm()[0, 0], instance.SpawnPos.getXForm()[1, 0], instance.SpawnPos.getXForm()[2, 0]).normalized * -1.25f;
-        Vector3 rayStartUp = new Vector3(instance.SpawnPos.getXForm()[0, 1], instance.SpawnPos.getXForm()[1, 1], instance.SpawnPos.getXForm()[2, 1]).normalized * -4f;
+        Vector3 rayStartUp = new Vector3(instance.SpawnPos.getXForm()[0, 1], instance.SpawnPos.getXForm()[1, 1], instance.SpawnPos.getXForm()[2, 1]).normalized * -4.5f;
         Vector3 rayStartPos = instance.SpawnPos.getXForm().GetPosition() + rayStartForward + rayStartRight + rayStartUp;
 
         instance.rayCylinder.SetActive(true);
@@ -72,28 +72,40 @@ public class GolfBallManager : MonoBehaviour
         instance.rayCylinder.transform.rotation = QuatScript.GetRotation(rayStartForward);
         rayTimer = rayTimerLength;
 
-        RaycastHit hit;
-        bool hitBall = Physics.Raycast(rayStartPos, rayStartForward, out hit, rayDist, instance.ballLayer);
-        if (hitBall){
-            Debug.DrawRay(rayStartPos, rayStartForward * 200, Color.yellow);
-            Vector3 ballOriginalPos = hit.transform.position;
-            GameObject ball1 = Instantiate(instance.BallPrefab, ballOriginalPos, hit.transform.rotation);
-            GameObject ball2 = Instantiate(instance.BallPrefab, ballOriginalPos, hit.transform.rotation);
-            ScoreTracker.increaseBalls();
-            ScoreTracker.increaseBalls();
+        bool hitAny = false;
+        for (int i = -1; i <= 1; i++)
+        {
+            RaycastHit[] hits = Physics.RaycastAll(rayStartPos, rayStartForward + (Vector3.right * i * .1f), rayDist, instance.ballLayer);
+            hitAny = hitAny || hits.Length > 0;
+            foreach(RaycastHit hit in hits)
+            {
+                if (!hit.collider.gameObject.GetComponent<GolfBall>().collisionActive)
+                {
+                    continue;
+                }
+                Debug.DrawRay(rayStartPos, rayStartForward * rayDist, Color.yellow);
+                Vector3 ballOriginalPos = hit.transform.position;
+                hit.collider.gameObject.SetActive(false);
+                GameObject ball1 = Instantiate(instance.BallPrefab, ballOriginalPos, hit.transform.rotation);
+                GameObject ball2 = Instantiate(instance.BallPrefab, ballOriginalPos, hit.transform.rotation);
+                ball1.GetComponent<GolfBall>().resetTimer();
+                ball2.GetComponent<GolfBall>().resetTimer();
+                ScoreTracker.increaseBalls();
+                ScoreTracker.increaseBalls();
 
-            Rigidbody rb1 = ball1.GetComponent<Rigidbody>();
-            Vector3 dir1 =  Quaternion.AngleAxis(duplicationRotation, rayStartUp) * rayStartForward;
-            rb1.AddForce(dir1 * 7, ForceMode.Impulse);
-            Rigidbody rb2 = ball2.GetComponent<Rigidbody>();
-            Vector3 dir2 =  Quaternion.AngleAxis(-duplicationRotation, rayStartUp) *rayStartForward;
-            rb2.AddForce(dir2 * 7, ForceMode.Impulse);
-            hit.transform.gameObject.GetComponent<GolfBall>().Reset();
+                Rigidbody rb1 = ball1.GetComponent<Rigidbody>();
+                Vector3 dir1 = Quaternion.AngleAxis(duplicationRotation, rayStartUp) * rayStartForward;
+                rb1.AddForce(dir1 * 7, ForceMode.Impulse);
+                Rigidbody rb2 = ball2.GetComponent<Rigidbody>();
+                Vector3 dir2 = Quaternion.AngleAxis(-duplicationRotation, rayStartUp) * rayStartForward;
+                rb2.AddForce(dir2 * 7, ForceMode.Impulse);
+                hit.transform.gameObject.GetComponent<GolfBall>().Reset();
+            }
         }
-        else{
+        if (!hitAny)
+        {
             Debug.DrawRay(rayStartPos, rayStartForward * 200, Color.red);
         }
-
     }
 
     public static void Reset()
