@@ -74,18 +74,19 @@
 			}
 			
 			// our own function
-            fixed4 ComputeDiffuse(v2f i) {
+            fixed4 ComputeDiffuse(v2f i) 
+			{
 				if (UseDiffuseLight)
 				{
 					float3 l = normalize(LightPosition - i.vertexWC);
 					return clamp(dot(i.normal, l), 0, 1);
 				}
-  
                 return 0;
             }
 
 			// our own function
-            fixed4 ComputePointLight(v2f i) {           
+            fixed4 ComputePointLight(v2f i) 
+			{           
 				if (UsePointLight)
 				{
 					float3 l5 = normalize(PointLightPosition - i.vertexWC);
@@ -112,10 +113,9 @@
 			fixed4 MyFrag (v2f i) : SV_Target
 			{
 				// sample the texture
-				fixed4 col = tex2D(_MainTex, i.uv);
-                fixed4 colWithLight = (col * ComputeDiffuse(i)) + (col * ComputePointLight(i) * LightColor); // add in lighting
-				col += MyColor + colWithLight; // add in given color
-				return col;
+				fixed4 col = tex2D(_MainTex, i.uv) * MyColor;
+                fixed4 light = ComputeDiffuse(i) + (ComputePointLight(i) * LightColor); 
+				return col + light;
 			}
 			ENDCG
 		}
