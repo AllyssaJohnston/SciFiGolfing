@@ -68,8 +68,10 @@ public class GolfBallManager : MonoBehaviour
         Vector3 rayStartPos = instance.SpawnPos.getXForm().GetPosition() + rayStartForward + rayStartRight + rayStartUp;
 
         instance.rayCylinder.SetActive(true);
-        instance.rayCylinder.transform.position = rayStartPos + (rayStartForward * rayDist / 2f);
-        instance.rayCylinder.transform.rotation = QuatScript.GetRotation(rayStartForward);
+        //instance.rayCylinder.transform.position = rayStartPos + (rayStartForward * rayDist / 2f);
+        //instance.rayCylinder.transform.rotation = QuatScript.GetRotation(rayStartForward);
+        instance.rayCylinder.transform.position = rayStartPos;
+        instance.rayCylinder.transform.forward = rayStartForward;
         rayTimer = rayTimerLength;
 
         bool hitAny = false;
