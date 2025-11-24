@@ -49,4 +49,5 @@ public class SliderManager : MonoBehaviour
             instance.swingSliders[i].resetData();
         }
     }
+
 }
