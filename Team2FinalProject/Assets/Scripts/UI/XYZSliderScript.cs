@@ -40,6 +40,7 @@ public class XYZSliderScript : SliderScript
     // set the slider's values to the newly selected object's values
     public override void resetData()
     {
+        
         float value;
         if (cameraSlider)
         {
@@ -55,6 +56,7 @@ public class XYZSliderScript : SliderScript
         }
         else
         {
+            gameObject.transform.parent.gameObject.SetActive(showRotSlider());
             value = ObjectManager.GetCurObjectValue(axis);
         }
         slider.value = value;
@@ -80,5 +82,21 @@ public class XYZSliderScript : SliderScript
                 ObjectManager.SetCurObjectValue(axis, value);
             }
         }
+    }
+
+
+    private bool showRotSlider()
+    {
+        Vector3 editable = ObjectManager.GetCurObject().editableAxes;
+        switch (axis)
+        {
+            case EAxis.X:
+                return editable.x == 1;
+            case EAxis.Y:
+                return editable.y == 1;
+            case EAxis.Z:
+                return editable.z == 1;
+        }
+        return false;
     }
 }

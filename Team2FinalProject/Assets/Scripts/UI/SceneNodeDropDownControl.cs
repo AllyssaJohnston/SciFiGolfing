@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using TMPro;
 using UnityEngine;
 
@@ -72,5 +73,9 @@ public class SceneNodeDropDownControl : MonoBehaviour
         SelectionChange(i); 
     }
 
-    public static void ResetData() { instance.menu.value = 0; }
+    public static void ResetData() 
+    { 
+        instance.menu.value = 0;
+        ObjectManager.SetCurObject(listSceneNodes[0]);
+    }
 }

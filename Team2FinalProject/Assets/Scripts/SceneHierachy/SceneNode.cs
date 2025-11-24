@@ -16,6 +16,7 @@ public class SceneNode : MonoBehaviour
     public List<SceneNode> ChildrenList;
 
     public bool editable = true;
+    public Vector3 editableAxes = Vector3.one;
 
 	protected void Start () 
     { 

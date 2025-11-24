@@ -45,7 +45,7 @@ public class GolfBall : MonoBehaviour
             ScoreTracker.IncreaseScore();
             RemoveSelf();
         }
-        if (collisionActive){
+        if (collisionActive) {
             AnimationManager.StopAnimation();
             Debug.Log(collision.gameObject.transform.parent.gameObject.name);
             Vector3 dir = (transform.position - collision.gameObject.transform.position).normalized;
