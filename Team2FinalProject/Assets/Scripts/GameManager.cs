@@ -17,6 +17,7 @@ public enum ELightMode
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
+    private static EGameMode lastGameMode = EGameMode.SETUP;
     private static EGameMode gameMode = EGameMode.SETUP;
     private static ELightMode lightMode = ELightMode.DIFFUSE;
     public static UnityEvent gameModeChanged;
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public static EGameMode GetLastGameMode() { return lastGameMode; }
 
     public static EGameMode GetGameMode() { return gameMode; }
 
@@ -45,6 +47,7 @@ public class GameManager : MonoBehaviour
     public static void SetGameMode(EGameMode givenGameMode) 
     {
         Debug.Log("switching to " + givenGameMode);
+        lastGameMode = gameMode;
         gameMode = givenGameMode;
         gameModeChanged.Invoke();
     }
