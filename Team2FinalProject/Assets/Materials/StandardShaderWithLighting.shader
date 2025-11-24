@@ -82,7 +82,8 @@ Shader "Custom/StandardShaderWithLighting"
 			
 
 			// point light
-			float4 PointLightPosition;
+
+			static float4 PointLightPosition[30]; // max of 30 point lights
             fixed4 LightColor;
             float  LightNear;
             float  LightFar;
@@ -121,7 +122,7 @@ Shader "Custom/StandardShaderWithLighting"
             fixed4 ComputePointLight(v2f i) {           
 				if (UsePointLight)
 				{
-					float3 l5 = normalize(PointLightPosition - i.vertexWC);
+					float3 l5 = normalize(PointLightPosition[0] - i.vertexWC);
 					float d = length(l5);
 					l5 = l5 / d;
 					float strength = 1;

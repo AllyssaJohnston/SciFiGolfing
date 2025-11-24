@@ -1,16 +1,15 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 
 public class LightManager : MonoBehaviour
 {
     private static LightManager instance;
 
-    public Transform LightPosition1;
-    
-    public Vector3 diffuselightPos;
-    public Vector3 pointLightPos;
+    public Transform diffuseLightTrans;
 
-    public Transform PointLightPosition;
+    public Transform PointLightTemplate;
+    private Transform[] PointLightPosition = new Transform[30]; // 0 is the main point light 
     [SerializeField] float PointNear = 5.0f;
     [SerializeField] float PointFar = 10.0f;
     [SerializeField] Color PointLightColor = Color.white;
@@ -31,10 +30,8 @@ public class LightManager : MonoBehaviour
     {
         GameManager.lightModeChanged.AddListener(changeLighting);
         setUpDiffuseLight();
-        setUpPointLight();
+        setUpPointLightTemplate();
         changeLighting(GameManager.GetLightMode());
-
-        
     }
 
     public void Reset()
@@ -48,18 +45,18 @@ public class LightManager : MonoBehaviour
         Shader.SetGlobalFloat("noDiffuse", .2f);
     }
 
-    void setUpPointLight()
+    void setUpPointLightTemplate()
     {
-        PointLightPosition.gameObject.GetComponent<Renderer>().material.color = PointLightColor;
+        PointLightTemplate.gameObject.GetComponent<Renderer>().material.color = PointLightColor;
 
         Color c = PointLightColor;
         c.a = 0.2f;
-        n.transform.localPosition = PointLightPosition.localPosition;
+        n.transform.localPosition = PointLightTemplate.localPosition;
         n.transform.localScale = new Vector3(2 * PointNear, 2 * PointNear, 2 * PointNear);
         n.GetComponent<Renderer>().material.color = c;
 
         c.a = 0.1f;
-        f.transform.localPosition = PointLightPosition.localPosition;
+        f.transform.localPosition = PointLightTemplate.localPosition;
         f.transform.localScale = new Vector3(2 * PointFar, 2 * PointFar, 2 * PointFar);
         f.GetComponent<Renderer>().material.color = c;
     }
@@ -71,18 +68,13 @@ public class LightManager : MonoBehaviour
         int lightInt = (int)lightMode;
 
         bool useDiffuse = lightInt == (int)ELightMode.DIFFUSE_AND_POINT || lightInt == (int)ELightMode.DIFFUSE;
-        if (useDiffuse)
-        {
-            LightPosition1.position = diffuselightPos;
-        }
        
 
         bool usePoint = lightInt == (int)ELightMode.DIFFUSE_AND_POINT || lightInt == (int)ELightMode.POINT;
         if (usePoint)
         {
-            PointLightPosition.position = pointLightPos;
-            n.transform.localPosition = PointLightPosition.localPosition;
-            f.transform.localPosition = PointLightPosition.localPosition;
+            n.transform.localPosition = PointLightTemplate.localPosition;
+            f.transform.localPosition = PointLightTemplate.localPosition;
             //SliderManager.ResetPointLightSliders();
         }
         //SliderManager.ResetDiffuseLightSliders();
@@ -95,33 +87,33 @@ public class LightManager : MonoBehaviour
     {
         switch (axis)
         {
-            case EAxis.X: instance.LightPosition1.position = new Vector3(value, instance.LightPosition1.position.y, instance.LightPosition1.position.z); break;
-            case EAxis.Y: instance.LightPosition1.position = new Vector3(instance.LightPosition1.position.x, value, instance.LightPosition1.position.z); break;
-            case EAxis.Z: instance.LightPosition1.position = new Vector3(instance.LightPosition1.position.x, instance.LightPosition1.position.y, value); break;
+            case EAxis.X: instance.diffuseLightTrans.position = new Vector3(value, instance.diffuseLightTrans.position.y,   instance.diffuseLightTrans.position.z); break;
+            case EAxis.Y: instance.diffuseLightTrans.position = new Vector3(instance.diffuseLightTrans.position.x,          value, instance.diffuseLightTrans.position.z); break;
+            case EAxis.Z: instance.diffuseLightTrans.position = new Vector3(instance.diffuseLightTrans.position.x,          instance.diffuseLightTrans.position.y, value); break;
             default: Debug.Log("unrecognized axis " + axis); break;
         }
-        instance.n.transform.localPosition = instance.LightPosition1.localPosition;
-        instance.f.transform.localPosition = instance.LightPosition1.localPosition;
+        instance.n.transform.localPosition = instance.diffuseLightTrans.localPosition;
+        instance.f.transform.localPosition = instance.diffuseLightTrans.localPosition;
         instance.UpdateSingleDiffuseShader();
     }
 
-    public static void UpdatePointLightPosition(EAxis axis, float value)
-    {
-        switch (axis)
-        {
-            case EAxis.X: instance.PointLightPosition.position = new Vector3(value,                                  instance.PointLightPosition.position.y, instance.PointLightPosition.position.z); break;
-            case EAxis.Y: instance.PointLightPosition.position = new Vector3(instance.PointLightPosition.position.x, value,                                  instance.PointLightPosition.position.z); break;
-            case EAxis.Z: instance.PointLightPosition.position = new Vector3(instance.PointLightPosition.position.x, instance.PointLightPosition.position.y, value); break;
-            default: Debug.Log("unrecognized axis " + axis); break;
-        }
-        instance.n.transform.localPosition = instance.PointLightPosition.localPosition;
-        instance.f.transform.localPosition = instance.PointLightPosition.localPosition;
-        instance.UpdatePointLightShader();
-    }
+    //public static void UpdatePointLightPosition(EAxis axis, float value)
+    //{
+    //    switch (axis)
+    //    {
+    //        case EAxis.X: instance.PointLightPosition[0].position = new Vector3(value,                                      instance.PointLightPosition[0].position.y,  instance.PointLightPosition[0].position.z); break;
+    //        case EAxis.Y: instance.PointLightPosition[0].position = new Vector3(instance.PointLightPosition[0].position.x,  value,                                      instance.PointLightPosition[0].position.z); break;
+    //        case EAxis.Z: instance.PointLightPosition[0].position = new Vector3(instance.PointLightPosition[0].position.x,  instance.PointLightPosition[0].position.y,  value); break;
+    //        default: Debug.Log("unrecognized axis " + axis); break;
+    //    }
+    //    instance.n.transform.localPosition = instance.PointLightPosition[0].localPosition;
+    //    instance.f.transform.localPosition = instance.PointLightPosition[0].localPosition;
+    //    instance.UpdatePointLightShader();
+    //}
 
-    public static Vector3 GetSingleDiffuseLightPosition() { return instance.LightPosition1.position; }
+    public static Vector3 GetSingleDiffuseLightPosition() { return instance.diffuseLightTrans.position; }
 
-    public static Vector3 GetPointLightPosition() { return instance.PointLightPosition.position; }
+    //public static Vector3 GetPointLightPosition() { return instance.PointLightPosition[0].position; }
 
     void UpdateShader(bool useSingleDiffuse, bool usePoint)
     {
@@ -131,14 +123,25 @@ public class LightManager : MonoBehaviour
         Shader.SetGlobalInteger("UseDiffuseLight", useSingleDiffuse ? 1 : 0);
         Shader.SetGlobalInteger("UsePointLight", usePoint ? 1 : 0);
     }
+
     void UpdateSingleDiffuseShader()
     {
-        Shader.SetGlobalVector("LightPosition", LightPosition1.localPosition);
+        Shader.SetGlobalVector("LightPosition", diffuseLightTrans.localPosition);
     }
 
     void UpdatePointLightShader()
     {
-        Shader.SetGlobalVector("PointLightPosition", PointLightPosition.localPosition);
+        List<Vector4> lightPosition = new List<Vector4>();
+        for (int i = 0; i < PointLightPosition.Length; i++)
+        {
+            if (PointLightPosition[i] == null) { continue; }
+            lightPosition.Add(PointLightPosition[i].localPosition);
+        }
+        if (lightPosition.Count == 0)
+        {
+            lightPosition.Add(Vector4.zero);
+        }
+        Shader.SetGlobalVectorArray("PointLightPosition", lightPosition);
         Shader.SetGlobalColor("LightColor", PointLightColor);
         Shader.SetGlobalFloat("LightNear", PointNear);
         Shader.SetGlobalFloat("LightFar", PointFar);
