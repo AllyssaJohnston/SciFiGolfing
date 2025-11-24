@@ -74,6 +74,8 @@ public class GolfBall : MonoBehaviour
 
     public void Reset() { RemoveSelf(); }
 
+    public bool glowing() {  return aliveTimer < glowingLength; }
+
     private void RemoveSelf()
     {
         ScoreTracker.decreaseBalls();

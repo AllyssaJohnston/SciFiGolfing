@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
 Shader "Custom/StandardShaderWithLighting"
 {
     Properties
@@ -6,6 +8,7 @@ Shader "Custom/StandardShaderWithLighting"
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
         _Glossiness ("Smoothness", Range(0,1)) = 0.5
         _Metallic ("Metallic", Range(0,1)) = 0.0
+		//_PointLightPosition ("PointLightPosition", float4[30]) = 
     }
     SubShader
     {
@@ -77,7 +80,7 @@ Shader "Custom/StandardShaderWithLighting"
             fixed4 _Color;
 
 			// diffuse lights
-            float4 LightPosition;
+            float4 DiffusePosition;
 			int UseDiffuseLight;
 			
 
@@ -99,10 +102,10 @@ Shader "Custom/StandardShaderWithLighting"
 
 				o.uv = v.uv; // no specific placement support
 
-                o.vertexWC = mul(UNITY_MATRIX_M, v.vertex); // this is in WC space!
+                o.vertexWC = mul(unity_ObjectToWorld, v.vertex).xyz; // this is in WC space!
                 // this is not pretty but we don't have access to inverse-transpose ...
                 float3 p = v.vertex + v.normal;
-                p = mul(UNITY_MATRIX_M, float4(p, 1));  // now in WC space
+                p = mul(unity_ObjectToWorld, float4(p, 1)).xyz;  // now in WC space
                 o.normal = normalize(p - o.vertexWC); // NOTE: this is in the world space!!
 				return o;
 			}
@@ -111,7 +114,7 @@ Shader "Custom/StandardShaderWithLighting"
             fixed4 ComputeDiffuse(v2f i) {
 				if (UseDiffuseLight)
 				{
-					float3 l = normalize(LightPosition - i.vertexWC);
+					float3 l = normalize(DiffusePosition - i.vertexWC);
 					return clamp(dot(i.normal, l), minDiffuse, 1);
 				}
   
@@ -119,10 +122,11 @@ Shader "Custom/StandardShaderWithLighting"
             }
 
 			// our own function
-            fixed4 ComputePointLight(v2f i) {           
+            fixed4 ComputePointLight(v2f i, int lightI) 
+			{      
 				if (UsePointLight)
 				{
-					float3 l5 = normalize(PointLightPosition[0] - i.vertexWC);
+					float3 l5 = normalize(PointLightPosition[lightI] - i.vertexWC);
 					float d = length(l5);
 					l5 = l5 / d;
 					float strength = 1;
@@ -147,8 +151,15 @@ Shader "Custom/StandardShaderWithLighting"
 			{
 				// sample the texture
 				fixed4 col = tex2D(_MainTex, i.uv) * _Color;
-                fixed4 colWithLight = (col * ComputeDiffuse(i)) + (col * ComputePointLight(i) * LightColor); // add in lighting
-				return colWithLight;
+				fixed4 difLight = ComputeDiffuse(i);
+				float4 pointLight = float4(0,0,0,0);
+				for (int count = 0; count < 30; count++)
+				{
+					pointLight += (ComputePointLight(i, count)); 
+				}
+				pointLight = clamp(pointLight, 0, 1) * LightColor;
+				return col * (difLight + pointLight);
+                
 			}
 
 			ENDCG

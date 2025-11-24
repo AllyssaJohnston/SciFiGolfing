@@ -44,11 +44,11 @@
 
 			
 			// diffuse lights
-            float4 LightPosition;
+            float4 DiffusePosition;
 			int UseDiffuseLight;
 
 			// point light
-			float4 PointLightPosition;
+			static float4 PointLightPosition[30]; // max of 30 point lights
             fixed4 LightColor;
             float  LightNear;
             float  LightFar;
@@ -78,18 +78,18 @@
 			{
 				if (UseDiffuseLight)
 				{
-					float3 l = normalize(LightPosition - i.vertexWC);
+					float3 l = normalize(DiffusePosition - i.vertexWC);
 					return clamp(dot(i.normal, l), 0, 1);
 				}
                 return 0;
             }
 
 			// our own function
-            fixed4 ComputePointLight(v2f i) 
+            fixed4 ComputePointLight(v2f i, int lightI) 
 			{           
 				if (UsePointLight)
 				{
-					float3 l5 = normalize(PointLightPosition - i.vertexWC);
+					float3 l5 = normalize(PointLightPosition[lightI] - i.vertexWC);
 					float d = length(l5);
 					l5 = l5 / d;
 					float strength = 1;
@@ -114,8 +114,13 @@
 			{
 				// sample the texture
 				fixed4 col = tex2D(_MainTex, i.uv) * MyColor;
-                fixed4 light = ComputeDiffuse(i) + (ComputePointLight(i) * LightColor); 
-				return col + light;
+                fixed4 difLight = ComputeDiffuse(i);
+				fixed4 pointLight = 0.0;
+				for (int count = 0; count < 30; count++)
+				{
+					pointLight += (ComputePointLight(i, count) * LightColor); 
+				}
+				return col + (difLight + pointLight);
 			}
 			ENDCG
 		}
