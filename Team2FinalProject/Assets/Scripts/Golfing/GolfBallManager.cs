@@ -35,7 +35,6 @@ public class GolfBallManager : MonoBehaviour
         instance.rayCylinder.transform.localScale = new Vector3(.5f, rayDist / 2, .5f);
         GameManager.gameModeChanged.AddListener(AddBall);
         ObjectManager.resetWorld.AddListener(Reset);
-
     }
 
     public void Update()
@@ -54,6 +53,7 @@ public class GolfBallManager : MonoBehaviour
         Vector3 spawnPosRight = new Vector3(instance.SpawnPos.getXForm()[0, 0], instance.SpawnPos.getXForm()[1, 0], instance.SpawnPos.getXForm()[2, 0]).normalized * -1.25f;
         Vector3 spawnPosition = instance.SpawnPos.getXForm().GetPosition() + spawnPosForward + spawnPosRight;
         GameObject ball = Instantiate(instance.BallPrefab, spawnPosition, instance.SpawnPos.transform.rotation, instance.BallParentObj.transform);
+        ball.GetComponent<GolfBall>().SetUp();
         numCreated++;
         ball.name = "Ball " + numCreated;
         golfBalls.Add(ball);
@@ -68,8 +68,6 @@ public class GolfBallManager : MonoBehaviour
         Vector3 rayStartPos = instance.SpawnPos.getXForm().GetPosition() + rayStartForward + rayStartRight + rayStartUp;
 
         instance.rayCylinder.SetActive(true);
-        //instance.rayCylinder.transform.position = rayStartPos + (rayStartForward * rayDist / 2f);
-        //instance.rayCylinder.transform.rotation = QuatScript.GetRotation(rayStartForward);
         instance.rayCylinder.transform.position = rayStartPos;
         instance.rayCylinder.transform.forward = rayStartForward;
         rayTimer = rayTimerLength;
@@ -90,8 +88,8 @@ public class GolfBallManager : MonoBehaviour
                 hit.collider.gameObject.SetActive(false);
                 GameObject ball1 = Instantiate(instance.BallPrefab, ballOriginalPos, hit.transform.rotation, instance.BallParentObj.transform);
                 GameObject ball2 = Instantiate(instance.BallPrefab, ballOriginalPos, hit.transform.rotation, instance.BallParentObj.transform);
-                ball1.GetComponent<GolfBall>().resetTimer();
-                ball2.GetComponent<GolfBall>().resetTimer();
+                ball1.GetComponent<GolfBall>().SetUp();
+                ball2.GetComponent<GolfBall>().SetUp();
                 ScoreTracker.increaseBalls();
                 ScoreTracker.increaseBalls();
 

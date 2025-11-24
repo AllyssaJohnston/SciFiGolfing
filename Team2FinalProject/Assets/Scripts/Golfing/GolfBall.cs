@@ -7,6 +7,15 @@ public class GolfBall : MonoBehaviour
     public bool collisionActive = false;
     public float collisionChangeTimeLength = 0.2f;
     private float collisionChangeTimer = .1f;
+    private float aliveTimer = 0f;
+    private float glowingLength = 3f;
+    public Material glowingTexture;
+    public Material plainTexture;
+
+    public void SetUp()
+    {
+        gameObject.GetComponent<Renderer>().material = glowingTexture;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -14,12 +23,13 @@ public class GolfBall : MonoBehaviour
         collisionChangeTimer = collisionChangeTimeLength;
         rb = GetComponent<Rigidbody>();
         ObjectManager.resetWorld.AddListener(Reset);
-        
+        resetCollisionTimer();
     }
 
     // Update is called once per frame
     void Update()
     {
+        aliveTimer += Time.deltaTime;
         if (!collisionActive)
         {
             collisionChangeTimer -= Time.deltaTime;
@@ -27,9 +37,18 @@ public class GolfBall : MonoBehaviour
         if (collisionChangeTimer <= 0){
             collisionActive = true;
         }
+        if (aliveTimer > glowingLength)
+        {
+            switchToPlain();
+        }
     }
 
-    public void resetTimer()
+    private void switchToPlain()
+    {
+        gameObject.GetComponent<Renderer>().material = plainTexture;
+    }
+
+    public void resetCollisionTimer()
     {
         collisionActive = false;
         collisionChangeTimer = collisionChangeTimeLength;
@@ -53,15 +72,11 @@ public class GolfBall : MonoBehaviour
         }
     }
 
-    public void Reset()
-    {
-        RemoveSelf();
-    }
+    public void Reset() { RemoveSelf(); }
 
     private void RemoveSelf()
     {
         ScoreTracker.decreaseBalls();
         Destroy(gameObject);
-    
     }
 }
