@@ -8,6 +8,7 @@ public class GolfBallManager : MonoBehaviour
     public GameObject ballTemplate;
     private static int numCreated = 0;
     private static float duplicationRotation = 15f;
+    private static float duplicationForce = 7f;
 
     public GameObject BallPrefab;
     public GameObject BallParentObj;
@@ -97,10 +98,10 @@ public class GolfBallManager : MonoBehaviour
 
                 Rigidbody rb1 = ball1.GetComponent<Rigidbody>();
                 Vector3 dir1 = Quaternion.AngleAxis(duplicationRotation, rayStartUp) * rayStartForward;
-                rb1.AddForce(dir1 * 7, ForceMode.Impulse);
+                rb1.AddForce(dir1 * duplicationForce, ForceMode.Impulse);
                 Rigidbody rb2 = ball2.GetComponent<Rigidbody>();
                 Vector3 dir2 = Quaternion.AngleAxis(-duplicationRotation, rayStartUp) * rayStartForward;
-                rb2.AddForce(dir2 * 7, ForceMode.Impulse);
+                rb2.AddForce(dir2 * duplicationForce, ForceMode.Impulse);
                 hit.transform.gameObject.GetComponent<GolfBall>().Reset();
             }
         }
@@ -124,4 +125,8 @@ public class GolfBallManager : MonoBehaviour
     public static float getDuplicationRotation() { return duplicationRotation; }
 
     public static void setDuplicationRotation(float rot) { duplicationRotation = rot; }
+
+    public static float getDuplicationForce() { return duplicationForce; }
+
+    public static void setDuplicationForce(float f) { duplicationForce = f; }
 }

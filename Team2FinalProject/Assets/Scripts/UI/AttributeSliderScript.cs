@@ -5,7 +5,8 @@ public enum ESliderAttribute
     RANGE = 0,
     FORCE,
     SPEED,
-    DUP_ROTATION
+    DUP_ROTATION,
+    DUP_FORCE
 }
 
 public class AttributeSliderScript : SliderScript
@@ -26,6 +27,7 @@ public class AttributeSliderScript : SliderScript
             case ESliderAttribute.FORCE: prefix = "Force:"; break;
             case ESliderAttribute.SPEED: prefix = "Speed:"; break;
             case ESliderAttribute.DUP_ROTATION: prefix = "Angle:"; break;
+            case ESliderAttribute.DUP_FORCE: prefix = "dupForce"; break;
             default:
                 Debug.Log("unrecognized value " + attribute);
                 break;
@@ -52,6 +54,9 @@ public class AttributeSliderScript : SliderScript
             case ESliderAttribute.DUP_ROTATION:
                 value = GolfBallManager.getDuplicationRotation();
                 break;
+            case ESliderAttribute.DUP_FORCE:
+                value = GolfBallManager.getDuplicationForce();
+                break;
             default:
                 Debug.Log("unrecognized value " + attribute);
                 break;
@@ -77,6 +82,9 @@ public class AttributeSliderScript : SliderScript
                 break;
             case ESliderAttribute.DUP_ROTATION:
                 GolfBallManager.setDuplicationRotation(value);
+                break;
+            case ESliderAttribute.DUP_FORCE:
+                GolfBallManager.setDuplicationForce(value);
                 break;
             default:
                 Debug.Log("unrecognized value " + attribute);
