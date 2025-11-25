@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -36,7 +37,6 @@ public class GolfBallManager : MonoBehaviour
         instance.rayCylinder.transform.localScale = new Vector3(.5f, rayDist / 2, .5f);
         GameManager.gameModeChanged.AddListener(AddBall);
         ObjectManager.resetWorld.AddListener(Reset);
-
     }
 
     public void Update()
@@ -49,16 +49,25 @@ public class GolfBallManager : MonoBehaviour
     }
 
 
-    public static void AddBall()
+    private static void AddBall()
     {
         Vector3 spawnPosForward = new Vector3(instance.SpawnPos.getXForm()[0, 2], instance.SpawnPos.getXForm()[1, 2], instance.SpawnPos.getXForm()[2, 2]).normalized * -1;
         Vector3 spawnPosRight = new Vector3(instance.SpawnPos.getXForm()[0, 0], instance.SpawnPos.getXForm()[1, 0], instance.SpawnPos.getXForm()[2, 0]).normalized * -1.25f;
         Vector3 spawnPosition = instance.SpawnPos.getXForm().GetPosition() + spawnPosForward + spawnPosRight;
-        GameObject ball = Instantiate(instance.BallPrefab, spawnPosition, instance.SpawnPos.transform.rotation, instance.BallParentObj.transform);
+        GameObject ball = AddBall(spawnPosition, instance.SpawnPos.transform.rotation);
+        LightManager.changeLighting();
+
+    }
+
+    private static GameObject AddBall(Vector3 spawnPos, Quaternion rot)
+    {
+        GameObject ball = Instantiate(instance.BallPrefab, spawnPos, rot, instance.BallParentObj.transform);
+        ball.GetComponent<GolfBall>().SetUp();
         numCreated++;
         ball.name = "Ball " + numCreated;
         golfBalls.Add(ball);
         ScoreTracker.increaseBalls();
+        return ball;
     }
 
     public static void Duplicate()
@@ -69,8 +78,6 @@ public class GolfBallManager : MonoBehaviour
         Vector3 rayStartPos = instance.SpawnPos.getXForm().GetPosition() + rayStartForward + rayStartRight + rayStartUp;
 
         instance.rayCylinder.SetActive(true);
-        //instance.rayCylinder.transform.position = rayStartPos + (rayStartForward * rayDist / 2f);
-        //instance.rayCylinder.transform.rotation = QuatScript.GetRotation(rayStartForward);
         instance.rayCylinder.transform.position = rayStartPos;
         instance.rayCylinder.transform.forward = rayStartForward;
         rayTimer = rayTimerLength;
@@ -89,13 +96,9 @@ public class GolfBallManager : MonoBehaviour
                 Debug.DrawRay(rayStartPos, rayStartForward * rayDist, Color.yellow);
                 Vector3 ballOriginalPos = hit.transform.position;
                 hit.collider.gameObject.SetActive(false);
-                GameObject ball1 = Instantiate(instance.BallPrefab, ballOriginalPos, hit.transform.rotation, instance.BallParentObj.transform);
-                GameObject ball2 = Instantiate(instance.BallPrefab, ballOriginalPos, hit.transform.rotation, instance.BallParentObj.transform);
-                ball1.GetComponent<GolfBall>().resetTimer();
-                ball2.GetComponent<GolfBall>().resetTimer();
-                ScoreTracker.increaseBalls();
-                ScoreTracker.increaseBalls();
-
+                GameObject ball1 = AddBall(ballOriginalPos, hit.transform.rotation);
+                GameObject ball2 = AddBall(ballOriginalPos, hit.transform.rotation);
+                
                 Rigidbody rb1 = ball1.GetComponent<Rigidbody>();
                 Vector3 dir1 = Quaternion.AngleAxis(duplicationRotation, rayStartUp) * rayStartForward;
                 rb1.AddForce(dir1 * duplicationForce, ForceMode.Impulse);
@@ -105,7 +108,11 @@ public class GolfBallManager : MonoBehaviour
                 hit.transform.gameObject.GetComponent<GolfBall>().Reset();
             }
         }
-        if (!hitAny)
+        if (hitAny)
+        {
+            LightManager.changeLighting();
+        }
+        else
         {
             Debug.DrawRay(rayStartPos, rayStartForward * 200, Color.red);
         }
@@ -129,4 +136,39 @@ public class GolfBallManager : MonoBehaviour
     public static float getDuplicationForce() { return duplicationForce; }
 
     public static void setDuplicationForce(float f) { duplicationForce = f; }
+    
+    public static void getGlowingGolfBallsPos(ref List<Vector4> pointLightPos)
+    {
+        int light = 0;
+        for (int i =0; i < golfBalls.Count; i++)
+        {
+            if (golfBalls[i] == null) { continue; }
+            GolfBall g = golfBalls[i].GetComponent<GolfBall>();
+            if (g.isActiveAndEnabled && g.glowing())
+            {
+                pointLightPos.Add(golfBalls[i].transform.position + Vector3.up * 2);
+                light++;
+                if (light >= 30)
+                {
+                    return;
+                }
+            }
+        }
+    }
+
+    public static void getRayGolfBallsPos(ref List<Vector4> pointLightPos)
+    {
+        if (rayTimer > 0)
+        {
+            Vector3 rayForward = new Vector3(instance.SpawnPos.getXForm()[0, 2], instance.SpawnPos.getXForm()[1, 2], instance.SpawnPos.getXForm()[2, 2]).normalized * -1;
+
+            float length = instance.rayCylinder.transform.localScale.y * 2;
+            int spacing = 8;
+            for (int i = 0; i < Mathf.Ceil(length / spacing) - 1; i++)
+            {
+                pointLightPos.Add(rayForward * i * spacing);
+            }
+            pointLightPos.Add(rayForward * length);
+        }
+    }
 }
