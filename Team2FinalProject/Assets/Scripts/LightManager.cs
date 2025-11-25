@@ -87,8 +87,9 @@ public class LightManager : MonoBehaviour
     {
         instance.PointLightPos.Clear();
         GolfBallManager.getGlowingGolfBallsPos(ref instance.PointLightPos);
-        
-       
+        GolfBallManager.getRayGolfBallsPos(ref instance.PointLightPos);
+
+
         for (int i = instance.PointLightPos.Count; i < 30; i++) // give the gpu 30 items
         {
             instance.PointLightPos.Add(new Vector4(1000, 0, 0, 0));
@@ -113,18 +114,17 @@ public class LightManager : MonoBehaviour
         GetPointLightPositions();
         Shader.SetGlobalVectorArray("PointLightPosition", instance.PointLightPos);
 
-        instance.timer -= Time.deltaTime;
-        if (instance.timer < 0f)
-        {
-            Vector4[] test = Shader.GetGlobalVectorArray("PointLightPosition");
-            string testStr = "";
-            for (int i = 0; i < test.Length; i++)
-            {
-                testStr += test[i].x + ", ";
-            }
-            Debug.Log(testStr);
-            instance.timer = .5f;
-        }
-
+        //instance.timer -= Time.deltaTime;
+        //if (instance.timer < 0f)
+        //{
+        //    Vector4[] test = Shader.GetGlobalVectorArray("PointLightPosition");
+        //    string testStr = "";
+        //    for (int i = 0; i < test.Length; i++)
+        //    {
+        //        testStr += test[i].x + ", ";
+        //    }
+        //    Debug.Log(testStr);
+        //    instance.timer = .5f;
+        //}
     }
 }

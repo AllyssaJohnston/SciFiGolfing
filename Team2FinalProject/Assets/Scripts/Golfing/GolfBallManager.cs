@@ -132,7 +132,7 @@ public class GolfBallManager : MonoBehaviour
 
     public static void setDuplicationRotation(float rot) { duplicationRotation = rot; }
 
-    public static void getGlowingGolfBallsPos(ref List<Vector4> pointLightTrans)
+    public static void getGlowingGolfBallsPos(ref List<Vector4> pointLightPos)
     {
         int light = 0;
         for (int i =0; i < golfBalls.Count; i++)
@@ -141,13 +141,29 @@ public class GolfBallManager : MonoBehaviour
             GolfBall g = golfBalls[i].GetComponent<GolfBall>();
             if (g.isActiveAndEnabled && g.glowing())
             {
-                pointLightTrans.Add(golfBalls[i].transform.position + Vector3.up * 2);
+                pointLightPos.Add(golfBalls[i].transform.position + Vector3.up * 2);
                 light++;
                 if (light >= 30)
                 {
                     return;
                 }
             }
+        }
+    }
+
+    public static void getRayGolfBallsPos(ref List<Vector4> pointLightPos)
+    {
+        if (rayTimer > 0)
+        {
+            Vector3 rayForward = new Vector3(instance.SpawnPos.getXForm()[0, 2], instance.SpawnPos.getXForm()[1, 2], instance.SpawnPos.getXForm()[2, 2]).normalized * -1;
+
+            float length = instance.rayCylinder.transform.localScale.y * 2;
+            int spacing = 8;
+            for (int i = 0; i < Mathf.Ceil(length / spacing) - 1; i++)
+            {
+                pointLightPos.Add(rayForward * i * spacing);
+            }
+            pointLightPos.Add(rayForward * length);
         }
     }
 }
