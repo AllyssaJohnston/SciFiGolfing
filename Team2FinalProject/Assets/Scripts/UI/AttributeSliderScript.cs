@@ -27,7 +27,7 @@ public class AttributeSliderScript : SliderScript
             case ESliderAttribute.FORCE: prefix = "Force:"; break;
             case ESliderAttribute.SPEED: prefix = "Speed:"; break;
             case ESliderAttribute.DUP_ROTATION: prefix = "Angle:"; break;
-            case ESliderAttribute.DUP_FORCE: prefix = "dupForce"; break;
+            case ESliderAttribute.DUP_FORCE: prefix = "Force:"; break;
             default:
                 Debug.Log("unrecognized value " + attribute);
                 break;
