@@ -141,7 +141,7 @@ public class GolfBallManager : MonoBehaviour
             GolfBall g = golfBalls[i].GetComponent<GolfBall>();
             if (g.isActiveAndEnabled && g.glowing())
             {
-                pointLightTrans.Add(golfBalls[i].transform.position);
+                pointLightTrans.Add(golfBalls[i].transform.position + Vector3.up * 2);
                 light++;
                 if (light >= 30)
                 {

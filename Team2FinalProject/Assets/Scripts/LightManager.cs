@@ -8,7 +8,7 @@ public class LightManager : MonoBehaviour
 
     public Transform diffuseLightTrans;
 
-    private List<Vector4> PointLightTrans = new List<Vector4>();  
+    private List<Vector4> PointLightPos = new List<Vector4>();  
     [SerializeField] float PointNear = 5.0f;
     [SerializeField] float PointFar = 10.0f;
     [SerializeField] Color PointLightColor = Color.white;
@@ -18,6 +18,8 @@ public class LightManager : MonoBehaviour
 
     private bool usePoint = false;
     private bool useDiffuse = true;
+
+    private float timer = 0f;
 
 
     public void Awake()
@@ -38,10 +40,7 @@ public class LightManager : MonoBehaviour
         changeLighting(GameManager.GetLightMode());
     }
 
-    private void Update()
-    {
-        UpdatePointLightShader();
-    }
+    private void Update() { UpdatePointLightShader(); }
 
     public void Reset() { changeLighting(GameManager.GetLightMode()); }
 
@@ -50,7 +49,7 @@ public class LightManager : MonoBehaviour
         Shader.SetGlobalFloat("minDiffuse", .6f);
         Shader.SetGlobalFloat("noDiffuse", .2f);
     }
-    
+
     void setUpPointLight()
     {
         Shader.SetGlobalColor("LightColor", instance.PointLightColor);
@@ -86,14 +85,23 @@ public class LightManager : MonoBehaviour
 
     public static void GetPointLightPositions()
     {
-        instance.PointLightTrans.Clear();
-        GolfBallManager.getGlowingGolfBallsPos(ref instance.PointLightTrans);
-        if (instance.PointLightTrans.Count == 0) // shader freaks out if passed array of 0
+        instance.PointLightPos.Clear();
+        GolfBallManager.getGlowingGolfBallsPos(ref instance.PointLightPos);
+        if (instance.PointLightPos.Count == 0)
         {
-            instance.PointLightTrans.Add(new Vector4(-1000, -1000, -1000, 0));
             Shader.SetGlobalInteger("UsePointLight", 0); // disable point light if there are no point lights right now
-            return;
         }
+        //instance.timer -= Time.deltaTime;
+        //if (instance.timer <= 0f)
+        //{
+        //    Debug.Log(instance.PointLightPos.Count);
+        //}
+       
+        for (int i = instance.PointLightPos.Count; i < 30; i++) // give the gpu 30 items
+        {
+            instance.PointLightPos.Add(new Vector4(1000, 0, 0, 0));
+        }
+
         Shader.SetGlobalInteger("UsePointLight", instance.usePoint ? 1 : 0);
     }
 
@@ -111,6 +119,19 @@ public class LightManager : MonoBehaviour
     static void UpdatePointLightShader()
     {
         GetPointLightPositions();
-        Shader.SetGlobalVectorArray("PointLightPosition", instance.PointLightTrans);
+        Shader.SetGlobalVectorArray("PointLightPosition", instance.PointLightPos);
+        
+        //if (instance.timer < 0f)
+        //{
+        //    Vector4[] test = Shader.GetGlobalVectorArray("PointLightPosition");
+        //    string testStr = "";
+        //    for (int i = 0; i < test.Length; i++)
+        //    {
+        //        testStr += test[i].x + ", ";
+        //    }
+        //    Debug.Log(testStr);
+        //    instance.timer = .5f;
+        //}
+        
     }
 }

@@ -8,7 +8,7 @@ public class GolfBall : MonoBehaviour
     public float collisionChangeTimeLength = 0.2f;
     private float collisionChangeTimer = .1f;
     private float aliveTimer = 0f;
-    private float glowingLength = 3f;
+    private float glowingLength = 10f;
     public Material glowingTexture;
     public Material plainTexture;
 

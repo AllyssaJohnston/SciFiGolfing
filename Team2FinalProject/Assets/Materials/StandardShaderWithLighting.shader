@@ -1,5 +1,9 @@
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
 Shader "Custom/StandardShaderWithLighting"
 {
     Properties
@@ -8,7 +12,7 @@ Shader "Custom/StandardShaderWithLighting"
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
         _Glossiness ("Smoothness", Range(0,1)) = 0.5
         _Metallic ("Metallic", Range(0,1)) = 0.0
-		//_PointLightPosition ("PointLightPosition", float4[30]) = 
+
     }
     SubShader
     {
@@ -73,7 +77,7 @@ Shader "Custom/StandardShaderWithLighting"
 				float4 vertex : SV_POSITION;
 				float3 normal : NORMAL;
 				float2 uv : TEXCOORD0;
-                float3 vertexWC : TEXCOORD3;
+                float4 vertexWC : TEXCOORD3;
 			};
 
 			sampler2D _MainTex;
@@ -86,7 +90,7 @@ Shader "Custom/StandardShaderWithLighting"
 
 			// point light
 
-			static float4 PointLightPosition[30]; // max of 30 point lights
+			float4 PointLightPosition[30]; // max of 30 point lights
             fixed4 LightColor;
             float  LightNear;
             float  LightFar;
@@ -102,11 +106,12 @@ Shader "Custom/StandardShaderWithLighting"
 
 				o.uv = v.uv; // no specific placement support
 
-                o.vertexWC = mul(unity_ObjectToWorld, v.vertex).xyz; // this is in WC space!
+                o.vertexWC = mul(unity_ObjectToWorld, v.vertex); // WC space
                 // this is not pretty but we don't have access to inverse-transpose ...
-                float3 p = v.vertex + v.normal;
-                p = mul(unity_ObjectToWorld, float4(p, 1)).xyz;  // now in WC space
-                o.normal = normalize(p - o.vertexWC); // NOTE: this is in the world space!!
+				float3 p = v.vertex + v.normal;
+                //float3 p = v.vertex + v.normal;
+                p = mul(unity_ObjectToWorld, float4(p, 1));  // WC space
+                o.normal = normalize(p - o.vertexWC);
 				return o;
 			}
 			
@@ -122,29 +127,41 @@ Shader "Custom/StandardShaderWithLighting"
             }
 
 			// our own function
-            fixed4 ComputePointLight(v2f i, int lightI) 
+            fixed4 ComputePointLight(v2f i) 
 			{      
+				float lightValue = 0;
 				if (UsePointLight)
 				{
-					float3 l5 = normalize(PointLightPosition[lightI] - i.vertexWC);
-					float d = length(l5);
-					l5 = l5 / d;
-					float strength = 1;
+					for (int count = 0; count < 30; count++)
+					{
+                        if (PointLightPosition[count].x <= 400.0)
+						{
+							float3 l = PointLightPosition[count].xyz - i.vertexWC;
+							float d = length(l);
+							l = l / d;
+							float strength = 1;
                 
-					float ndotl = clamp(dot(i.normal, l5), 0, 1);
-					if (d > LightNear) {
-						if (d < LightFar) {
-							float range = LightFar - LightNear;
-							float n = d - LightNear;
-							strength = smoothstep(0, 1, 1.0 - (n*n) / (range*range));
+							float ndotl = clamp(dot(i.normal, l), 0, 1);
+							if (d > LightNear) 
+							{
+								if (d < LightFar) 
+								{
+									float range = LightFar - LightNear;
+									float n = d - LightNear;
+									strength = smoothstep(0, 1, 1.0 - (n*n) / (range*range));
+								}
+								else 
+								{
+									strength = 0;
+								}
+							}
+							lightValue += ndotl * strength;
 						}
-						else {
-							strength = 0;
-						}
+						
 					}
-					return ndotl * strength;
+					
 				}
-                return 0;
+                return lightValue;
             }
 
 			fixed4 frag (v2f i) : SV_Target
@@ -152,12 +169,7 @@ Shader "Custom/StandardShaderWithLighting"
 				// sample the texture
 				fixed4 col = tex2D(_MainTex, i.uv) * _Color;
 				fixed4 difLight = ComputeDiffuse(i);
-				float4 pointLight = float4(0,0,0,0);
-				for (int count = 0; count < 30; count++)
-				{
-					pointLight += (ComputePointLight(i, count)); 
-				}
-				pointLight = clamp(pointLight, 0, 1) * LightColor;
+				fixed4 pointLight = ComputePointLight(i) * LightColor;
 				return col * (difLight + pointLight);
                 
 			}

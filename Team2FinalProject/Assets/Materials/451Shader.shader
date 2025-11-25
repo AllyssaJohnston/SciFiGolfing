@@ -31,7 +31,7 @@
 				float4 vertex : SV_POSITION;
 				float2 uv : TEXCOORD0;
 				float3 normal : NORMAL;
-				float3 vertexWC : TEXCOORD3;
+				float4 vertexWC : TEXCOORD3;
 			};
 
             // our own matrix
@@ -48,7 +48,7 @@
 			int UseDiffuseLight;
 
 			// point light
-			static float4 PointLightPosition[30]; // max of 30 point lights
+			float4 PointLightPosition[30]; // max of 30 point lights
             fixed4 LightColor;
             float  LightNear;
             float  LightFar;
@@ -85,29 +85,41 @@
             }
 
 			// our own function
-            fixed4 ComputePointLight(v2f i, int lightI) 
+            fixed4 ComputePointLight(v2f i) 
 			{           
+				float lightValue = 0;
 				if (UsePointLight)
 				{
-					float3 l5 = normalize(PointLightPosition[lightI] - i.vertexWC);
-					float d = length(l5);
-					l5 = l5 / d;
-					float strength = 1;
+					for (int count = 0; count < 30; count++)
+					{
+                        if (PointLightPosition[count].x <= 400.0)
+						{
+							float3 l = PointLightPosition[count].xyz - i.vertexWC;
+							float d = length(l);
+							l = l / d;
+							float strength = 1;
                 
-					float ndotl = clamp(dot(i.normal, l5), 0, 1);
-					if (d > LightNear) {
-						if (d < LightFar) {
-							float range = LightFar - LightNear;
-							float n = d - LightNear;
-							strength = smoothstep(0, 1, 1.0 - (n*n) / (range*range));
+							float ndotl = clamp(dot(i.normal, l), 0, 1);
+							if (d > LightNear) 
+							{
+								if (d < LightFar) 
+								{
+									float range = LightFar - LightNear;
+									float n = d - LightNear;
+									strength = smoothstep(0, 1, 1.0 - (n*n) / (range*range));
+								}
+								else 
+								{
+									strength = 0;
+								}
+							}
+							lightValue += ndotl * strength;
 						}
-						else {
-							strength = 0;
-						}
+						
 					}
-					return ndotl * strength;
+					
 				}
-                return 0;
+                return lightValue;
             }
 
 			fixed4 MyFrag (v2f i) : SV_Target
@@ -115,11 +127,7 @@
 				// sample the texture
 				fixed4 col = tex2D(_MainTex, i.uv) * MyColor;
                 fixed4 difLight = ComputeDiffuse(i);
-				fixed4 pointLight = 0.0;
-				for (int count = 0; count < 30; count++)
-				{
-					pointLight += (ComputePointLight(i, count) * LightColor); 
-				}
+				fixed4 pointLight = (ComputePointLight(i) * LightColor);
 				return col + (difLight + pointLight);
 			}
 			ENDCG
