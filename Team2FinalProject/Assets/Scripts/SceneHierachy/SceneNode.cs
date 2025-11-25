@@ -90,7 +90,6 @@ public class SceneNode : MonoBehaviour
     {
         if (GameManager.GetLastGameMode() == EGameMode.SETUP && GameManager.GetGameMode() == EGameMode.PLAY)
         {
-            Debug.Log("saving stats");
             startingPlayPos = transform.localPosition;
             startingPlayRot = transform.localRotation;
             startingPlayRotation = rotation;
@@ -100,7 +99,6 @@ public class SceneNode : MonoBehaviour
 
     private void PostPlay()
     {
-        Debug.Log("loading stats");
         transform.localPosition = startingPlayPos;
         transform.localRotation = startingPlayRot;
         mCombinedParentXform = startingPlayCombinedParentXForm;
