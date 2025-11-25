@@ -13,13 +13,9 @@ public class LightManager : MonoBehaviour
     [SerializeField] float PointFar = 10.0f;
     [SerializeField] Color PointLightColor = Color.white;
 
-    public GameObject RayObj;
-
 
     private bool usePoint = false;
     private bool useDiffuse = true;
-
-    private float timer = 0f;
 
 
     public void Awake()
