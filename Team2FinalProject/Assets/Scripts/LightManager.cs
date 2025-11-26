@@ -73,29 +73,41 @@ public class LightManager : MonoBehaviour
     public static void setUseSkyLight(bool useSkyLight)
     {
         instance.useSkyPoint = useSkyLight;
-
     }
 
-    //public static void UpdateSingleDiffuseLightPosition(EAxis axis, float value)
-    //{
-    //    switch (axis)
-    //    {
-    //        case EAxis.X: instance.diffuseLightTrans.position = new Vector3(value, instance.diffuseLightTrans.position.y,   instance.diffuseLightTrans.position.z); break;
-    //        case EAxis.Y: instance.diffuseLightTrans.position = new Vector3(instance.diffuseLightTrans.position.x,          value, instance.diffuseLightTrans.position.z); break;
-    //        case EAxis.Z: instance.diffuseLightTrans.position = new Vector3(instance.diffuseLightTrans.position.x,          instance.diffuseLightTrans.position.y, value); break;
-    //        default: Debug.Log("unrecognized axis " + axis); break;
-    //    }
-    //    UpdateSingleDiffuseShader();
-    //}
+    public static void UpdateDiffuseLightPosition(EAxis axis, float value)
+    {
+        switch (axis)
+        {
+            case EAxis.X: instance.diffuseLightTrans.position = new Vector3(value, instance.diffuseLightTrans.position.y, instance.diffuseLightTrans.position.z); break;
+            case EAxis.Y: instance.diffuseLightTrans.position = new Vector3(instance.diffuseLightTrans.position.x, value, instance.diffuseLightTrans.position.z); break;
+            case EAxis.Z: instance.diffuseLightTrans.position = new Vector3(instance.diffuseLightTrans.position.x, instance.diffuseLightTrans.position.y, value); break;
+            default: Debug.Log("unrecognized axis " + axis); break;
+        }
+        UpdateDiffuseShader();
+    }
 
-    //public static Vector3 GetSingleDiffuseLightPosition() { return instance.diffuseLightTrans.position; }
+    public static void UpdatePointLightPosition(EAxis axis, float value)
+    {
+        switch (axis)
+        {
+            case EAxis.X: instance.pointLightTrans.position = new Vector3(value, instance.pointLightTrans.position.y, instance.pointLightTrans.position.z); break;
+            case EAxis.Y: instance.pointLightTrans.position = new Vector3(instance.pointLightTrans.position.x, value, instance.pointLightTrans.position.z); break;
+            case EAxis.Z: instance.pointLightTrans.position = new Vector3(instance.pointLightTrans.position.x, instance.pointLightTrans.position.y, value); break;
+            default: Debug.Log("unrecognized axis " + axis); break;
+        }
+        UpdatePointLightShader();
+    }
+
+    public static Vector3 GetDiffuseLightPosition() { return instance.diffuseLightTrans.position; }
+
+    public static Vector3 GetPointLightPosition() { return instance.pointLightTrans.position; }
 
     public static void GetPointLightPositions()
     {
         instance.PointLightPos.Clear();
         GolfBallManager.getGlowingGolfBallsPos(ref instance.PointLightPos);
         GolfBallManager.getRayGolfBallsPos(ref instance.PointLightPos);
-
 
         if (instance.useSkyPoint)
         {
@@ -111,14 +123,14 @@ public class LightManager : MonoBehaviour
 
     static void UpdateShader()
     {
-        UpdateSingleDiffuseShader();
+        UpdateDiffuseShader();
         UpdatePointLightShader();
 
         Shader.SetGlobalInteger("UseDiffuseLight", instance.useDiffuse ? 1 : 0);
         Shader.SetGlobalInteger("UsePointLight", instance.usePoint ? 1 : 0);
     }
 
-    static void UpdateSingleDiffuseShader() { Shader.SetGlobalVector("DiffusePosition", instance.diffuseLightTrans.localPosition); }
+    static void UpdateDiffuseShader() { Shader.SetGlobalVector("DiffusePosition", instance.diffuseLightTrans.localPosition); }
 
     static void UpdatePointLightShader()
     {
