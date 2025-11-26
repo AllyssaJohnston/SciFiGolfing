@@ -51,7 +51,7 @@ public class LightManager : MonoBehaviour
         Shader.SetGlobalColor("LightColor", instance.PointLightColor);
         Shader.SetGlobalFloat("LightNear", instance.PointNear);
         Shader.SetGlobalFloat("LightFar", instance.PointFar);
-        Shader.SetGlobalFloat("maxPoint", .5f);
+        Shader.SetGlobalFloat("maxPoint", .3f);
     }
 
     public static void changeLighting() { changeLighting(GameManager.GetLightMode()); }
