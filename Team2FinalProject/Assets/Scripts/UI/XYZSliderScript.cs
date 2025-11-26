@@ -1,5 +1,13 @@
 using UnityEngine;
 
+public enum ESliderType
+{
+    CAMERA,
+    NODE,
+    DIFFUSE,
+    POINT
+}
+
 public enum EAxis
 {
     X = 0,
@@ -10,14 +18,14 @@ public enum EAxis
 public class XYZSliderScript : SliderScript
 {
     public EAxis axis;
-    public bool cameraSlider = false;
+    public ESliderType type = ESliderType.NODE;
 
     // called at start
     protected override void subSetUp()
     {
         slider.value = 0f;
         lastValue = slider.value;
-        if (cameraSlider)
+        if (type == ESliderType.CAMERA)
         {
             slider.minValue = -1 * CameraMovement.getMaxTransVal();
             slider.maxValue = CameraMovement.getMaxTransVal();
@@ -41,23 +49,51 @@ public class XYZSliderScript : SliderScript
     public override void resetData()
     {
         
-        float value;
-        if (cameraSlider)
+        float value = 0f;
+        Vector3 position;
+        switch (type)
         {
-            Vector3 position = CameraMovement.GetPosition();
-            value = position.x;
-            switch (axis)
-            {
-                case EAxis.Y:
-                    value = position.y; break;
-                case EAxis.Z:
-                    value = position.z; break;
-            }
-        }
-        else
-        {
-            gameObject.transform.parent.gameObject.SetActive(showRotSlider());
-            value = ObjectManager.GetCurObjectValue(axis);
+            case ESliderType.CAMERA:
+       
+                position = CameraMovement.GetPosition();
+                value = position.x;
+                switch (axis)
+                {
+                    case EAxis.Y:
+                        value = position.y; break;
+                    case EAxis.Z:
+                        value = position.z; break;
+                }
+                break;
+
+            case ESliderType.NODE:
+                gameObject.transform.parent.gameObject.SetActive(showRotSlider());
+                value = ObjectManager.GetCurObjectValue(axis);
+                break;
+
+            case ESliderType.DIFFUSE:
+                position = LightManager.GetDiffuseLightPosition();
+                value = position.x;
+                switch (axis)
+                {
+                    case EAxis.Y:
+                        value = position.y; break;
+                    case EAxis.Z:
+                        value = position.z; break;
+                }
+                break;
+
+            case ESliderType.POINT:
+                position = LightManager.GetPointLightPosition();
+                value = position.x;
+                switch (axis)
+                {
+                    case EAxis.Y:
+                        value = position.y; break;
+                    case EAxis.Z:
+                        value = position.z; break;
+                }
+                break;
         }
         slider.value = value;
         lastValue = value;
@@ -73,13 +109,20 @@ public class XYZSliderScript : SliderScript
         if (curSelected != null)
         {
             UpdateLabel();
-            if (cameraSlider)
+            switch (type)
             {
-                CameraMovement.UpdateLookAt(axis, value);
-            }
-            else
-            {
-                ObjectManager.SetCurObjectValue(axis, value);
+                case ESliderType.CAMERA:
+                    CameraMovement.UpdateLookAt(axis, value);
+                    break;
+                case ESliderType.NODE:
+                    ObjectManager.SetCurObjectValue(axis, value);
+                    break;
+                case ESliderType.DIFFUSE:
+                    LightManager.UpdateDiffuseLightPosition(axis, value);
+                    break;
+                case ESliderType.POINT:
+                    LightManager.UpdatePointLightPosition(axis, value);
+                    break;
             }
         }
     }

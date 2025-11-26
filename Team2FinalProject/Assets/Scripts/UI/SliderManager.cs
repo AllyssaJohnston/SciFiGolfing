@@ -10,7 +10,8 @@ public class SliderManager : MonoBehaviour
     [SerializeField] XYZSliderScript[] xyzSliders = new XYZSliderScript[3]; //rotation sliders
     [SerializeField] XYZSliderScript[] lookAtSliders = new XYZSliderScript[3]; //camera sliders
     [SerializeField] List<AttributeSliderScript> swingSliders = new List< AttributeSliderScript>(); // golf sliders
-     
+    [SerializeField] XYZSliderScript[] lightingSliders = new XYZSliderScript[6]; //rotation sliders
+
     void Awake()
     {
         if (instance != null && instance != this)
@@ -29,6 +30,8 @@ public class SliderManager : MonoBehaviour
         {
             instance.xyzSliders[i].resetData();
             instance.lookAtSliders[i].resetData();
+            instance.lightingSliders[i].resetData();
+            instance.lightingSliders[i + 3].resetData();
         }
 
         ResetAttributeSliders();

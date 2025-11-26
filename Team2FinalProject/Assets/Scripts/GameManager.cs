@@ -85,6 +85,39 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public static void SetPoint(bool usePoint)
+    {
+        switch (usePoint)
+        {
+            case true:
+                switch (lightMode)
+                {
+                    case ELightMode.NONE:
+                        SetLightMode(ELightMode.POINT);
+                        break;
+                    case ELightMode.DIFFUSE:
+                        SetLightMode(ELightMode.DIFFUSE_AND_POINT);
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case false:
+                switch (lightMode)
+                {
+                    case ELightMode.POINT:
+                        SetLightMode(ELightMode.NONE);
+                        break;
+                    case ELightMode.DIFFUSE_AND_POINT:
+                        SetLightMode(ELightMode.DIFFUSE);
+                        break;
+                    default:
+                        break;
+                }
+                break;
+        }
+    }
+
     public static void SetLightMode(ELightMode givenLightMode)
     {
         Debug.Log("switching to " + givenLightMode);
