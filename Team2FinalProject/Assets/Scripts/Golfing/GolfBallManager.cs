@@ -162,19 +162,22 @@ public class GolfBallManager : MonoBehaviour
         if (rayTimer > 0)
         {
             Vector3 rayForward = new Vector3(instance.SpawnPos.getXForm()[0, 2], instance.SpawnPos.getXForm()[1, 2], instance.SpawnPos.getXForm()[2, 2]).normalized * -1;
+            Vector3 rayStartRight = new Vector3(instance.SpawnPos.getXForm()[0, 0], instance.SpawnPos.getXForm()[1, 0], instance.SpawnPos.getXForm()[2, 0]).normalized * -1.25f;
+            Vector3 rayStartUp = new Vector3(instance.SpawnPos.getXForm()[0, 1], instance.SpawnPos.getXForm()[1, 1], instance.SpawnPos.getXForm()[2, 1]).normalized * -4f;
+            Vector3 rayStartPos = instance.SpawnPos.getXForm().GetPosition() + rayForward + rayStartRight + rayStartUp + Vector3.up * .5f;
 
             float length = instance.rayCylinder.transform.localScale.y * 2;
             int spacing = 3;
             for (int i = 0; i < Mathf.Ceil(length / spacing) - 1; i++)
             {
-                pointLightPos.Add(rayForward * i * spacing);
+                pointLightPos.Add(rayStartPos + rayForward * i * spacing);
                 light++;
                 if (light >= 30)
                 {
                     return;
                 }
             }
-            pointLightPos.Add(rayForward * length);
+            pointLightPos.Add(rayStartPos + rayForward * length);
         }
     }
 }
