@@ -6,8 +6,10 @@ public class LightManager : MonoBehaviour
 {
     private static LightManager instance;
 
+    private Vector3 startingDiffuseLightPos;
     [SerializeField] Vector3 diffuseLightPos;
 
+    private Vector3 startingSkyLightPos;
     [SerializeField] Vector3 skyLightPos;
     private List<Vector4> PointLightPos = new List<Vector4>();  
     [SerializeField] float PointNear = 5.0f;
@@ -33,6 +35,8 @@ public class LightManager : MonoBehaviour
     private void Start()
     {
         GameManager.lightModeChanged.AddListener(changeLighting);
+        startingDiffuseLightPos = diffuseLightPos;
+        startingSkyLightPos = skyLightPos;
         setUpDiffuseLight();
         setUpPointLight();
         changeLighting(GameManager.GetLightMode());
@@ -40,7 +44,12 @@ public class LightManager : MonoBehaviour
 
     private void Update() { UpdatePointLightShader(); }
 
-    public void Reset() { changeLighting(GameManager.GetLightMode()); }
+    public void Reset() 
+    {
+        diffuseLightPos = startingDiffuseLightPos;
+        skyLightPos = startingSkyLightPos;
+        changeLighting(GameManager.GetLightMode()); 
+    }
 
     void setUpDiffuseLight()
     {
