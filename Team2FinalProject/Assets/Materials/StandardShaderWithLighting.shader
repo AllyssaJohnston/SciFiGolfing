@@ -150,7 +150,7 @@ Shader "Custom/StandardShaderWithLighting"
 								{
 									float range = LightFar - LightNear;
 									float n = d - LightNear;
-									strength = smoothstep(0, maxPoint, 1.0 - (n*n) / (range*range));
+									strength = smoothstep(0, maxPoint, maxPoint - (n*n) / (range*range));
 								}
 								else 
 								{
