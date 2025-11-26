@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 public class GolfBall : MonoBehaviour
 {
@@ -8,15 +9,20 @@ public class GolfBall : MonoBehaviour
     public float collisionChangeTimeLength = 0.2f;
     private float collisionChangeTimer = .1f;
     private float aliveTimer = 0f;
-    private float glowingLength = 3f;
-    public Material glowingTexture;
-    public Material plainTexture;
+    private float glowingLength = 10f;
+    public Texture glowingTexture;
+    public Texture plainTexture;
+    public Material ballMaterial;
+    public float glowIntensity = 1.0f;
+    public float scrollSpeed = 1f;
+    public float pulseSpeed = 2f;
+    public bool glowEnabled = false;
+
 
     public void SetUp()
     {
-        gameObject.GetComponent<Renderer>().material = glowingTexture;
+        EnableGlow(glowEnabled);
     }
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -24,6 +30,8 @@ public class GolfBall : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         ObjectManager.resetWorld.AddListener(Reset);
         resetCollisionTimer();
+
+        EnableGlow(glowEnabled);
     }
 
     // Update is called once per frame
@@ -37,15 +45,42 @@ public class GolfBall : MonoBehaviour
         if (collisionChangeTimer <= 0){
             collisionActive = true;
         }
-        if (aliveTimer > glowingLength)
+        // if (globalGlowEnabled && aliveTimer > glowingLength)
+        // {
+        //     EnableGlow(false);
+        // }
+    }
+
+    public void EnableGlow(bool enabled)
+    {
+
+        ballMaterial.SetFloat("_GlowEnabled", enabled ? 1f : 0f);
+
+        if(enabled)
         {
-            switchToPlain();
+            ApplyGlowTexture();
+        }
+        else
+        {
+            ApplyPlainTexture();
         }
     }
 
-    private void switchToPlain()
+    private void ApplyGlowTexture()
     {
-        gameObject.GetComponent<Renderer>().material = plainTexture;
+        ballMaterial.SetTexture("_MainTex", glowingTexture);
+        ballMaterial.SetTexture("GlowTex", glowingTexture);
+
+        ballMaterial.SetFloat("_GlowIntensity", glowIntensity);
+        ballMaterial.SetFloat("_ScrollSpeed", scrollSpeed);
+        ballMaterial.SetFloat("_PulseSpeed", pulseSpeed);
+        GetComponent<Renderer>().material = ballMaterial;
+    }
+    private void ApplyPlainTexture()
+    {
+        ballMaterial.SetTexture("_MainTex", glowingTexture);
+        ballMaterial.SetFloat("GlowIntensity", 0f);
+        gameObject.GetComponent<Renderer>().material = ballMaterial;
     }
 
     public void resetCollisionTimer()
@@ -80,5 +115,37 @@ public class GolfBall : MonoBehaviour
     {
         ScoreTracker.decreaseBalls();
         Destroy(gameObject);
+    }
+
+    public void SetGlowEnabled(bool enable)
+    {
+        glowEnabled = enable;
+        var r = GetComponent<Renderer>();
+
+        r.material.SetFloat("_GlowEnabled", enable ? 1f : 0f);
+    }
+
+    public void SetGlowIntensity(float value)
+    {
+        glowIntensity = value;
+        var r = GetComponent<Renderer>();
+
+        r.material.SetFloat("_GlowIntensity", value);
+    }
+
+    public void SetScrollSpeed(float value)
+    {
+        scrollSpeed = value;
+        var r = GetComponent<Renderer>();
+
+        r.material.SetFloat("_ScrollSpeed", value);
+    }
+
+    public void SetPulseSpeed(float value)
+    {
+        pulseSpeed = value;
+        var r = GetComponent<Renderer>();
+
+        r.material.SetFloat("_PulseSpeed", value);
     }
 }

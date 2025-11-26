@@ -44,7 +44,7 @@ public class NodePrimitive: MonoBehaviour {
         m = nodeMatrix * p * trs * invp;
         if (init == false || material == null ) // initialize
         {
-            material = GetComponent<Renderer>().material;
+            material = GetComponent<Renderer>().sharedMaterial;
             MyColor = ColorManager.GetColor(color);
             init = true;
         }

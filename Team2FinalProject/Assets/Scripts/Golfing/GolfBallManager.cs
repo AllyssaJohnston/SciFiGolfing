@@ -67,6 +67,9 @@ public class GolfBallManager : MonoBehaviour
         ball.name = "Ball " + numCreated;
         golfBalls.Add(ball);
         ScoreTracker.increaseBalls();
+        GlowingManager gm = FindFirstObjectByType<GlowingManager>();
+        if (gm != null)
+            gm.RegisterBall(ball.GetComponent<GolfBall>());
         return ball;
     }
 

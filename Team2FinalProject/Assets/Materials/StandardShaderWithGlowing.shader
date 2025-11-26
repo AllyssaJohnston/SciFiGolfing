@@ -16,7 +16,7 @@ Shader "Custom/StandardShaderWithGlowing"
 		// Glowing golf properties
 		_GlowTex ("Glow Texture", 2D) = "white"{}
 		_GlowIntensity ("Glow Intensity", Range(0,5)) = 1.0
-		_ScrollSpeed("Glow Scroll Speed", Range(-5,5)) = 1.0
+		_ScrollSpeed("Glow Scroll Speed", Range(-5,5)) = 0.5
 		_PulseSpeed ("Glow Pulse Speed", Range(0,10)) = 2.0
 		_GlowEnabled ("Glow enabled", Float) = 1.0
 
