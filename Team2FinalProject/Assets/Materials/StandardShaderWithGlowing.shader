@@ -4,7 +4,7 @@
 
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
-Shader "Custom/StandardShaderWithLighting"
+Shader "Custom/StandardShaderWithGlowing"
 {
     Properties
     {
@@ -12,6 +12,13 @@ Shader "Custom/StandardShaderWithLighting"
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
         _Glossiness ("Smoothness", Range(0,1)) = 0.5
         _Metallic ("Metallic", Range(0,1)) = 0.0
+
+		// Glowing golf properties
+		_GlowTex ("Glow Texture", 2D) = "white"{}
+		_GlowIntensity ("Glow Intensity", Range(0,5)) = 1.0
+		_ScrollSpeed("Glow Scroll Speed", Range(-5,5)) = 1.0
+		_PulseSpeed ("Glow Pulse Speed", Range(0,10)) = 2.0
+		_GlowEnabled ("Glow enabled", Float) = 1.0
 
     }
     SubShader
@@ -27,6 +34,7 @@ Shader "Custom/StandardShaderWithLighting"
         #pragma target 3.0
 
         sampler2D _MainTex;
+		sampler2D _GlowTex;
 
         struct Input
         {
@@ -85,6 +93,7 @@ Shader "Custom/StandardShaderWithLighting"
 			};
 
 			sampler2D _MainTex;
+			sampler2D _GlowTex;
             fixed4 _Color;
 
 			// diffuse lights
@@ -105,6 +114,11 @@ Shader "Custom/StandardShaderWithLighting"
 
 			float maxPoint;
 			
+			//glow params
+			float _GlowIntensity;
+			float _ScrollSpeed;
+			float _PulseSpeed;
+			float _GlowEnabled;
 
 			v2f vert (appdata v)
 			{
@@ -177,8 +191,23 @@ Shader "Custom/StandardShaderWithLighting"
 				fixed4 col = tex2D(_MainTex, i.uv) * _Color;
 				fixed4 difLight = ComputeDiffuse(i);
 				fixed4 pointLight = ComputePointLight(i) * LightColor;
-				
-				return col * (difLight + pointLight);
+
+				// Switch of Glowing return to normal lighting
+				if(_GlowEnabled < 0.5)
+				{
+					return col * (difLight + pointLight);
+				}
+
+				// Switch on Glowing, UV scrolling (translate in MP6)
+				float2 glowUV = i.uv;
+				glowUV.x += _ScrollSpeed * _Time.y;
+				fixed4 glowCol = tex2D(_GlowTex, glowUV);
+
+				// pulsing emission
+				float pulse = sin(_Time.y * _PulseSpeed) * 0.5 + 0.5;
+				fixed4 emmisive = glowCol * _GlowIntensity * pulse;
+
+				return col * (difLight + pointLight) + emmisive;
                 
 			}
 
