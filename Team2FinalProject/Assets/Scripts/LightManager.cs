@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 
@@ -8,6 +10,7 @@ public class LightManager : MonoBehaviour
 
     public Transform diffuseLightTrans;
 
+    public Transform pointLightTrans;
     private List<Vector4> PointLightPos = new List<Vector4>();  
     [SerializeField] float PointNear = 5.0f;
     [SerializeField] float PointFar = 10.0f;
@@ -15,6 +18,7 @@ public class LightManager : MonoBehaviour
 
 
     private bool usePoint = false;
+    private bool useSkyPoint = false;
     private bool useDiffuse = true;
 
 
@@ -66,6 +70,12 @@ public class LightManager : MonoBehaviour
         UpdateShader();
     }
 
+    public static void setUseSkyLight(bool useSkyLight)
+    {
+        instance.useSkyPoint = useSkyLight;
+
+    }
+
     //public static void UpdateSingleDiffuseLightPosition(EAxis axis, float value)
     //{
     //    switch (axis)
@@ -87,6 +97,10 @@ public class LightManager : MonoBehaviour
         GolfBallManager.getRayGolfBallsPos(ref instance.PointLightPos);
 
 
+        if (instance.useSkyPoint)
+        {
+            instance.PointLightPos.Add(instance.pointLightTrans.position);
+        }
         for (int i = instance.PointLightPos.Count; i < 30; i++) // give the gpu 30 items
         {
             instance.PointLightPos.Add(new Vector4(1000, 0, 0, 0));
