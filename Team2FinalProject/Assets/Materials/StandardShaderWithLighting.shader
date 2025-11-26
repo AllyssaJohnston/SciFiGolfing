@@ -98,6 +98,8 @@ Shader "Custom/StandardShaderWithLighting"
 
             float minDiffuse;
             float noDiffuse;
+
+			float maxPoint;
 			
 			v2f vert (appdata v)
 			{
@@ -139,7 +141,7 @@ Shader "Custom/StandardShaderWithLighting"
 							float3 l = PointLightPosition[count].xyz - i.vertexWC;
 							float d = length(l);
 							l = l / d;
-							float strength = 1;
+							float strength = maxPoint;
                 
 							float ndotl = clamp(dot(i.normal, l), 0, 1);
 							if (d > LightNear) 
@@ -148,7 +150,7 @@ Shader "Custom/StandardShaderWithLighting"
 								{
 									float range = LightFar - LightNear;
 									float n = d - LightNear;
-									strength = smoothstep(0, 1, 1.0 - (n*n) / (range*range));
+									strength = smoothstep(0, maxPoint, 1.0 - (n*n) / (range*range));
 								}
 								else 
 								{

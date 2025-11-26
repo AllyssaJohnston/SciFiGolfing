@@ -42,7 +42,7 @@ public class LightManager : MonoBehaviour
 
     void setUpDiffuseLight()
     {
-        Shader.SetGlobalFloat("minDiffuse", .6f);
+        Shader.SetGlobalFloat("minDiffuse", .4f);
         Shader.SetGlobalFloat("noDiffuse", .2f);
     }
 
@@ -51,6 +51,7 @@ public class LightManager : MonoBehaviour
         Shader.SetGlobalColor("LightColor", instance.PointLightColor);
         Shader.SetGlobalFloat("LightNear", instance.PointNear);
         Shader.SetGlobalFloat("LightFar", instance.PointFar);
+        Shader.SetGlobalFloat("maxPoint", .5f);
     }
 
     public static void changeLighting() { changeLighting(GameManager.GetLightMode()); }
@@ -109,18 +110,5 @@ public class LightManager : MonoBehaviour
     {
         GetPointLightPositions();
         Shader.SetGlobalVectorArray("PointLightPosition", instance.PointLightPos);
-
-        //instance.timer -= Time.deltaTime;
-        //if (instance.timer < 0f)
-        //{
-        //    Vector4[] test = Shader.GetGlobalVectorArray("PointLightPosition");
-        //    string testStr = "";
-        //    for (int i = 0; i < test.Length; i++)
-        //    {
-        //        testStr += test[i].x + ", ";
-        //    }
-        //    Debug.Log(testStr);
-        //    instance.timer = .5f;
-        //}
     }
 }
