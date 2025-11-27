@@ -154,9 +154,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GolfBall
   collisionActive: 0
   collisionChangeTimeLength: 0.2
-  glowingTexture: {fileID: 2100000, guid: 1173e1fa42564cd4d8154ad28b0a7e6c, type: 2}
-  plainTexture: {fileID: 2100000, guid: bb6e10b22a631834791ea6c49b73eaf2, type: 2}
+  glowingTexture: {fileID: 0}
+  plainTexture: {fileID: 0}
   ballMaterial: {fileID: 2100000, guid: e3d3ba3f36920ce4b8adcc0f86a37b51, type: 2}
   glowIntensity: 1
   scrollSpeed: 1
   pulseSpeed: 2
+  glowEnabled: 0

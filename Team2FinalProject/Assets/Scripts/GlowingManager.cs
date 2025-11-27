@@ -1,11 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using System.Reflection.Emit;
 using TMPro;
 
 public class GlowingManager : MonoBehaviour
 {
+    private static GlowingManager instance;
     public Toggle glowToggle;
     public Slider glowIntensitySlider;
     public Slider scrollSpeedSlider;
@@ -14,7 +14,15 @@ public class GlowingManager : MonoBehaviour
     public TMP_Text scrollLabel;
     public TMP_Text pulseLabel;
 
-    private List<GolfBall> activeBalls = new List<GolfBall>();
+    public void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(this);
+            return;
+        }
+        instance = this;
+    }
 
     void Start()
     {
@@ -26,9 +34,6 @@ public class GlowingManager : MonoBehaviour
         glowIntensitySlider.onValueChanged.AddListener(OnGlowIntensityChanged);
         scrollSpeedSlider.onValueChanged.AddListener(OnScrollSpeedChanged);
         pulseSpeedSlider.onValueChanged.AddListener(OnPulseSpeedChanged);
-
-        // Register all existing balls in the scene
-        FindExistingBalls();
     }
 
     private void SetupSliders()
@@ -48,69 +53,52 @@ public class GlowingManager : MonoBehaviour
         pulseSpeedSlider.value = 2f;            
     }
 
-    public void RegisterBall(GolfBall ball)
+    public static void setUpGlow(GolfBall ball)
     {
-        activeBalls.Add(ball);
-
         // Apply all UI settings immediately to new balls
-        ball.SetGlowEnabled(glowToggle.isOn);
-        ball.SetGlowIntensity(glowIntensitySlider.value);
-        ball.SetScrollSpeed(scrollSpeedSlider.value);
-        ball.SetPulseSpeed(pulseSpeedSlider.value);
-    }
-
-    private void FindExistingBalls()
-    {
-        activeBalls.Clear();
-        activeBalls.AddRange(FindObjectsByType<GolfBall>(FindObjectsSortMode.None));
-
-        foreach (var ball in activeBalls)
-        {
-            ball.SetGlowEnabled(glowToggle.isOn);
-            ball.SetGlowIntensity(glowIntensitySlider.value);
-            ball.SetScrollSpeed(scrollSpeedSlider.value);
-            ball.SetPulseSpeed(pulseSpeedSlider.value);
-        }
+        ball.SetGlowEnabled(instance.glowToggle.isOn);
+        ball.SetGlowIntensity(instance.glowIntensitySlider.value);
+        ball.SetScrollSpeed(instance.scrollSpeedSlider.value);
+        ball.SetPulseSpeed(instance.pulseSpeedSlider.value);
     }
 
     // UI callbacks
     void OnGlowToggleChanged(bool enabled)
     {
-        CleanupDeadBalls();
-        foreach (var b in activeBalls)
-            b.SetGlowEnabled(enabled);
+        foreach (GolfBall ball in GolfBallManager.getGolfBalls())
+        {
+            if (ball == null || ball.enabled == false) { continue; }
+            ball.SetGlowEnabled(enabled);
+        }
     }
 
     void OnGlowIntensityChanged(float value)
     {
-        CleanupDeadBalls();
         intensityLabel.text = "Intensity: " + value.ToString("F2");
-        foreach (var b in activeBalls)
-            b.SetGlowIntensity(value);
+        foreach (GolfBall ball in GolfBallManager.getGolfBalls())
+        {
+            if (ball == null || ball.enabled == false) { continue; }
+            ball.SetGlowIntensity(value);
+        }
     }
 
     void OnScrollSpeedChanged(float value)
     {
-        CleanupDeadBalls();
         scrollLabel.text = "Scroll speed: " + value.ToString("F2");
-        foreach (var b in activeBalls)
-            b.SetScrollSpeed(value);
+        foreach (GolfBall ball in GolfBallManager.getGolfBalls())
+        {
+            if (ball == null || ball.enabled == false) { continue; }
+            ball.SetScrollSpeed(value);
+        }
     }
 
     void OnPulseSpeedChanged(float value)
     {
-        CleanupDeadBalls();
         pulseLabel.text = "Pulse speed: " + value.ToString("F2");
-        foreach (var b in activeBalls)
-            b.SetPulseSpeed(value);
-    }
-
-    private void CleanupDeadBalls()
-    {
-        for (int i = activeBalls.Count - 1; i >= 0; i--)
+        foreach (GolfBall ball in GolfBallManager.getGolfBalls())
         {
-            if (activeBalls[i] == null)
-                activeBalls.RemoveAt(i);
+            if (ball == null || ball.enabled == false) { continue; }
+            ball.SetPulseSpeed(value);
         }
     }
 }
