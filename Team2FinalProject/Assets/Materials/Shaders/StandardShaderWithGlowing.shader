@@ -205,7 +205,7 @@ Shader "Custom/StandardShaderWithGlowing"
 					float2 glowUV = i.uv;
 					glowUV.x += _ScrollSpeed * _Time.y;
 					float pulse = sin(_Time.y * _PulseSpeed) * 0.5 + 0.5; // pulsing emission
-					fixed4 glowCol = (tex2D(_GlowTex, glowUV) * _Color * _GlowIntensity * pulse) + fixed4(.5, .5, .5, 0);
+					fixed4 glowCol = (tex2D(_GlowTex, glowUV) * _Color * _GlowIntensity * pulse) + fixed4(.3, .3, .3, 0);
 
 					
 					
@@ -215,7 +215,7 @@ Shader "Custom/StandardShaderWithGlowing"
 					if (whiteAlpha < 0) { whiteAlpha = 0; }
 					fixed4 blended =  fixed4(glowCol.r * glowCol.a,			glowCol.g * glowCol.a,			glowCol.b * glowCol.a,			0) 
 									+ fixed4(combinedCol.r * combinedCol.a, combinedCol.g * combinedCol.a,	combinedCol.b * combinedCol.a,	0) 
-									+ fixed4(1 * whiteAlpha,				1 * whiteAlpha,					1 * whiteAlpha,					1);
+									+ fixed4(0,								1 * whiteAlpha,					1 * whiteAlpha,					1);
 
 					return blended;
 				}
