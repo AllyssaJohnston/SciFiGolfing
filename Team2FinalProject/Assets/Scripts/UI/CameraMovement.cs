@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum EMouseButton
@@ -10,6 +11,8 @@ public enum EMouseButton
 public class CameraMovement : MonoBehaviour
 {
     private static CameraMovement instance;
+
+    private static Camera cam;
 
     public float degreePerSec = 15f;
     public float zoomPerSec = 20f;
@@ -40,6 +43,7 @@ public class CameraMovement : MonoBehaviour
 
     private void Start()
     {
+        cam = GetComponent<Camera>();
         angle.x = -transform.localRotation.eulerAngles.y;
         angle.y = transform.localRotation.eulerAngles.x;
         startingAngle = angle;
@@ -51,6 +55,8 @@ public class CameraMovement : MonoBehaviour
 
     private void Update()
     {
+        UpdateZoom();
+
         // orbiting
         Vector3 angleChangeVect = Vector3.zero;
         if (Input.GetMouseButtonDown((int)EMouseButton.LEFT))
@@ -65,7 +71,7 @@ public class CameraMovement : MonoBehaviour
             angleChangeVect = (mousePos - lastMousePos) * degreePerSec * Time.deltaTime;
             angleChangeVect.y *= -1;
         }
-        else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
             angleChangeVect.x = -1 * degreePerSec * Time.deltaTime;
         }
@@ -73,7 +79,7 @@ public class CameraMovement : MonoBehaviour
         {
             angleChangeVect.x = degreePerSec * Time.deltaTime;
         }
-        else if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
             angleChangeVect.y = degreePerSec * Time.deltaTime;
         }
@@ -82,31 +88,34 @@ public class CameraMovement : MonoBehaviour
             angleChangeVect.y = -1 * degreePerSec * Time.deltaTime;
         }
 
-
-        // tracking / panning
         Vector3 transPos = Vector3.zero;
-        if (Input.GetMouseButtonDown((int)EMouseButton.RIGHT))
-        {
-            // just get the mouse position
-            mousePos = Input.mousePosition;
-        }
-        else if (Input.GetKey(KeyCode.LeftAlt) && Input.GetMouseButton((int)EMouseButton.RIGHT))
-        {
-            // get the mouse position and compare it to the last mouse position
-            mousePos = Input.mousePosition;
-            transPos = (mousePos - lastMousePos) * transPerSec * Time.deltaTime;
-        }
-
-
-        // scrolling
         float zoom = 0f;
-        float scrollWheel = Input.GetAxis("Mouse ScrollWheel");
-        if (Input.GetKey(KeyCode.LeftAlt) && (scrollWheel != 0))
+        if (GameManager.GetGameMode() == EGameMode.SETUP)
         {
-            // get the mouse position and compare it to the last mouse position
-            scrollWheel = (scrollWheel > 0) ? -1 : 1;
-            zoom = zoomPerSec * Time.deltaTime * scrollWheel;
-            Debug.Log(scrollWheel + " " + zoom);
+            // tracking / panning
+            
+            if (Input.GetMouseButtonDown((int)EMouseButton.RIGHT))
+            {
+                // just get the mouse position
+                mousePos = Input.mousePosition;
+            }
+            else if (Input.GetKey(KeyCode.LeftAlt) && Input.GetMouseButton((int)EMouseButton.RIGHT))
+            {
+                // get the mouse position and compare it to the last mouse position
+                mousePos = Input.mousePosition;
+                transPos = (mousePos - lastMousePos) * transPerSec * Time.deltaTime;
+            }
+
+
+            // scrolling
+            float scrollWheel = Input.GetAxis("Mouse ScrollWheel");
+            if (Input.GetKey(KeyCode.LeftAlt) && (scrollWheel != 0))
+            {
+                // get the mouse position and compare it to the last mouse position
+                scrollWheel = (scrollWheel > 0) ? -1 : 1;
+                zoom = zoomPerSec * Time.deltaTime * scrollWheel;
+                Debug.Log(scrollWheel + " " + zoom);
+            }
         }
 
         radius += zoom;
@@ -184,5 +193,47 @@ public class CameraMovement : MonoBehaviour
                 instance.transform.position = instance.playModePos;
                 break;
         }
+    }
+
+    private static void UpdateZoom()
+    {
+        if (GameManager.GetGameMode() == EGameMode.PLAY)
+        {
+            Vector3 additivePosition = Vector3.zero;
+            List<GameObject> listToCheck = new List<GameObject>();
+            foreach (GameObject obj in GolfBallManager.getGolfBallObjs())
+            {
+                listToCheck.Add(obj);
+            }
+            listToCheck.Add(World.GetRoot().gameObject);
+
+            foreach (GameObject obj in listToCheck)
+            {
+                if (obj == null) { continue; }
+                Vector2 screenPos = cam.WorldToViewportPoint(obj.transform.position);
+                additivePosition += obj.transform.position;
+                Debug.Log(screenPos);
+                if (screenPos.x < 0)
+                {
+                    radius = Mathf.Max(radius, (obj.transform.position - lookAtPos).magnitude);
+                }
+                if (screenPos.x > 1)
+                {
+                    radius = Mathf.Max(radius, (obj.transform.position - lookAtPos).magnitude);
+                }
+                if (screenPos.y < 0)
+                {
+                    radius = Mathf.Max(radius, (obj.transform.position - lookAtPos).magnitude);
+                }
+                if (screenPos.y > 1)
+                {
+                    radius = Mathf.Max(radius, (obj.transform.position - lookAtPos).magnitude);
+                }
+            }
+            lookAtPos = additivePosition / (float)listToCheck.Count;
+        }
+
+
+
     }
 }

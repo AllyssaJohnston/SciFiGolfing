@@ -138,6 +138,8 @@ public class GolfBallManager : MonoBehaviour
     
     public static List<GolfBall> getGolfBalls() { return golfBalls; }
 
+    public static List<GameObject> getGolfBallObjs() { return golfBallsObjs; }
+
     public static void getGlowingGolfBallsPos(ref List<Vector4> pointLightPos, ref List<Vector4> nearFar, ref List<Vector4> color)
     {
         Vector4 ballNearFar = LightManager.GetBallNearFar();

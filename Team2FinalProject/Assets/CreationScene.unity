@@ -26687,7 +26687,7 @@ MonoBehaviour:
   zoomPerSec: 30
   transPerSec: 10
   startRadius: 18
-  maxTransVal: 20
+  maxTransVal: 200
   playModePos: {x: 0, y: 15, z: 75}
 --- !u!1 &1997402777
 GameObject:
