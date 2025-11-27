@@ -15,7 +15,7 @@ public class CameraMovement : MonoBehaviour
     public float zoomPerSec = 20f;
     public float transPerSec = 15f;
     public float startRadius = 1f;
-    public float maxTransVal = 20f;
+    public float maxTransVal = 200f;
 
     private static float radius = 1f;
     private static Vector3 startLookAtPos = Vector3.zero;
@@ -72,6 +72,14 @@ public class CameraMovement : MonoBehaviour
         else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
             angleChangeVect.x = degreePerSec * Time.deltaTime;
+        }
+        else if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+        {
+            angleChangeVect.y = degreePerSec * Time.deltaTime;
+        }
+        else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+        {
+            angleChangeVect.y = -1 * degreePerSec * Time.deltaTime;
         }
 
 
