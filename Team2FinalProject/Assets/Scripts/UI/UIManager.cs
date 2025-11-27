@@ -38,15 +38,15 @@ public class UIManager : MonoBehaviour
         for (int i = 0; i < instance.setUpPanels.Count; i++)
         {
             instance.setUpPanels[i].SetActive(gameMode == EGameMode.SETUP);
-            Toggle toggle = instance.setUpPanels[i].GetComponent<Toggle>();
-            if (toggle != null) { toggle.isOn = gameMode == EGameMode.SETUP; }
+            PanelScript panel = instance.setUpPanels[i].GetComponent<PanelScript>();
+            if (panel != null) { panel.SetVisibility(gameMode == EGameMode.SETUP); }
         }
 
         for (int i = 0; i < instance.playPanels.Count; i++)
         {
             instance.playPanels[i].SetActive(gameMode == EGameMode.PLAY);
-            Toggle toggle = instance.playPanels[i].GetComponent<Toggle>();
-            if (toggle != null) { toggle.isOn = gameMode == EGameMode.PLAY; }
+            PanelScript panel = instance.playPanels[i].GetComponent<PanelScript>();
+            if (panel != null) { panel.SetVisibility(gameMode == EGameMode.PLAY); }
         }
     }
 
@@ -54,6 +54,7 @@ public class UIManager : MonoBehaviour
     {
         instance.rotPanel.SetActive(true);
         instance.rotPanelToggle.SetActive(true);
-        instance.rotPanelToggle.GetComponent<Toggle>().isOn = true;
+        instance.rotPanel.GetComponent<PanelScript>().SetVisibility(true);
+
     }
 }

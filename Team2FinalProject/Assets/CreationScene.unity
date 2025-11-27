@@ -2697,7 +2697,6 @@ GameObject:
   m_Component:
   - component: {fileID: 233915567}
   - component: {fileID: 233915568}
-  - component: {fileID: 233915569}
   m_Layer: 5
   m_Name: LookAtToggle
   m_TagString: Untagged
@@ -2773,19 +2772,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 1
---- !u!114 &233915569
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 233915566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 284596f5be78f0847a7c270cffb844cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PanelExitButton
-  panel: {fileID: 1299434108}
 --- !u!1 &253523631
 GameObject:
   m_ObjectHideFlags: 0
@@ -3036,6 +3022,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 283561193}
+  - component: {fileID: 283561194}
   m_Layer: 5
   m_Name: LightingPanel
   m_TagString: Untagged
@@ -3064,6 +3051,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 552.5083, y: 592.69}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &283561194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283561192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 720396bb079175144a9ae74074ab3e79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PanelScript
+  parent: {fileID: 283561192}
+  panel: {fileID: 1461661455}
+  toggle: {fileID: 713016429}
 --- !u!21 &288581855
 Material:
   serializedVersion: 8
@@ -6370,6 +6372,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 565847324}
+  - component: {fileID: 565847325}
   m_Layer: 5
   m_Name: SwingPanel
   m_TagString: Untagged
@@ -6398,6 +6401,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 531.04, y: 261.3939}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &565847325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 565847323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 720396bb079175144a9ae74074ab3e79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PanelScript
+  parent: {fileID: 565847323}
+  panel: {fileID: 775993738}
+  toggle: {fileID: 1626592032}
 --- !u!1001 &568513968
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7878,7 +7896,6 @@ GameObject:
   m_Component:
   - component: {fileID: 713016427}
   - component: {fileID: 713016429}
-  - component: {fileID: 713016428}
   m_Layer: 5
   m_Name: LightingToggle
   m_TagString: Untagged
@@ -7906,19 +7923,6 @@ RectTransform:
   m_AnchoredPosition: {x: 483, y: -42}
   m_SizeDelta: {x: 19.4183, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &713016428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 713016426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 284596f5be78f0847a7c270cffb844cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PanelToggleButton
-  panel: {fileID: 1461661455}
 --- !u!114 &713016429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8235,9 +8239,8 @@ GameObject:
   m_Component:
   - component: {fileID: 727841624}
   - component: {fileID: 727841626}
-  - component: {fileID: 727841625}
   m_Layer: 5
-  m_Name: SwingToggle
+  m_Name: GlowingToggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8263,19 +8266,6 @@ RectTransform:
   m_AnchoredPosition: {x: 482, y: -33}
   m_SizeDelta: {x: 19.4183, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &727841625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 727841623}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 284596f5be78f0847a7c270cffb844cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PanelToggleButton
-  panel: {fileID: 187110195}
 --- !u!114 &727841626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15294,7 +15284,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1653214791}
   m_HandleRect: {fileID: 1653214790}
   m_Direction: 2
-  m_Value: 1.0000005
+  m_Value: 0.99997437
   m_Size: 0.3604797
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -16050,7 +16040,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1372609236}
   - component: {fileID: 1372609238}
-  - component: {fileID: 1372609237}
   m_Layer: 5
   m_Name: RotationToggle
   m_TagString: Untagged
@@ -16078,19 +16067,6 @@ RectTransform:
   m_AnchoredPosition: {x: 482, y: -43.44336}
   m_SizeDelta: {x: 19.4183, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1372609237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1372609235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 284596f5be78f0847a7c270cffb844cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PanelToggleButton
-  panel: {fileID: 758299657}
 --- !u!114 &1372609238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16918,9 +16894,9 @@ RectTransform:
   - {fileID: 1580569717}
   m_Father: {fileID: 1423498664}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -13.846985, y: -956.3194}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -293.847, y: -1495.3193}
   m_SizeDelta: {x: 533.0861, y: 2990.7368}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1388694847
@@ -17580,6 +17556,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1423111222}
+  - component: {fileID: 1423111223}
   m_Layer: 5
   m_Name: RotationPanel
   m_TagString: Untagged
@@ -17606,8 +17583,23 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 6.5405, y: 337.6504}
+  m_SizeDelta: {x: 533.09, y: 337.6504}
   m_Pivot: {x: 0, y: -1}
+--- !u!114 &1423111223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1423111221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 720396bb079175144a9ae74074ab3e79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PanelScript
+  parent: {fileID: 1423111221}
+  panel: {fileID: 758299657}
+  toggle: {fileID: 1372609238}
 --- !u!1 &1423498663
 GameObject:
   m_ObjectHideFlags: 0
@@ -17642,10 +17634,10 @@ RectTransform:
   - {fileID: 1388694846}
   m_Father: {fileID: 1044909712}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -17, y: 0}
+  m_AnchoredPosition: {x: -578, y: 0}
+  m_SizeDelta: {x: 561, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1423498665
 MonoBehaviour:
@@ -19441,6 +19433,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1580569717}
+  - component: {fileID: 1580569718}
   m_Layer: 5
   m_Name: GlowingPanel
   m_TagString: Untagged
@@ -19469,6 +19462,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 531.04, y: 261.3939}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1580569718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580569716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 720396bb079175144a9ae74074ab3e79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PanelScript
+  parent: {fileID: 1580569716}
+  panel: {fileID: 187110195}
+  toggle: {fileID: 727841626}
 --- !u!21 &1587265569
 Material:
   serializedVersion: 8
@@ -20451,7 +20459,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1626592030}
   - component: {fileID: 1626592032}
-  - component: {fileID: 1626592031}
   m_Layer: 5
   m_Name: SwingToggle
   m_TagString: Untagged
@@ -20479,19 +20486,6 @@ RectTransform:
   m_AnchoredPosition: {x: 482, y: -42}
   m_SizeDelta: {x: 19.4183, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1626592031
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1626592029}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 284596f5be78f0847a7c270cffb844cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PanelToggleButton
-  panel: {fileID: 775993738}
 --- !u!114 &1626592032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23746,6 +23740,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1790607476}
+  - component: {fileID: 1790607477}
   m_Layer: 5
   m_Name: LookAtPanel
   m_TagString: Untagged
@@ -23772,8 +23767,23 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 6.5404, y: 248.0984}
+  m_SizeDelta: {x: 531.05, y: 248.0984}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1790607477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1790607475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 720396bb079175144a9ae74074ab3e79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PanelScript
+  parent: {fileID: 1790607475}
+  panel: {fileID: 1299434108}
+  toggle: {fileID: 233915568}
 --- !u!1001 &1805221672
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27723,7 +27733,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05c85a0dea6a0a845895f58bd8c1e954, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TopViewCamMovement
-  playModePos: {x: 0, y: 10, z: 300}
 --- !u!1 &2108131178
 GameObject:
   m_ObjectHideFlags: 0
