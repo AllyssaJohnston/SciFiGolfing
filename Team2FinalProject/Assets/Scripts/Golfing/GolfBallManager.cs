@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class GolfBallManager : MonoBehaviour
@@ -137,8 +138,10 @@ public class GolfBallManager : MonoBehaviour
     
     public static List<GolfBall> getGolfBalls() { return golfBalls; }
 
-    public static void getGlowingGolfBallsPos(ref List<Vector4> pointLightPos)
+    public static void getGlowingGolfBallsPos(ref List<Vector4> pointLightPos, ref List<Vector4> nearFar, ref List<Vector4> color)
     {
+        Vector4 ballNearFar = LightManager.GetBallNearFar();
+        Vector4 ballColor = LightManager.GetBallColor();
         int light = pointLightPos.Count;
         for (int i = 0; i < golfBalls.Count; i++)
         {
@@ -147,6 +150,8 @@ public class GolfBallManager : MonoBehaviour
             if (g.isActiveAndEnabled && g.glowing())
             {
                 pointLightPos.Add(golfBalls[i].gameObject.transform.position + Vector3.up * 2);
+                nearFar.Add(ballNearFar);
+                color.Add(ballColor);
                 light++;
                 if (light >= 30)
                 {
@@ -156,11 +161,14 @@ public class GolfBallManager : MonoBehaviour
         }
     }
 
-    public static void getRayGolfBallsPos(ref List<Vector4> pointLightPos)
+    public static void getRayGolfBallsPos(ref List<Vector4> pointLightPos, ref List<Vector4> nearFar, ref List<Vector4> color)
     {
-        int light = pointLightPos.Count;
         if (rayTimer > 0)
         {
+            Vector4 rayNearFar = LightManager.GetRayNearFar();
+            Vector4 rayColor = LightManager.GetRayColor();
+            int light = pointLightPos.Count;
+
             Vector3 rayForward = new Vector3(instance.SpawnPos.getXForm()[0, 2], instance.SpawnPos.getXForm()[1, 2], instance.SpawnPos.getXForm()[2, 2]).normalized * -1;
             Vector3 rayStartRight = new Vector3(instance.SpawnPos.getXForm()[0, 0], instance.SpawnPos.getXForm()[1, 0], instance.SpawnPos.getXForm()[2, 0]).normalized * -1.25f;
             Vector3 rayStartUp = new Vector3(instance.SpawnPos.getXForm()[0, 1], instance.SpawnPos.getXForm()[1, 1], instance.SpawnPos.getXForm()[2, 1]).normalized * -4f;
@@ -171,6 +179,8 @@ public class GolfBallManager : MonoBehaviour
             for (int i = 0; i < Mathf.Ceil(length / spacing) - 1; i++)
             {
                 pointLightPos.Add(rayStartPos + rayForward * i * spacing);
+                nearFar.Add(rayNearFar);
+                color.Add(rayColor);
                 light++;
                 if (light >= 30)
                 {

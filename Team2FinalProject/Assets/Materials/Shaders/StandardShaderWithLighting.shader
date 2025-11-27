@@ -95,9 +95,8 @@ Shader "Custom/StandardShaderWithLighting"
 			// point light
 
 			float4 PointLightPosition[30]; // max of 30 point lights
-            fixed4 LightColor;
-            float  LightNear;
-            float  LightFar;
+			float4 PointNearFar[30]; 
+			float4 PointLightColor[30];
 			int UsePointLight;
 
             float minDiffuse;
@@ -149,6 +148,9 @@ Shader "Custom/StandardShaderWithLighting"
 							float strength = maxPoint;
                 
 							float ndotl = clamp(dot(i.normal, l), 0, 1);
+							float LightNear = PointNearFar[count].x;
+							float LightFar = PointNearFar[count].y;
+							float4 LightColor = PointLightColor[count];
 							if (d > LightNear) 
 							{
 								if (d < LightFar) 
@@ -162,7 +164,7 @@ Shader "Custom/StandardShaderWithLighting"
 									strength = 0;
 								}
 							}
-							lightValue += ndotl * strength;
+							lightValue += ndotl * strength * LightColor;
 						}
 						
 					}
@@ -176,7 +178,7 @@ Shader "Custom/StandardShaderWithLighting"
 				// sample the texture
 				fixed4 col = tex2D(_MainTex, i.uv) * _Color;
 				fixed4 difLight = ComputeDiffuse(i);
-				fixed4 pointLight = ComputePointLight(i) * LightColor;
+				fixed4 pointLight = ComputePointLight(i);
 				
 				return col * (difLight + pointLight);
                 

@@ -22363,10 +22363,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightManager
   diffuseLightPos: {x: 0, y: 30, z: 0}
-  skyLightPos: {x: 5, y: 1.5, z: 0}
-  PointNear: 1
-  PointFar: 7
-  PointLightColor: {r: 0, g: 1, b: 0.8580706, a: 1}
+  skyLightPos: {x: -5, y: 1.5, z: 0}
+  SkyPointNear: 5
+  SkyPointFar: 18
+  SkyPointLightColor: {r: 1, g: 1, b: 0, a: 1}
+  BallPointNear: 1
+  BallPointFar: 7
+  BallPointLightColor: {r: 1, g: 1, b: 0, a: 1}
+  RayPointNear: 1
+  RayPointFar: 7
+  RayPointLightColor: {r: 1, g: 0.99951, b: 0, a: 1}
 --- !u!114 &1731630374
 MonoBehaviour:
   m_ObjectHideFlags: 0

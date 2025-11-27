@@ -11,10 +11,19 @@ public class LightManager : MonoBehaviour
 
     private Vector3 startingSkyLightPos;
     [SerializeField] Vector3 skyLightPos;
-    private List<Vector4> PointLightPos = new List<Vector4>();  
-    [SerializeField] float PointNear = 5.0f;
-    [SerializeField] float PointFar = 10.0f;
-    [SerializeField] Color PointLightColor = Color.white;
+    private List<Vector4> PointLightPos = new List<Vector4>();
+    private List<Vector4> PointNearFar = new List<Vector4>(); // x = near, y = far, z & w are unused
+    private List<Vector4> PointLightColor = new List<Vector4>();
+
+    [SerializeField] float SkyPointNear = 5.0f;
+    [SerializeField] float SkyPointFar = 10.0f;
+    [SerializeField] Color SkyPointLightColor = Color.white;
+    [SerializeField] float BallPointNear = 5.0f;
+    [SerializeField] float BallPointFar = 10.0f;
+    [SerializeField] Color BallPointLightColor = Color.white;
+    [SerializeField] float RayPointNear = 5.0f;
+    [SerializeField] float RayPointFar = 10.0f;
+    [SerializeField] Color RayPointLightColor = Color.white;
 
 
     private bool usePoint = false;
@@ -59,9 +68,9 @@ public class LightManager : MonoBehaviour
 
     void setUpPointLight()
     {
-        Shader.SetGlobalColor("LightColor", instance.PointLightColor);
-        Shader.SetGlobalFloat("LightNear", instance.PointNear);
-        Shader.SetGlobalFloat("LightFar", instance.PointFar);
+        //Shader.SetGlobalColor("LightColor", instance.PointLightColor);
+        //Shader.SetGlobalFloat("LightNear", instance.PointNear);
+        //Shader.SetGlobalFloat("LightFar", instance.PointFar);
         Shader.SetGlobalFloat("maxPoint", .3f);
     }
 
@@ -110,19 +119,33 @@ public class LightManager : MonoBehaviour
     public static void GetPointLightPositions()
     {
         instance.PointLightPos.Clear();
+        instance.PointNearFar.Clear();
+        instance.PointLightColor.Clear();
         if (instance.useSkyPoint)
         {
             instance.PointLightPos.Add(instance.skyLightPos);
+            instance.PointNearFar.Add(new Vector4(instance.SkyPointNear, instance.SkyPointFar, 0, 0));
+            instance.PointLightColor.Add(new Vector4(instance.SkyPointLightColor.r, instance.SkyPointLightColor.g, instance.SkyPointLightColor.b, instance.SkyPointLightColor.a));
         }
-        GolfBallManager.getGlowingGolfBallsPos(ref instance.PointLightPos);
-        GolfBallManager.getRayGolfBallsPos(ref instance.PointLightPos);
+        GolfBallManager.getGlowingGolfBallsPos(ref instance.PointLightPos, ref instance.PointNearFar, ref instance.PointLightColor);
+        GolfBallManager.getRayGolfBallsPos(ref instance.PointLightPos, ref instance.PointNearFar, ref instance.PointLightColor);
         for (int i = instance.PointLightPos.Count; i < 30; i++) // give the gpu 30 items
         {
             instance.PointLightPos.Add(new Vector4(1000, 0, 0, 0));
+            instance.PointNearFar.Add(Vector4.zero);
+            instance.PointLightColor.Add(Vector4.zero);
         }
 
         Shader.SetGlobalInteger("UsePointLight", instance.usePoint ? 1 : 0);
     }
+
+    public static Vector4 GetBallNearFar() { return new Vector4(instance.BallPointNear, instance.BallPointFar, 0, 0);  }
+
+    public static Vector4 GetBallColor() { return new Vector4(instance.BallPointLightColor.r, instance.BallPointLightColor.g, instance.BallPointLightColor.b, instance.BallPointLightColor.a); }
+
+    public static Vector4 GetRayNearFar() { return new Vector4(instance.RayPointNear, instance.RayPointFar, 0, 0); }
+
+    public static Vector4 GetRayColor() { return new Vector4(instance.RayPointLightColor.r, instance.RayPointLightColor.g, instance.RayPointLightColor.b, instance.RayPointLightColor.a); }
 
     static void UpdateShader()
     {
@@ -139,5 +162,7 @@ public class LightManager : MonoBehaviour
     {
         GetPointLightPositions();
         Shader.SetGlobalVectorArray("PointLightPosition", instance.PointLightPos);
+        Shader.SetGlobalVectorArray("PointNearFar", instance.PointNearFar);
+        Shader.SetGlobalVectorArray("PointLightColor", instance.PointLightColor);
     }
 }
