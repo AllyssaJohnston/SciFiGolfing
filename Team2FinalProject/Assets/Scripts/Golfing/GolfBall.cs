@@ -43,6 +43,7 @@ public class GolfBall : MonoBehaviour
         if ((firstGlow && (aliveTimer > (glowingLength + 3f))) || (!firstGlow && (aliveTimer > glowingLength)))
         {
             SetGlowEnabled(false);
+            firstGlow = false;
         }
 
     }
