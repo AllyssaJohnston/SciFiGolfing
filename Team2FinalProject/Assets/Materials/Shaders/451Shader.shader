@@ -101,21 +101,21 @@
 							float ndotl = clamp(dot(i.normal, l), 0, 1);
 							float LightNear = PointNearFar[count].x;
 							float LightFar = PointNearFar[count].y;
-							float4 LightColor = PointLightColor[count];
+							fixed4 LightColor = PointLightColor[count];
 							if (d > LightNear) 
 							{
 								if (d < LightFar) 
 								{
 									float range = LightFar - LightNear;
 									float n = d - LightNear;
-									strength = smoothstep(0, 1, 1 - (n*n) / (range*range));
+									strength = smoothstep(0, 1, 1.0 - (n*n) / (range*range));
 								}
 								else 
 								{
 									strength = 0;
 								}
 							}
-							lightValue += ndotl * strength * LightColor;
+							lightValue += ndotl * strength * (LightColor / 10);
 						}
 						
 					}

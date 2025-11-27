@@ -150,7 +150,7 @@ Shader "Custom/StandardShaderWithLighting"
 							float ndotl = clamp(dot(i.normal, l), 0, 1);
 							float LightNear = PointNearFar[count].x;
 							float LightFar = PointNearFar[count].y;
-							float4 LightColor = PointLightColor[count];
+							fixed4 LightColor = PointLightColor[count];
 							if (d > LightNear) 
 							{
 								if (d < LightFar) 
