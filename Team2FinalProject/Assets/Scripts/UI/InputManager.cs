@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
@@ -7,7 +6,6 @@ public class InputManager : MonoBehaviour
 {
     private static InputManager instance;
     private Vector2 mousePos;
-    private Vector2 lastMousePos;
     private bool mouseDownLastFrame;
     LayerMask nodeColliderMask;
 
@@ -37,14 +35,7 @@ public class InputManager : MonoBehaviour
 
     private void useInput()
     {
-        lastMousePos = new Vector2(mousePos.x, mousePos.y);
         mousePos = Input.mousePosition;
-
-        //if (Input.GetKey(KeyCode.R))
-        //{
-        //    ResetCalled();
-        //    return;
-        //}
        
         bool curMouseDown = Mouse.current.leftButton.isPressed;
 
@@ -52,10 +43,6 @@ public class InputManager : MonoBehaviour
         {
             leftMouseClick();
         }
-        //else if (curMouseDown && mouseDownLastFrame)
-        //{
-        //    leftMouseHeld();
-        //}
         mouseDownLastFrame = curMouseDown;
     }
 
@@ -65,7 +52,7 @@ public class InputManager : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (EventSystem.current.IsPointerOverGameObject() || UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject != null)
+        if (EventSystem.current.IsPointerOverGameObject() || EventSystem.current.currentSelectedGameObject != null)
         {
             // on UI, ignore
         }
