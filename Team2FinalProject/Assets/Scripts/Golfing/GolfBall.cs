@@ -8,15 +8,14 @@ public class GolfBall : MonoBehaviour
     public float collisionChangeTimeLength = 0.2f;
     private float collisionChangeTimer = .1f;
     private float aliveTimer = 0f;
-    private float glowingLength = 10f;
-    public Texture glowingTexture;
-    public Texture plainTexture;
+    private float glowingLength = 4.5f;
     public Material ballMaterial;
     private Renderer r;
     public float glowIntensity = 1.0f;
     public float scrollSpeed = 1f;
     public float pulseSpeed = 2f;
     public bool glowEnabled = false;
+    private static bool firstGlow = true;
 
     public void SetUp()
     {
@@ -26,10 +25,8 @@ public class GolfBall : MonoBehaviour
         r.material = ballMaterial;
         ObjectManager.resetWorld.AddListener(Reset);
         resetCollisionTimer();
-        glowingTexture = ballMaterial.GetTexture("_MainTex");
-        plainTexture = ballMaterial.GetTexture("_GlowTex");
-
         SetGlowEnabled(glowEnabled);
+
     }
 
     // Update is called once per frame
@@ -43,25 +40,11 @@ public class GolfBall : MonoBehaviour
         if (collisionChangeTimer <= 0){
             collisionActive = true;
         }
-        if (aliveTimer > glowingLength)
+        if ((firstGlow && (aliveTimer > (glowingLength + 3f))) || (!firstGlow && (aliveTimer > glowingLength)))
         {
             SetGlowEnabled(false);
         }
-    }
 
-    private void ApplyGlowTexture()
-    {
-        ballMaterial.SetTexture("_MainTex", glowingTexture);
-        ballMaterial.SetTexture("_GlowTex", glowingTexture);
-
-        ballMaterial.SetFloat("_GlowIntensity", glowIntensity);
-        ballMaterial.SetFloat("_ScrollSpeed", scrollSpeed);
-        ballMaterial.SetFloat("_PulseSpeed", pulseSpeed);
-    }
-    private void ApplyPlainTexture()
-    {
-        ballMaterial.SetTexture("_MainTex", plainTexture);
-        ballMaterial.SetFloat("GlowIntensity", 0f);
     }
 
     public void resetCollisionTimer()
@@ -104,11 +87,13 @@ public class GolfBall : MonoBehaviour
         r.material.SetFloat("_GlowEnabled", enable ? 1f : 0f);
         if (enable)
         {
-            ApplyGlowTexture();
+            ballMaterial.SetFloat("_GlowIntensity", glowIntensity);
+            ballMaterial.SetFloat("_ScrollSpeed", scrollSpeed);
+            ballMaterial.SetFloat("_PulseSpeed", pulseSpeed);
         }
         else
         {
-            ApplyPlainTexture();
+            ballMaterial.SetFloat("GlowIntensity", 0f);
         }
     }
 

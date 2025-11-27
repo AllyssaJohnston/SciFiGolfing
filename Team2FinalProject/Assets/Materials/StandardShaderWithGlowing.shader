@@ -23,12 +23,13 @@ Shader "Custom/StandardShaderWithGlowing"
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
-        LOD 200
+        Tags { "Queue"="Transparent" "RenderType"="Transparent"  }
+		LOD 200
+		Blend SrcAlpha OneMinusSrcAlpha
 
         CGPROGRAM
         // Physically based Standard lighting model, and enable shadows on all light types
-        #pragma surface surf Standard fullforwardshadows
+        #pragma surface surf Standard fullforwardshadows alpha
 
         // Use shader model 3.0 target, to get nicer looking lighting
         #pragma target 3.0
@@ -71,8 +72,8 @@ Shader "Custom/StandardShaderWithGlowing"
         Pass 
         {
             CGPROGRAM
-			#pragma vertex vert
-			#pragma fragment frag
+			#pragma vertex vert alpha
+			#pragma fragment frag alpha
 			// make fog work
 			
 			#include "UnityCG.cginc"
@@ -188,26 +189,38 @@ Shader "Custom/StandardShaderWithGlowing"
 			fixed4 frag (v2f i) : SV_Target
 			{
 				// sample the texture
-				fixed4 col = tex2D(_MainTex, i.uv) * _Color;
+				fixed4 col = tex2D(_MainTex, i.uv) * _Color + fixed4(.7, .7, .7, 0);
 				fixed4 difLight = ComputeDiffuse(i);
 				fixed4 pointLight = ComputePointLight(i) * LightColor;
 
 				// Switch of Glowing return to normal lighting
-				if(_GlowEnabled < 0.5)
+				if (_GlowEnabled < 0.5)
 				{
-					return col * (difLight + pointLight);
+					fixed4 blended = col * (difLight + pointLight);
+					return fixed4(blended.r, blended.g, blended.b, 1);
+				}
+				else
+				{
+					// Switch on Glowing, UV scrolling (translate in MP6)
+					float2 glowUV = i.uv;
+					glowUV.x += _ScrollSpeed * _Time.y;
+					float pulse = sin(_Time.y * _PulseSpeed) * 0.5 + 0.5; // pulsing emission
+					fixed4 glowCol = (tex2D(_GlowTex, glowUV) * _Color * _GlowIntensity * pulse) + fixed4(.5, .5, .5, 0);
+
+					
+					
+
+					fixed4 combinedCol = col * (difLight + pointLight); 
+					float whiteAlpha = 1.0 - (glowCol.a + combinedCol.a);
+					if (whiteAlpha < 0) { whiteAlpha = 0; }
+					fixed4 blended =  fixed4(glowCol.r * glowCol.a,			glowCol.g * glowCol.a,			glowCol.b * glowCol.a,			0) 
+									+ fixed4(combinedCol.r * combinedCol.a, combinedCol.g * combinedCol.a,	combinedCol.b * combinedCol.a,	0) 
+									+ fixed4(1 * whiteAlpha,				1 * whiteAlpha,					1 * whiteAlpha,					1);
+
+					return blended;
 				}
 
-				// Switch on Glowing, UV scrolling (translate in MP6)
-				float2 glowUV = i.uv;
-				glowUV.x += _ScrollSpeed * _Time.y;
-				fixed4 glowCol = tex2D(_GlowTex, glowUV);
-
-				// pulsing emission
-				float pulse = sin(_Time.y * _PulseSpeed) * 0.5 + 0.5;
-				fixed4 emmisive = glowCol * _GlowIntensity * pulse;
-
-				return col * (difLight + pointLight) + emmisive;
+				
                 
 			}
 
