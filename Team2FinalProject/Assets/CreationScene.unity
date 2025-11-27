@@ -1891,7 +1891,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1675681707}
   - {fileID: 1328568484}
   - {fileID: 1193604589}
   m_Father: {fileID: 1580569717}
@@ -2771,7 +2770,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!1 &253523631
 GameObject:
   m_ObjectHideFlags: 0
@@ -3043,13 +3042,14 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1461661456}
+  - {fileID: 2142648183}
   - {fileID: 713016427}
   m_Father: {fileID: 1388694846}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 552.5083, y: 592.69}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 276.25415, y: -1353.8867}
+  m_SizeDelta: {x: 552.5083, y: 582}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &283561194
 MonoBehaviour:
@@ -3063,9 +3063,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 720396bb079175144a9ae74074ab3e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PanelScript
+  whenToShow: 0
   parent: {fileID: 283561192}
   panel: {fileID: 1461661455}
   toggle: {fileID: 713016429}
+  title: {fileID: 2142648184}
 --- !u!21 &288581855
 Material:
   serializedVersion: 8
@@ -6393,13 +6395,14 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 775993739}
+  - {fileID: 1610289381}
   - {fileID: 1626592030}
   m_Father: {fileID: 1388694846}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 531.04, y: 261.3939}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 265.52, y: -918.7112}
+  m_SizeDelta: {x: 531.04, y: 258.351}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &565847325
 MonoBehaviour:
@@ -6413,9 +6416,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 720396bb079175144a9ae74074ab3e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PanelScript
+  whenToShow: 0
   parent: {fileID: 565847323}
   panel: {fileID: 775993738}
   toggle: {fileID: 1626592032}
+  title: {fileID: 1610289382}
 --- !u!1001 &568513968
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7970,7 +7975,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!114 &723341217 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
@@ -8636,14 +8641,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1900946309}
   - {fileID: 277794377}
   - {fileID: 1760309268}
   m_Father: {fileID: 1423111222}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 290.03064, y: -168}
+  m_AnchoredPosition: {x: 290.03064, y: -162}
   m_SizeDelta: {x: 579.9388, y: 329.4605}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &758299659
@@ -8728,7 +8732,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1610289381}
   - {fileID: 1844273774}
   m_Father: {fileID: 565847324}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15155,7 +15158,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1759263213}
   - {fileID: 1049011213}
   m_Father: {fileID: 1790607476}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16917,7 +16919,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 5
+  m_Spacing: 15
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -17577,13 +17579,14 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 758299658}
+  - {fileID: 1900946309}
   - {fileID: 1372609236}
   m_Father: {fileID: 1388694846}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 533.09, y: 337.6504}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: -1098.4364}
+  m_SizeDelta: {x: 533.09, y: 323.9007}
   m_Pivot: {x: 0, y: -1}
 --- !u!114 &1423111223
 MonoBehaviour:
@@ -17597,9 +17600,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 720396bb079175144a9ae74074ab3e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PanelScript
+  whenToShow: 0
   parent: {fileID: 1423111221}
   panel: {fileID: 758299657}
   toggle: {fileID: 1372609238}
+  title: {fileID: 1900946310}
 --- !u!1 &1423498663
 GameObject:
   m_ObjectHideFlags: 0
@@ -18439,7 +18444,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2142648183}
   - {fileID: 1617859163}
   - {fileID: 1109836769}
   - {fileID: 134853398}
@@ -18448,7 +18452,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 266.545, y: -300}
+  m_AnchoredPosition: {x: 266.545, y: -291}
   m_SizeDelta: {x: 533.09, y: 584.5441}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1461661457
@@ -19454,13 +19458,14 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 187110199}
+  - {fileID: 1675681707}
   - {fileID: 727841624}
   m_Father: {fileID: 1388694846}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 531.04, y: 261.3939}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 265.52, y: -1788.823}
+  m_SizeDelta: {x: 531.04, y: 257.8725}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1580569718
 MonoBehaviour:
@@ -19474,9 +19479,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 720396bb079175144a9ae74074ab3e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PanelScript
+  whenToShow: 1
   parent: {fileID: 1580569716}
   panel: {fileID: 187110195}
   toggle: {fileID: 727841626}
+  title: {fileID: 1675681708}
 --- !u!21 &1587265569
 Material:
   serializedVersion: 8
@@ -19984,7 +19991,7 @@ GameObject:
   - component: {fileID: 1610289383}
   - component: {fileID: 1610289382}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: SwingText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19997,16 +20004,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1610289380}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 775993739}
+  m_Father: {fileID: 565847324}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 263.63, y: -49.7231}
+  m_AnchoredPosition: {x: 263.68494, y: -49.733154}
   m_SizeDelta: {x: 453.25, y: 59.4463}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1610289382
@@ -21286,7 +21293,7 @@ GameObject:
   - component: {fileID: 1675681709}
   - component: {fileID: 1675681708}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: GlowingText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21299,16 +21306,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1675681706}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 187110199}
+  m_Father: {fileID: 1580569717}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 263.63, y: -34}
+  m_AnchoredPosition: {x: 263.68494, y: -34.01001}
   m_SizeDelta: {x: 453.25, y: 59.4463}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1675681708
@@ -22323,14 +22330,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
   setUpPanels:
-  - {fileID: 1790607475}
-  - {fileID: 233915566}
-  - {fileID: 1423111221}
-  - {fileID: 1372609235}
-  - {fileID: 565847323}
-  - {fileID: 1626592029}
-  - {fileID: 283561192}
-  - {fileID: 713016426}
   - {fileID: 1341470896}
   - {fileID: 1776488264}
   - {fileID: 1740897457}
@@ -22340,10 +22339,13 @@ MonoBehaviour:
   - {fileID: 1740497819}
   - {fileID: 290161917}
   - {fileID: 160544919}
-  - {fileID: 1580569716}
-  - {fileID: 1193604588}
+  panels:
+  - {fileID: 1790607477}
+  - {fileID: 1423111223}
+  - {fileID: 565847325}
+  - {fileID: 283561194}
+  - {fileID: 1580569718}
   rotPanel: {fileID: 1423111221}
-  rotPanelToggle: {fileID: 1372609235}
 --- !u!114 &1731630373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22538,9 +22540,9 @@ RectTransform:
   - {fileID: 221156466}
   m_Father: {fileID: 1388694846}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1.5584, y: -86.2683}
   m_SizeDelta: {x: 3.1168, y: 172.5366}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1747491488 stripped
@@ -22837,7 +22839,7 @@ GameObject:
   - component: {fileID: 1759263215}
   - component: {fileID: 1759263214}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: LookAtText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22850,16 +22852,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1759263212}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1299434109}
+  m_Father: {fileID: 1790607476}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 264.3996, y: -42}
+  m_AnchoredPosition: {x: 264.47467, y: -42}
   m_SizeDelta: {x: 454.7972, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1759263214
@@ -23761,12 +23763,13 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1299434109}
+  - {fileID: 1759263213}
   - {fileID: 233915567}
   m_Father: {fileID: 1388694846}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 265.525, y: -311.58582}
   m_SizeDelta: {x: 531.05, y: 248.0984}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1790607477
@@ -23781,9 +23784,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 720396bb079175144a9ae74074ab3e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PanelScript
+  whenToShow: 0
   parent: {fileID: 1790607475}
   panel: {fileID: 1299434108}
   toggle: {fileID: 233915568}
+  title: {fileID: 1759263214}
 --- !u!1001 &1805221672
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25360,7 +25365,7 @@ GameObject:
   - component: {fileID: 1900946311}
   - component: {fileID: 1900946310}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: RotationText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25373,16 +25378,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1900946308}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 758299658}
+  m_Father: {fileID: 1423111222}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 263.63, y: -49.7231}
+  m_AnchoredPosition: {x: 263.69128, y: -46.992676}
   m_SizeDelta: {x: 453.25, y: 59.4463}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1900946310
@@ -28188,7 +28193,7 @@ GameObject:
   - component: {fileID: 2142648185}
   - component: {fileID: 2142648184}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: LightingText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28206,11 +28211,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1461661456}
+  m_Father: {fileID: 283561193}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 263.69128, y: -42}
+  m_AnchoredPosition: {x: 263.69128, y: -40.727905}
   m_SizeDelta: {x: 453.25, y: 59.4463}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2142648184

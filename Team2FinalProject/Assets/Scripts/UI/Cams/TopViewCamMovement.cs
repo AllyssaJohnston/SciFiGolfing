@@ -51,7 +51,6 @@ public class TopViewCamMovement : MonoBehaviour
             if (obj == null) { continue; }
             Vector2 screenPos = cam.WorldToViewportPoint(obj.transform.position);
             additivePosition += obj.transform.position;
-            Debug.Log(screenPos);
             if (screenPos.x < 0)
             {
                 radius = Mathf.Max(radius, (obj.transform.position - lookAtPos).magnitude);
