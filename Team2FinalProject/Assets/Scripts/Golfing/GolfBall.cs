@@ -84,6 +84,7 @@ public class GolfBall : MonoBehaviour
 
     public void SetGlowEnabled(bool enable)
     {
+        Debug.Log(enable);
         glowEnabled = enable;
         r.material.SetFloat("_GlowEnabled", enable ? 1f : 0f);
         if (enable)
