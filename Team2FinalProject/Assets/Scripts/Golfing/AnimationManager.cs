@@ -117,7 +117,10 @@ public class AnimationManager : MonoBehaviour
 
     public static void Reset()
     {
-        StopAnimation();
+        if (playing)
+        {
+            StopAnimation();
+        }
         instance.range = startingRange;
         instance.force = startingForce;
         instance.speed = startingSpeed;

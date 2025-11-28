@@ -25,7 +25,6 @@ public class GlowingManager : MonoBehaviour
 
     void Start()
     {
-        SetupSliders();
         intensityLabel.text = "Intensity: " + glowIntensitySlider.value.ToString("F2");
         scrollLabel.text = "Scroll speed: " + scrollSpeedSlider.value.ToString("F2");
         pulseLabel.text = "Pulse speed: " + pulseSpeedSlider.value.ToString("F2");
@@ -35,22 +34,6 @@ public class GlowingManager : MonoBehaviour
         pulseSpeedSlider.onValueChanged.AddListener(OnPulseSpeedChanged);
     }
 
-    private void SetupSliders()
-    {
-        glowIntensitySlider.minValue = 0f;
-        glowIntensitySlider.maxValue = 5f;
-
-        scrollSpeedSlider.minValue = -5f;
-        scrollSpeedSlider.maxValue = 5f;
-
-        pulseSpeedSlider.minValue = 0f;
-        pulseSpeedSlider.maxValue = 10f;
-
-        glowToggle.isOn = false;                
-        glowIntensitySlider.value = 1f;        
-        scrollSpeedSlider.value = 0.5f;           
-        pulseSpeedSlider.value = 2f;            
-    }
 
     public static void setUpGlow(GolfBall ball)
     {
