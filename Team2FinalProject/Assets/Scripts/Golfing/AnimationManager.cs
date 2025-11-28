@@ -50,7 +50,7 @@ public class AnimationManager : MonoBehaviour
         leftShoulderQ = instance.leftShoulder.localRotation;
         leftElbowQ = instance.leftElbow.localRotation;
         golfClubQ = instance.golfClub.localRotation;
-        ObjectManager.resetWorld.AddListener(Reset);
+        ObjectManager.backToSetUp.AddListener(Reset);
         
     }
 

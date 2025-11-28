@@ -4,9 +4,15 @@ using UnityEngine.Events;
 public class ObjectManager : MonoBehaviour
 {
     private static ObjectManager instance;
+
     private static SceneNode curSceneObj; // SceneNode of the selected scene node
     public static UnityEvent curObjectChanged;
     public static UnityEvent curSceneObjectValuesChanged;
+
+    private static GameObject curHoleObj;
+    public static UnityEvent curHoleChanged;
+
+    public static UnityEvent backToSetUp;
     public static UnityEvent resetWorld;
 
     public void Awake()
@@ -19,6 +25,8 @@ public class ObjectManager : MonoBehaviour
         instance = this;
         curObjectChanged = new UnityEvent();
         curSceneObjectValuesChanged = new UnityEvent();
+        curHoleChanged = new UnityEvent();
+        backToSetUp = new UnityEvent();
         resetWorld = new UnityEvent();
     }
 
@@ -28,7 +36,14 @@ public class ObjectManager : MonoBehaviour
         curObjectChanged.Invoke();
     }
 
+    public static void SetCurHoleObject(GameObject obj)
+    {
+        curHoleObj = obj;
+        curHoleChanged.Invoke();
+    }
+
     public static SceneNode GetCurObject() { return curSceneObj; }
+    public static GameObject GetCurHoleObject() { return curHoleObj; }
 
     // get a value of the scene node
     public static float GetCurObjectValue(EAxis axis)
@@ -71,6 +86,36 @@ public class ObjectManager : MonoBehaviour
 
         curSceneObjectValuesChanged.Invoke();
     }
+
+    // get a value of the hole
+    public static float GetCurHoleObjectValue(EAxis axis)
+    {
+        switch (axis)
+        {
+            case EAxis.X: return curHoleObj.transform.position.x;
+            case EAxis.Z: return curHoleObj.transform.position.z;
+            default: Debug.Log("unrecognized axis " + axis); return 0f;
+        }
+    }
+
+    // set a value of the hole
+    public static void SetCurHoleObjectValue(EAxis axis, float value)
+    {
+        switch (axis)
+        {
+            case EAxis.X:
+                curHoleObj.transform.position = new Vector3(value, curHoleObj.transform.position.y, curHoleObj.transform.position.z);
+                break;
+            case EAxis.Z:
+                curHoleObj.transform.position = new Vector3(curHoleObj.transform.position.x, curHoleObj.transform.position.y, value);
+                break;
+            default:
+                Debug.Log("unrecognized axis " + axis);
+                break;
+        }
+    }
+
+    public static void BackToSetUp() { backToSetUp.Invoke();  }
 
     public static void Reset() { resetWorld.Invoke(); }
 }

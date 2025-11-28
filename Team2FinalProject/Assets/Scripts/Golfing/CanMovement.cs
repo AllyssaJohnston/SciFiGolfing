@@ -9,7 +9,7 @@ public class CanMovement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        ObjectManager.resetWorld.AddListener(Reset);
+        ObjectManager.backToSetUp.AddListener(Reset);
         rb = GetComponent<Rigidbody>();
         startingPos = transform.position;
         startingRot = transform.rotation;
