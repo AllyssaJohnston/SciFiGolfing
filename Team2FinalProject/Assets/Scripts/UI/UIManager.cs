@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class UIManager : MonoBehaviour
     public List<GameObject> playPanels = new List<GameObject>();
     public List<PanelScript> panels = new List<PanelScript>();
     public PanelScript rotPanel;
+    public TMP_Text rotText;
+    public TMP_Dropdown rotSceneNodeDropDown;
 
 
     public void Awake()
@@ -33,6 +36,8 @@ public class UIManager : MonoBehaviour
     {
         EGameMode gameMode = GameManager.GetGameMode();
         Debug.Log(gameMode);
+        instance.rotText.gameObject.SetActive(false);
+        instance.rotSceneNodeDropDown.gameObject.SetActive(true);
         for (int i = 0; i < instance.panels.Count; i++)
         {
             instance.panels[i].SetVisibility();
@@ -48,5 +53,10 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public static void showRotPanel() { instance.rotPanel.SetVisibility(true); }
+    public static void showRotPanel() 
+    { 
+        instance.rotPanel.SetVisibility(true);
+        instance.rotText.gameObject.SetActive(true);
+        instance.rotSceneNodeDropDown.gameObject.SetActive(false);
+    }
 }
