@@ -36,7 +36,7 @@ public class GolfBallManager : MonoBehaviour
         rayCylinder.SetActive(false);
         instance.rayCylinder.transform.localScale = new Vector3(.5f, rayDist / 2, .5f);
         GameManager.gameModeChanged.AddListener(AddBall);
-        ObjectManager.resetWorld.AddListener(Reset);
+        ObjectManager.backToSetUp.AddListener(Reset);
     }
 
     public void Update()
@@ -51,6 +51,7 @@ public class GolfBallManager : MonoBehaviour
 
     private static void AddBall()
     {
+        if (GameManager.GetGameMode() != EGameMode.PLAY) { return; }
         Vector3 spawnPosForward = new Vector3(instance.SpawnPos.getXForm()[0, 2], instance.SpawnPos.getXForm()[1, 2], instance.SpawnPos.getXForm()[2, 2]).normalized * -1;
         Vector3 spawnPosRight = new Vector3(instance.SpawnPos.getXForm()[0, 0], instance.SpawnPos.getXForm()[1, 0], instance.SpawnPos.getXForm()[2, 0]).normalized * -1.25f;
         Vector3 spawnPosition = instance.SpawnPos.getXForm().GetPosition() + spawnPosForward + spawnPosRight;

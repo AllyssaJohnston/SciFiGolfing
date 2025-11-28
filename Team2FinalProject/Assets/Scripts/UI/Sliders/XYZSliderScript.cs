@@ -5,7 +5,8 @@ public enum ESliderType
     CAMERA,
     NODE,
     DIFFUSE,
-    POINT
+    POINT,
+    HOLE
 }
 
 public enum EAxis
@@ -94,6 +95,10 @@ public class XYZSliderScript : SliderScript
                         value = position.z; break;
                 }
                 break;
+
+            case ESliderType.HOLE:
+                value = ObjectManager.GetCurHoleObjectValue(axis);
+                break;
         }
         slider.value = value;
         lastValue = value;
@@ -122,6 +127,9 @@ public class XYZSliderScript : SliderScript
                     break;
                 case ESliderType.POINT:
                     LightManager.UpdatePointLightPosition(axis, value);
+                    break;
+                case ESliderType.HOLE:
+                    ObjectManager.SetCurHoleObjectValue(axis, value);
                     break;
             }
         }

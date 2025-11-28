@@ -23,7 +23,7 @@ public class GolfBall : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         r = GetComponent<Renderer>();
         r.material = ballMaterial;
-        ObjectManager.resetWorld.AddListener(Reset);
+        ObjectManager.backToSetUp.AddListener(Reset);
         resetCollisionTimer();
         SetGlowEnabled(glowEnabled);
 
@@ -45,7 +45,11 @@ public class GolfBall : MonoBehaviour
             SetGlowEnabled(false);
             firstGlow = false;
         }
-
+        if (transform.position.y < -20f)
+        {
+            // safety, did fall out of world?
+            RemoveSelf();
+        }
     }
 
     public void resetCollisionTimer()

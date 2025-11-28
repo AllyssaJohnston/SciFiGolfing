@@ -11,6 +11,7 @@ public class SliderManager : MonoBehaviour
     [SerializeField] XYZSliderScript[] lookAtSliders = new XYZSliderScript[3]; //camera sliders
     [SerializeField] List<AttributeSliderScript> swingSliders = new List< AttributeSliderScript>(); // golf sliders
     [SerializeField] XYZSliderScript[] lightingSliders = new XYZSliderScript[6]; //rotation sliders
+    [SerializeField] XYZSliderScript[] holeSliders = new XYZSliderScript[2]; //rotation sliders
 
     void Awake()
     {
@@ -32,6 +33,11 @@ public class SliderManager : MonoBehaviour
             instance.lookAtSliders[i].resetData();
             instance.lightingSliders[i].resetData();
             instance.lightingSliders[i + 3].resetData();
+            
+        }
+        for (int i = 0; i < instance.holeSliders.Length; i++)
+        {
+            instance.holeSliders[i].resetData();
         }
 
         ResetAttributeSliders();
@@ -50,6 +56,14 @@ public class SliderManager : MonoBehaviour
         for (int i = 0; i < instance.swingSliders.Count; i++)
         {
             instance.swingSliders[i].resetData();
+        }
+    }
+
+    public static void ResetHoleSliders()
+    {
+        for (int i = 0; i < instance.holeSliders.Length; i++)
+        {
+            instance.holeSliders[i].resetData();
         }
     }
 
