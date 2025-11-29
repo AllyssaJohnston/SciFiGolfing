@@ -12,6 +12,10 @@ public class GlowingManager : MonoBehaviour
     public TMP_Text intensityLabel;
     public TMP_Text scrollLabel;
     public TMP_Text pulseLabel;
+    private float startingIntensity;
+    private float startingScrollSpeed;
+    private float startingPulseSpeed;
+    [SerializeField] GolfBall template;
 
     public void Awake()
     {
@@ -25,6 +29,9 @@ public class GlowingManager : MonoBehaviour
 
     void Start()
     {
+        startingIntensity = glowIntensitySlider.value;
+        startingScrollSpeed = scrollSpeedSlider.value;
+        startingPulseSpeed = pulseSpeedSlider.value;
         intensityLabel.text = "Intensity: " + glowIntensitySlider.value.ToString("F2");
         scrollLabel.text = "Scroll speed: " + scrollSpeedSlider.value.ToString("F2");
         pulseLabel.text = "Pulse speed: " + pulseSpeedSlider.value.ToString("F2");
@@ -32,6 +39,7 @@ public class GlowingManager : MonoBehaviour
         glowIntensitySlider.onValueChanged.AddListener(OnGlowIntensityChanged);
         scrollSpeedSlider.onValueChanged.AddListener(OnScrollSpeedChanged);
         pulseSpeedSlider.onValueChanged.AddListener(OnPulseSpeedChanged);
+        ObjectManager.resetWorld.AddListener(Reset);
     }
 
 
@@ -62,6 +70,7 @@ public class GlowingManager : MonoBehaviour
             if (ball == null || ball.enabled == false) { continue; }
             ball.SetGlowIntensity(value);
         }
+        template.SetGlowIntensity(value);
     }
 
     void OnScrollSpeedChanged(float value)
@@ -72,6 +81,7 @@ public class GlowingManager : MonoBehaviour
             if (ball == null || ball.enabled == false) { continue; }
             ball.SetScrollSpeed(value);
         }
+        template.SetScrollSpeed(value);
     }
 
     void OnPulseSpeedChanged(float value)
@@ -82,5 +92,13 @@ public class GlowingManager : MonoBehaviour
             if (ball == null || ball.enabled == false) { continue; }
             ball.SetPulseSpeed(value);
         }
+        template.SetPulseSpeed(value);
+    }
+
+    private void Reset()
+    {
+        glowIntensitySlider.value = startingIntensity;
+        scrollSpeedSlider.value = startingScrollSpeed;
+        pulseSpeedSlider.value = startingPulseSpeed;
     }
 }

@@ -4,6 +4,7 @@ public class GolfBall : MonoBehaviour
 {
     Rigidbody rb;
 
+    public bool template = false;
     public bool collisionActive = false;
     public float collisionChangeTimeLength = 0.2f;
     private float collisionChangeTimer = .1f;
@@ -17,21 +18,38 @@ public class GolfBall : MonoBehaviour
     public bool glowEnabled = false;
     private static bool firstGlow = true;
 
+    private void Start()
+    {
+        if (template)
+        {
+            r = GetComponent<Renderer>();
+            r.material = ballMaterial;
+            SetGlowEnabled(true);
+            SetGlowIntensity(1);
+            SetScrollSpeed(1);
+            SetPulseSpeed(2);
+        }
+    }
+
     public void SetUp()
     {
         collisionChangeTimer = collisionChangeTimeLength;
-        rb = GetComponent<Rigidbody>();
         r = GetComponent<Renderer>();
         r.material = ballMaterial;
+        rb = GetComponent<Rigidbody>();
         ObjectManager.backToSetUp.AddListener(Reset);
         resetCollisionTimer();
         SetGlowEnabled(glowEnabled);
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (template)
+        {
+            return;
+        }
         aliveTimer += Time.deltaTime;
         if (!collisionActive)
         {
@@ -60,6 +78,10 @@ public class GolfBall : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (template)
+        {
+            return;
+        }
         if (collision == null || collision.collider == null || collision.gameObject.transform.parent == null) { return; }
         if (collision.gameObject.layer == LayerMask.NameToLayer("hole"))
         {
@@ -76,9 +98,23 @@ public class GolfBall : MonoBehaviour
         }
     }
 
-    public void Reset() { RemoveSelf(); }
+    public void Reset() 
+    {
+        if (template)
+        {
+            return;
+        }
+        RemoveSelf(); 
+    }
 
-    public bool glowing() {  return aliveTimer < glowingLength; }
+    public bool glowing() 
+    {
+        if (template)
+        {
+            return true;
+        }
+        return aliveTimer < glowingLength; 
+    }
 
     private void RemoveSelf()
     {
