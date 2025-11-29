@@ -24,7 +24,11 @@ public class SliderManager : MonoBehaviour
         instance = this;
     }
 
-    
+    private void Start()
+    {
+        ObjectManager.curHoleChanged.AddListener(ResetHoleSliders);
+    }
+
     public void Reset()
     {
         for (int i = 0; i < instance.xyzSliders.Length; i++)
