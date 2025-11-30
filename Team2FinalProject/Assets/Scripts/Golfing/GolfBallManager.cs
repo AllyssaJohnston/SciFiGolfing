@@ -21,6 +21,8 @@ public class GolfBallManager : MonoBehaviour
     private static float rayTimerLength = 2f;
     public GameObject rayCylinder;
 
+    private static Matrix4x4 lastSpawnPos = Matrix4x4.zero;
+
     public void Awake()
     {
         if (instance != null && instance != this)
@@ -80,6 +82,8 @@ public class GolfBallManager : MonoBehaviour
         Vector3 rayStartRight = new Vector3(instance.SpawnPos.getXForm()[0, 0], instance.SpawnPos.getXForm()[1, 0], instance.SpawnPos.getXForm()[2, 0]).normalized * -1.25f;
         Vector3 rayStartUp = new Vector3(instance.SpawnPos.getXForm()[0, 1], instance.SpawnPos.getXForm()[1, 1], instance.SpawnPos.getXForm()[2, 1]).normalized * -4f;
         Vector3 rayStartPos = instance.SpawnPos.getXForm().GetPosition() + rayStartForward + rayStartRight + rayStartUp;
+
+        lastSpawnPos = instance.SpawnPos.getXForm();
 
         instance.rayCylinder.SetActive(true);
         instance.rayCylinder.transform.position = rayStartPos;
@@ -171,10 +175,10 @@ public class GolfBallManager : MonoBehaviour
             Vector4 rayColor = LightManager.GetRayColor();
             int light = pointLightPos.Count;
 
-            Vector3 rayForward = new Vector3(instance.SpawnPos.getXForm()[0, 2], instance.SpawnPos.getXForm()[1, 2], instance.SpawnPos.getXForm()[2, 2]).normalized * -1;
-            Vector3 rayStartRight = new Vector3(instance.SpawnPos.getXForm()[0, 0], instance.SpawnPos.getXForm()[1, 0], instance.SpawnPos.getXForm()[2, 0]).normalized * -1.25f;
-            Vector3 rayStartUp = new Vector3(instance.SpawnPos.getXForm()[0, 1], instance.SpawnPos.getXForm()[1, 1], instance.SpawnPos.getXForm()[2, 1]).normalized * -4f;
-            Vector3 rayStartPos = instance.SpawnPos.getXForm().GetPosition() + rayForward + rayStartRight + rayStartUp + Vector3.up * .5f;
+            Vector3 rayForward = new Vector3(lastSpawnPos[0, 2], lastSpawnPos[1, 2], lastSpawnPos[2, 2]).normalized * -1;
+            Vector3 rayStartRight = new Vector3(lastSpawnPos[0, 0], lastSpawnPos[1, 0], lastSpawnPos[2, 0]).normalized * -1.25f;
+            Vector3 rayStartUp = new Vector3(lastSpawnPos[0, 1], lastSpawnPos[1, 1], lastSpawnPos[2, 1]).normalized * -4f;
+            Vector3 rayStartPos = lastSpawnPos.GetPosition() + rayForward + rayStartRight + rayStartUp + Vector3.up * .5f;
 
             float length = instance.rayCylinder.transform.localScale.y * 2;
             int spacing = 3;

@@ -124,4 +124,5 @@ public class GameManager : MonoBehaviour
         lightMode = givenLightMode;
         lightModeChanged.Invoke();
     }
+
 }
