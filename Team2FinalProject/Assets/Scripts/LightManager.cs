@@ -49,6 +49,7 @@ public class LightManager : MonoBehaviour
         setUpDiffuseLight();
         setUpPointLight();
         changeLighting(GameManager.GetLightMode());
+        
     }
 
     private void Update() { UpdatePointLightShader(); }
