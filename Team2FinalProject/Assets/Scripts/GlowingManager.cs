@@ -60,6 +60,7 @@ public class GlowingManager : MonoBehaviour
             if (ball == null || ball.enabled == false) { continue; }
             ball.SetGlowEnabled(enabled);
         }
+        template.SetGlowEnabled(enabled);
     }
 
     void OnGlowIntensityChanged(float value)
@@ -97,6 +98,7 @@ public class GlowingManager : MonoBehaviour
 
     private void Reset()
     {
+        glowToggle.isOn = true;
         glowIntensitySlider.value = startingIntensity;
         scrollSpeedSlider.value = startingScrollSpeed;
         pulseSpeedSlider.value = startingPulseSpeed;

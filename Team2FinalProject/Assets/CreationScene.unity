@@ -2294,7 +2294,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1675681707}
   - {fileID: 1193604589}
   - {fileID: 470615945}
   - {fileID: 990063578}
@@ -6680,7 +6679,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Pulse
+  m_Text: Glow
 --- !u!222 &507339994
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13857,10 +13856,10 @@ RectTransform:
   - {fileID: 1311402157}
   m_Father: {fileID: 1264481562}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -286.19006, y: -540.9548}
-  m_SizeDelta: {x: 577.78, y: 1078.1}
+  m_AnchoredPosition: {x: -286.18994, y: -0.954834}
+  m_SizeDelta: {x: 577.78, y: -1.9000244}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1044909713
 MonoBehaviour:
@@ -22041,6 +22040,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 187110199}
+  - {fileID: 1675681707}
   - {fileID: 727841624}
   m_Father: {fileID: 1388694846}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -23911,11 +23911,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 187110199}
+  m_Father: {fileID: 1580569717}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 263.63, y: -34}
+  m_AnchoredPosition: {x: 263.68494, y: -34.009766}
   m_SizeDelta: {x: 453.25, y: 59.4463}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1675681708
@@ -24968,7 +24968,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LightManager
   diffuseLightPos: {x: 0, y: 30, z: 0}
   skyLightPos: {x: -5, y: 1.5, z: 0}
-  SkyPointNear: 5
+  SkyPointNear: 0
   SkyPointFar: 18
   SkyPointLightColor: {r: 1, g: 1, b: 0, a: 1}
   BallPointNear: 1
@@ -25636,12 +25636,12 @@ PrefabInstance:
     - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
         type: 3}
       propertyPath: m_MaxValue
-      value: 180
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
         type: 3}
       propertyPath: m_MinValue
-      value: -180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
         type: 3}
@@ -26149,6 +26149,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1731630366}
         m_TargetAssemblyTypeName: SliderManager, Assembly-CSharp
         m_MethodName: ResetHoleSliders
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 171240751}
+        m_TargetAssemblyTypeName: HoleDropDownScript, Assembly-CSharp
+        m_MethodName: ResetData
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -30066,10 +30078,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1264481562}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -287.53003, y: -540}
-  m_SizeDelta: {x: 575.1, y: 1080}
+  m_AnchoredPosition: {x: -287.53003, y: 0}
+  m_SizeDelta: {x: 575.1, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2025180594
 MonoBehaviour:
