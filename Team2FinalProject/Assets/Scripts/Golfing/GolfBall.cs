@@ -116,7 +116,6 @@ public class GolfBall : MonoBehaviour
         {
             return true;
         }
-        Debug.Log(firstGlow);
         return (firstGlow && (aliveTimer < (glowingLength + 1.5f))) || (!firstGlow && (aliveTimer < glowingLength));
     }
 

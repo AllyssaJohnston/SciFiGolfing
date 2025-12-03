@@ -85,13 +85,14 @@ public class AnimationManager : MonoBehaviour
         }
     }
 
-    public static void PlayAnimation()
+    private static void PlayAnimation()
     {
         // record the state of the attribute sliders to reset back to when doen
         startingRange = instance.range;
         startingForce = instance.force;
         startingSpeed = instance.speed;
 
+        curAngle = 0f;
         float radius = instance.golfClub.localScale.y * 2;
         maxAngle = Mathf.PI * 2 * instance.range / radius;
         playing = true;
@@ -105,13 +106,16 @@ public class AnimationManager : MonoBehaviour
     public static void StopAnimation()
     {
         playing = false;
-        forward = false;
+        forward = true;
         doneAnimation.Invoke();
         // reset everything to starting rotation
         instance.rightShoulder.localRotation = rightShoulderQ;
         instance.leftShoulder.localRotation = leftShoulderQ;
         instance.leftElbow.localRotation = leftElbowQ;
         instance.golfClub.localRotation = golfClubQ;
+        instance.range = startingRange;
+        instance.force = startingForce;
+        instance.speed = startingSpeed;
         Debug.Log("stop");
     }
 
@@ -121,9 +125,8 @@ public class AnimationManager : MonoBehaviour
         {
             StopAnimation();
         }
-        instance.range = startingRange;
-        instance.force = startingForce;
-        instance.speed = startingSpeed;
+        
+        Debug.Log("reset");
     }
 
     public static float getRange() { return instance.range; }
