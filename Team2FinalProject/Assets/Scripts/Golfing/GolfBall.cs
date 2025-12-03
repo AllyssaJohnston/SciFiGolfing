@@ -16,6 +16,7 @@ public class GolfBall : MonoBehaviour
     public float scrollSpeed = 1f;
     public float pulseSpeed = 2f;
     public bool glowEnabled = false;
+
     private static bool firstGlow = true;
 
     private void Start()
@@ -55,15 +56,16 @@ public class GolfBall : MonoBehaviour
         {
             collisionChangeTimer -= Time.deltaTime;
         }
-        if (collisionChangeTimer <= 0){
+        if (collisionChangeTimer <= 0)
+        {
             collisionActive = true;
         }
-        if ((firstGlow && (aliveTimer > (glowingLength + 3f))) || (!firstGlow && (aliveTimer > glowingLength)))
+        if (!glowing())
         {
             SetGlowEnabled(false);
             firstGlow = false;
         }
-        if (transform.position.y < -20f)
+        if (Mathf.Abs(transform.position.x) > 1000f || Mathf.Abs(transform.position.z) > 1000f || transform.position.y < -20f)
         {
             // safety, did fall out of world?
             RemoveSelf();
@@ -100,6 +102,7 @@ public class GolfBall : MonoBehaviour
 
     public void Reset() 
     {
+        GolfBall.firstGlow = true;
         if (template)
         {
             return;
@@ -113,10 +116,11 @@ public class GolfBall : MonoBehaviour
         {
             return true;
         }
-        return aliveTimer < glowingLength; 
+        Debug.Log(firstGlow);
+        return (firstGlow && (aliveTimer < (glowingLength + 1.5f))) || (!firstGlow && (aliveTimer < glowingLength));
     }
 
-    private void RemoveSelf()
+    public void RemoveSelf()
     {
         ScoreTracker.decreaseBalls();
         Destroy(gameObject);
@@ -124,7 +128,6 @@ public class GolfBall : MonoBehaviour
 
     public void SetGlowEnabled(bool enable)
     {
-        Debug.Log(enable);
         glowEnabled = enable;
         r.material.SetFloat("_GlowEnabled", enable ? 1f : 0f);
         if (enable)

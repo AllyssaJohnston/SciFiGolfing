@@ -111,7 +111,7 @@ public class GolfBallManager : MonoBehaviour
                 Vector3 dir2 = Quaternion.AngleAxis(-duplicationRotation, rayStartUp) * rayStartForward;
                 rb2.AddForce(dir2 * duplicationForce, ForceMode.Impulse);
 
-                hit.transform.gameObject.GetComponent<GolfBall>().Reset();
+                hit.transform.gameObject.GetComponent<GolfBall>().RemoveSelf();
             }
         }
         if (hitAny)
