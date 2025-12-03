@@ -1,5 +1,1 @@
 Built with Unity 6000.2.6f2
-Can use WASD to orbit the main camera horizontally and vertically around the look at position or alt LMB to orbit in any direction around the look at position
-Can zoom with alt MMB
-Can pan with alt RMB
-
