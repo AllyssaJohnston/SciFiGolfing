@@ -57,13 +57,6 @@ public class NodePrimitive: MonoBehaviour {
         transform.localPosition = startingPos;
         transform.localRotation = startingRot;
         transform.localScale = startingScale;
-        // reset the animation if it exists
-        AnimatePrimitive ap = gameObject.GetComponent<AnimatePrimitive>();
-        if (ap != null) 
-        {
-            ap.ResetNode();
-        }
-
         Matrix4x4 p = Matrix4x4.TRS(Pivot, Quaternion.identity, Vector3.one);
         Matrix4x4 invp = Matrix4x4.TRS(-Pivot, Quaternion.identity, Vector3.one);
         Matrix4x4 trs = Matrix4x4.TRS(transform.localPosition, transform.localRotation, transform.localScale);

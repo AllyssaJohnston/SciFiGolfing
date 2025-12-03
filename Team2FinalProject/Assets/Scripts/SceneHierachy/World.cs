@@ -6,7 +6,6 @@ public class World : MonoBehaviour
 {
     private static World instance;
     public SceneNode root;
-    private static bool tickYet;
 
     public void Awake()
     {
