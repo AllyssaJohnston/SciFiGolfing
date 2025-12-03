@@ -1,8 +1,5 @@
 Built with Unity 6000.2.6f2
-Can use left or right arrows to orbit the main camera in a circle around the look at position
-Small camera attaches and shows the view from the current scene node in the dropdown menu, and follows any rotations it goes through
-
-Rotating shapes are adjustable in Editor mode, and rotate around a path during play mode
-Second drop down menu allows user to select primitives and change their color
-Can use left and right (or a and d) keys to have the camera orbit around the figure
+Can use WASD to orbit the main camera horizontally and vertically around the look at position or alt LMB to orbit in any direction around the look at position
+Can zoom with alt MMB
+Can pan with alt RMB
 

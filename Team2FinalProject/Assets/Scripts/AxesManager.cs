@@ -4,6 +4,7 @@ public class AxesManager : MonoBehaviour
 {
     private static AxesManager instance;
     public GameObject axes;
+    private bool tickYet = false;
 
     public void Awake()
     {
@@ -16,6 +17,15 @@ public class AxesManager : MonoBehaviour
         ObjectManager.curObjectChanged.AddListener(SetAxes);
         ObjectManager.curSceneObjectValuesChanged.AddListener(SetAxes);
         GameManager.gameModeChanged.AddListener(GameModeChanged);
+    }
+    public void Update()
+    {
+        if (!tickYet)
+        {
+            SetAxes();
+            tickYet = true;
+        }
+        
     }
 
     // set the axes position
