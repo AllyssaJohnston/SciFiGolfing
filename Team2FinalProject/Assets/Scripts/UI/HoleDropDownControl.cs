@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class HoleDropDownScript : MonoBehaviour
+public class HoleDropDownControl : MonoBehaviour
 {
-    private static HoleDropDownScript instance;
+    private static HoleDropDownControl instance;
     public TMP_Dropdown menu = null;
 
     private static List<TMP_Dropdown.OptionData> selectMenuOptions = new List<TMP_Dropdown.OptionData>();

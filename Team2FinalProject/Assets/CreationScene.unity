@@ -2995,7 +2995,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1023
+    m_Bits: 3071
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: c976b485b7cd67c478475012602926b0, type: 2}
   m_TargetDisplay: 0
@@ -24915,7 +24915,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97653aee94c3dc84f95ceb913b686d42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SliderManager
-  xyzSliders:
+  nodeSliders:
   - {fileID: 1160877241}
   - {fileID: 328345168}
   - {fileID: 1111200282}
@@ -29623,7 +29623,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 511
+    m_Bits: 2559
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -31006,7 +31006,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1023
+    m_Bits: 3071
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 337549217ba67b442aa8f7a09ecdb2df, type: 2}
   m_TargetDisplay: 0

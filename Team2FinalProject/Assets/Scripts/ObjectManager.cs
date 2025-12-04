@@ -1,9 +1,17 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum ELastChanged
+{
+    SCENE_NODE = 0,
+    HOLE
+}
+
 public class ObjectManager : MonoBehaviour
 {
     private static ObjectManager instance;
+
+    private static ELastChanged lastChanged = ELastChanged.SCENE_NODE;
 
     private static SceneNode curSceneObj; // SceneNode of the selected scene node
     public static UnityEvent curObjectChanged;
@@ -33,17 +41,21 @@ public class ObjectManager : MonoBehaviour
     public static void SetCurObject(SceneNode obj) 
     {
         curSceneObj = obj;
+        lastChanged = ELastChanged.SCENE_NODE;
         curObjectChanged.Invoke();
     }
 
     public static void SetCurHoleObject(GameObject obj)
     {
         curHoleObj = obj;
+        lastChanged = ELastChanged.HOLE;
         curHoleChanged.Invoke();
     }
 
     public static SceneNode GetCurObject() { return curSceneObj; }
     public static GameObject GetCurHoleObject() { return curHoleObj; }
+
+    public static ELastChanged GetLastChanged() {  return lastChanged; }
 
     // get a value of the scene node
     public static float GetCurObjectValue(EAxis axis)
@@ -84,6 +96,7 @@ public class ObjectManager : MonoBehaviour
                 break;
         }
 
+        lastChanged = ELastChanged.SCENE_NODE;
         curSceneObjectValuesChanged.Invoke();
     }
 
@@ -113,9 +126,14 @@ public class ObjectManager : MonoBehaviour
                 Debug.Log("unrecognized axis " + axis);
                 break;
         }
+        lastChanged = ELastChanged.HOLE;
     }
 
     public static void BackToSetUp() { backToSetUp.Invoke();  }
 
-    public static void Reset() { resetWorld.Invoke(); }
+    public static void Reset() 
+    { 
+        resetWorld.Invoke();
+        lastChanged = ELastChanged.SCENE_NODE;
+    }
 }
