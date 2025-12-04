@@ -11,6 +11,7 @@ public class InputManager : MonoBehaviour
     LayerMask holeMask;
     LayerMask groundMask;
 
+    public float rotSpeed = 10f;
 
     void Awake()
     {
@@ -39,6 +40,8 @@ public class InputManager : MonoBehaviour
 
     private void useInput()
     {
+        useKeyBoard();
+
         bool curMouseDown = Mouse.current.leftButton.isPressed;
         if (curMouseDown && !mouseDownLastFrame)
         {
@@ -53,20 +56,53 @@ public class InputManager : MonoBehaviour
 
     private void useKeyBoard()
     {
+        bool move = false;
+        EAxis axis = EAxis.X;
+        int dir = 1;
+        Vector3 editable = ObjectManager.GetCurObject().editableAxes;
 
-        SceneNode sceneNode = ObjectManager.GetCurObject();
-        if (sceneNode != null && ObjectManager.GetLastChanged() == ELastChanged.SCENE_NODE)
+        if (Input.GetKey(KeyCode.W) && editable.y == 1)
         {
-            //if (Input.GetKey(KeyCode.W))
-            //{
-            //    ObjectManager.moveControllerBy(EAxis.Y, transPerSec * Time.deltaTime);
-            //    SliderManager.ResetNodeSliders();
-            //}
+            move = true;
+            axis = EAxis.Y;
+            dir = 1;
+        }
+        if (Input.GetKey(KeyCode.S) && editable.y == 1)
+        {
+            move = true;
+            axis = EAxis.Y;
+            dir = -1;
+        }
+        if (Input.GetKey(KeyCode.A) && editable.x == 1)
+        {
+            move = true;
+            axis = EAxis.X;
+            dir = -1;
+        }
+        if (Input.GetKey(KeyCode.D) && editable.x == 1)
+        {
+            move = true;
+            axis = EAxis.X;
+            dir = 1;
+        }
+        if (Input.GetKey(KeyCode.E) && editable.z == 1)
+        {
+            move = true;
+            axis = EAxis.Z;
+            dir = -1;
+        }
+        if (Input.GetKey(KeyCode.Z) && editable.z == 1)
+        {
+            move = true;
+            axis = EAxis.Z;
+            dir = 1;
+        }
 
-            //sceneNode.gameObject.transform.position;
-            ObjectManager.curSceneObjectValuesChanged.Invoke();
+        move = move && (GameManager.GetGameMode() == EGameMode.SETUP || !AnimationManager.GetPlaying());
+        if (move)
+        {
+            ObjectManager.ChangeCurObjectValueBy(axis, dir * rotSpeed * Time.deltaTime);
             SliderManager.ResetNodeSliders();
-
         }
     }
 
@@ -115,7 +151,7 @@ public class InputManager : MonoBehaviour
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundMask))
         {
             GameObject hole = ObjectManager.GetCurHoleObject();            
-            if ((hole != null) && (ObjectManager.GetLastChanged() == ELastChanged.HOLE))
+            if (hole != null)
             {
                 Vector3 newPos = new Vector3(hit.point.x, hole.transform.position.y, hit.point.z);
                 if ((hole.transform.position - newPos).magnitude < 10)

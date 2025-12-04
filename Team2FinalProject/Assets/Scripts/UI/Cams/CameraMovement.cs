@@ -71,19 +71,19 @@ public class CameraMovement : MonoBehaviour
             angleChangeVect = (mousePos - lastMousePos) * degreePerSec * Time.deltaTime;
             angleChangeVect.y *= -1;
         }
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
             angleChangeVect.x = -1 * degreePerSec * Time.deltaTime;
         }
-        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.RightArrow))
         {
             angleChangeVect.x = degreePerSec * Time.deltaTime;
         }
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.UpArrow))
         {
             angleChangeVect.y = degreePerSec * Time.deltaTime;
         }
-        else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.DownArrow))
         {
             angleChangeVect.y = -1 * degreePerSec * Time.deltaTime;
         }

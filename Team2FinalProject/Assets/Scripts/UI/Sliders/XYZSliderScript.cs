@@ -60,10 +60,8 @@ public class XYZSliderScript : SliderScript
                 value = position.x;
                 switch (axis)
                 {
-                    case EAxis.Y:
-                        value = position.y; break;
-                    case EAxis.Z:
-                        value = position.z; break;
+                    case EAxis.Y:   value = position.y; break;
+                    case EAxis.Z:   value = position.z; break;
                 }
                 break;
 
@@ -77,10 +75,8 @@ public class XYZSliderScript : SliderScript
                 value = position.x;
                 switch (axis)
                 {
-                    case EAxis.Y:
-                        value = position.y; break;
-                    case EAxis.Z:
-                        value = position.z; break;
+                    case EAxis.Y:   value = position.y; break;
+                    case EAxis.Z:   value = position.z; break;
                 }
                 break;
 
@@ -89,10 +85,8 @@ public class XYZSliderScript : SliderScript
                 value = position.x;
                 switch (axis)
                 {
-                    case EAxis.Y:
-                        value = position.y; break;
-                    case EAxis.Z:
-                        value = position.z; break;
+                    case EAxis.Y:   value = position.y; break;
+                    case EAxis.Z:   value = position.z; break;
                 }
                 break;
 
@@ -103,7 +97,6 @@ public class XYZSliderScript : SliderScript
         slider.value = value;
         lastValue = value;
         UpdateLabel();
-        SliderManager.SliderMoved();
     }
 
 
@@ -117,23 +110,12 @@ public class XYZSliderScript : SliderScript
             UpdateLabel();
             switch (type)
             {
-                case ESliderType.CAMERA:
-                    CameraMovement.UpdateLookAt(axis, value);
-                    break;
-                case ESliderType.NODE:
-                    ObjectManager.SetCurObjectValue(axis, value);
-                    break;
-                case ESliderType.DIFFUSE:
-                    LightManager.UpdateDiffuseLightPosition(axis, value);
-                    break;
-                case ESliderType.POINT:
-                    LightManager.UpdatePointLightPosition(axis, value);
-                    break;
-                case ESliderType.HOLE:
-                    ObjectManager.SetCurHoleObjectValue(axis, value);
-                    break;
+                case ESliderType.CAMERA:    CameraMovement.UpdateLookAt(axis, value);               break;
+                case ESliderType.NODE:      ObjectManager.SetCurObjectValue(axis, value);           break;
+                case ESliderType.DIFFUSE:   LightManager.UpdateDiffuseLightPosition(axis, value);   break;
+                case ESliderType.POINT:     LightManager.UpdatePointLightPosition(axis, value);     break;
+                case ESliderType.HOLE:      ObjectManager.SetCurHoleObjectValue(axis, value);       break;
             }
-            SliderManager.SliderMoved();
         }
     }
 
@@ -143,12 +125,9 @@ public class XYZSliderScript : SliderScript
         Vector3 editable = ObjectManager.GetCurObject().editableAxes;
         switch (axis)
         {
-            case EAxis.X:
-                return editable.x == 1;
-            case EAxis.Y:
-                return editable.y == 1;
-            case EAxis.Z:
-                return editable.z == 1;
+            case EAxis.X: return editable.x == 1;
+            case EAxis.Y: return editable.y == 1;
+            case EAxis.Z: return editable.z == 1;
         }
         return false;
     }

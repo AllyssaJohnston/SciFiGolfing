@@ -1,17 +1,9 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum ELastChanged
-{
-    SCENE_NODE = 0,
-    HOLE
-}
-
 public class ObjectManager : MonoBehaviour
 {
     private static ObjectManager instance;
-
-    private static ELastChanged lastChanged = ELastChanged.SCENE_NODE;
 
     private static SceneNode curSceneObj; // SceneNode of the selected scene node
     public static UnityEvent curObjectChanged;
@@ -41,22 +33,18 @@ public class ObjectManager : MonoBehaviour
     public static void SetCurObject(SceneNode obj) 
     {
         curSceneObj = obj;
-        lastChanged = ELastChanged.SCENE_NODE;
         curObjectChanged.Invoke();
     }
 
     public static void SetCurHoleObject(GameObject obj)
     {
         curHoleObj = obj;
-        lastChanged = ELastChanged.HOLE;
         curHoleChanged.Invoke();
     }
 
     public static SceneNode GetCurObject() { return curSceneObj; }
 
     public static GameObject GetCurHoleObject() { return curHoleObj; }
-
-    public static ELastChanged GetLastChanged() {  return lastChanged; }
 
     // get a value of the scene node
     public static float GetCurObjectValue(EAxis axis)
@@ -74,32 +62,52 @@ public class ObjectManager : MonoBehaviour
     public static void SetCurObjectValue(EAxis axis, float value)
     {
         float deltaAngle = 0f;
-        SceneNode nodeScript = curSceneObj.GetComponent<SceneNode>();
         switch (axis)
         {
             case EAxis.X:
-                deltaAngle = value - nodeScript.rotation.x;
+                deltaAngle = value - curSceneObj.rotation.x;
                 curSceneObj.transform.localRotation *= QuatScript.UpdateRotate(deltaAngle, EAxis.X);
-                nodeScript.rotation.x = value;
+                curSceneObj.rotation.x = value;
                 break;
             case EAxis.Y:
-                deltaAngle = value - nodeScript.rotation.y;
+                deltaAngle = value - curSceneObj.rotation.y;
                 curSceneObj.transform.localRotation *= QuatScript.UpdateRotate(deltaAngle, EAxis.Y);
-                nodeScript.rotation.y = value;
+                curSceneObj.rotation.y = value;
                 break;
             case EAxis.Z:
-                deltaAngle = value - nodeScript.rotation.z;
+                deltaAngle = value - curSceneObj.rotation.z;
                 curSceneObj.transform.localRotation *= QuatScript.UpdateRotate(deltaAngle, EAxis.Z);
-                nodeScript.rotation.z = value;
+                curSceneObj.rotation.z = value;
                 break;
             default:
                 Debug.Log("unrecognized axis " + axis);
                 break;
         }
-
-        lastChanged = ELastChanged.SCENE_NODE;
         curSceneObjectValuesChanged.Invoke();
     }
+
+    // set a value of the scene node
+    public static void ChangeCurObjectValueBy(EAxis axis, float deltaAngle)
+    {
+        curSceneObj.transform.localRotation *= QuatScript.UpdateRotate(deltaAngle, axis);
+        switch (axis)
+        {
+            case EAxis.X:
+                curSceneObj.rotation.x += deltaAngle;
+                break;
+            case EAxis.Y:
+                curSceneObj.rotation.y += deltaAngle;
+                break;
+            case EAxis.Z:
+                curSceneObj.rotation.z += deltaAngle;
+                break;
+            default:
+                Debug.Log("unrecognized axis " + axis);
+                break;
+        }
+        curSceneObjectValuesChanged.Invoke();
+    }
+
 
     // get a value of the hole
     public static float GetCurHoleObjectValue(EAxis axis)
@@ -127,14 +135,9 @@ public class ObjectManager : MonoBehaviour
                 Debug.Log("unrecognized axis " + axis);
                 break;
         }
-        lastChanged = ELastChanged.HOLE;
     }
 
     public static void BackToSetUp() { backToSetUp.Invoke();  }
 
-    public static void Reset() 
-    { 
-        resetWorld.Invoke();
-        lastChanged = ELastChanged.SCENE_NODE;
-    }
+    public static void Reset() { resetWorld.Invoke(); }
 }

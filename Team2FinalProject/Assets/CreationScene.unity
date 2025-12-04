@@ -4309,6 +4309,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2515772308855872469, guid: 17a7d13fc4baf449d99f5045866277a1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2894336900523720915, guid: 17a7d13fc4baf449d99f5045866277a1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -25097,6 +25102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0c77b20cd94eea4ab1f025fc3f805f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputManager
+  rotSpeed: 8
 --- !u!114 &1731630375
 MonoBehaviour:
   m_ObjectHideFlags: 0

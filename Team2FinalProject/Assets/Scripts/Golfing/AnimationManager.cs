@@ -85,6 +85,8 @@ public class AnimationManager : MonoBehaviour
         }
     }
 
+    public static bool GetPlaying() { return playing; }
+
     private static void PlayAnimation()
     {
         // record the state of the attribute sliders to reset back to when doen
