@@ -103,6 +103,7 @@ public class XYZSliderScript : SliderScript
         slider.value = value;
         lastValue = value;
         UpdateLabel();
+        SliderManager.SliderMoved();
     }
 
 
@@ -132,6 +133,7 @@ public class XYZSliderScript : SliderScript
                     ObjectManager.SetCurHoleObjectValue(axis, value);
                     break;
             }
+            SliderManager.SliderMoved();
         }
     }
 

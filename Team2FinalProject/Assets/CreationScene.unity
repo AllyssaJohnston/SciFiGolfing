@@ -21149,12 +21149,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
         type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
+        type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1472271616}
     - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
         type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1731630366}
+    - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
+        type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
@@ -21164,12 +21179,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
         type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SliderMoved
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
+        type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: AttributeSliderScript, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
         type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: SliderManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
+        type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1179290920208497773, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
@@ -25746,12 +25776,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
         type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
+        type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1761967353}
     - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
         type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1731630366}
+    - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
+        type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
@@ -25761,12 +25806,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
         type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SliderMoved
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
+        type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: AttributeSliderScript, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
         type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: SliderManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
+        type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1179290920208497773, guid: b58ef7b3406d7bd47ac78cd3afacb30f,

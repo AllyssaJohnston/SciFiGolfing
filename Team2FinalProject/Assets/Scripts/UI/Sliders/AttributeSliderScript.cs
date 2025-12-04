@@ -64,6 +64,7 @@ public class AttributeSliderScript : SliderScript
         slider.value = value;
         lastValue = value;
         UpdateLabel();
+        SliderManager.SliderMoved();
     }
 
     public override void SliderMoved(float value)
@@ -91,6 +92,6 @@ public class AttributeSliderScript : SliderScript
                 break;
         }
         UpdateLabel();
-        
+        SliderManager.SliderMoved();
     }
 }

@@ -53,6 +53,7 @@ public class ObjectManager : MonoBehaviour
     }
 
     public static SceneNode GetCurObject() { return curSceneObj; }
+
     public static GameObject GetCurHoleObject() { return curHoleObj; }
 
     public static ELastChanged GetLastChanged() {  return lastChanged; }
