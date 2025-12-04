@@ -41,6 +41,10 @@ public class InputManager : MonoBehaviour
     private void useInput()
     {
         useKeyBoard();
+        if (Input.GetKey(KeyCode.LeftAlt))
+        {
+            return;
+        }
 
         bool curMouseDown = Mouse.current.leftButton.isPressed;
         if (curMouseDown && !mouseDownLastFrame)
