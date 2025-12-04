@@ -42,7 +42,7 @@ public abstract class SliderScript : MonoBehaviour
     // set the slider's label to the value
     protected void UpdateLabel()
     {
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.LeftArrow)  || Input.GetKey(KeyCode.RightArrow) )
         {
             // Unity sometimes lets keyboard input adjust the slider. Internet didn't yield much insight on why this happens, 
             // so I'll just undo the slider update

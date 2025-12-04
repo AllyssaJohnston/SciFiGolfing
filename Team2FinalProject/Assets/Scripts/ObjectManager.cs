@@ -43,6 +43,7 @@ public class ObjectManager : MonoBehaviour
     }
 
     public static SceneNode GetCurObject() { return curSceneObj; }
+
     public static GameObject GetCurHoleObject() { return curHoleObj; }
 
     // get a value of the scene node
@@ -61,31 +62,52 @@ public class ObjectManager : MonoBehaviour
     public static void SetCurObjectValue(EAxis axis, float value)
     {
         float deltaAngle = 0f;
-        SceneNode nodeScript = curSceneObj.GetComponent<SceneNode>();
         switch (axis)
         {
             case EAxis.X:
-                deltaAngle = value - nodeScript.rotation.x;
+                deltaAngle = value - curSceneObj.rotation.x;
                 curSceneObj.transform.localRotation *= QuatScript.UpdateRotate(deltaAngle, EAxis.X);
-                nodeScript.rotation.x = value;
+                curSceneObj.rotation.x = value;
                 break;
             case EAxis.Y:
-                deltaAngle = value - nodeScript.rotation.y;
+                deltaAngle = value - curSceneObj.rotation.y;
                 curSceneObj.transform.localRotation *= QuatScript.UpdateRotate(deltaAngle, EAxis.Y);
-                nodeScript.rotation.y = value;
+                curSceneObj.rotation.y = value;
                 break;
             case EAxis.Z:
-                deltaAngle = value - nodeScript.rotation.z;
+                deltaAngle = value - curSceneObj.rotation.z;
                 curSceneObj.transform.localRotation *= QuatScript.UpdateRotate(deltaAngle, EAxis.Z);
-                nodeScript.rotation.z = value;
+                curSceneObj.rotation.z = value;
                 break;
             default:
                 Debug.Log("unrecognized axis " + axis);
                 break;
         }
-
         curSceneObjectValuesChanged.Invoke();
     }
+
+    // set a value of the scene node
+    public static void ChangeCurObjectValueBy(EAxis axis, float deltaAngle)
+    {
+        curSceneObj.transform.localRotation *= QuatScript.UpdateRotate(deltaAngle, axis);
+        switch (axis)
+        {
+            case EAxis.X:
+                curSceneObj.rotation.x += deltaAngle;
+                break;
+            case EAxis.Y:
+                curSceneObj.rotation.y += deltaAngle;
+                break;
+            case EAxis.Z:
+                curSceneObj.rotation.z += deltaAngle;
+                break;
+            default:
+                Debug.Log("unrecognized axis " + axis);
+                break;
+        }
+        curSceneObjectValuesChanged.Invoke();
+    }
+
 
     // get a value of the hole
     public static float GetCurHoleObjectValue(EAxis axis)

@@ -46,7 +46,6 @@ public class GameManager : MonoBehaviour
 
     public static void SetGameMode(EGameMode givenGameMode) 
     {
-        Debug.Log("switching to " + givenGameMode);
         lastGameMode = gameMode;
         gameMode = givenGameMode;
         gameModeChanged.Invoke();
@@ -120,7 +119,6 @@ public class GameManager : MonoBehaviour
 
     public static void SetLightMode(ELightMode givenLightMode)
     {
-        Debug.Log("switching to " + givenLightMode);
         lightMode = givenLightMode;
         lightModeChanged.Invoke();
     }

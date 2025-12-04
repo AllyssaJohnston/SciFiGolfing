@@ -85,6 +85,8 @@ public class AnimationManager : MonoBehaviour
         }
     }
 
+    public static bool GetPlaying() { return playing; }
+
     private static void PlayAnimation()
     {
         // record the state of the attribute sliders to reset back to when doen
@@ -125,8 +127,6 @@ public class AnimationManager : MonoBehaviour
         {
             StopAnimation();
         }
-        
-        Debug.Log("reset");
     }
 
     public static float getRange() { return instance.range; }

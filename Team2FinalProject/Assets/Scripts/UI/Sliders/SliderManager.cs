@@ -1,5 +1,8 @@
-using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
 [System.Serializable]
 
@@ -7,11 +10,12 @@ public class SliderManager : MonoBehaviour
 {
     private static SliderManager instance;
 
-    [SerializeField] XYZSliderScript[] xyzSliders = new XYZSliderScript[3]; //rotation sliders
+    [SerializeField] XYZSliderScript[] nodeSliders = new XYZSliderScript[3]; //rotation sliders
     [SerializeField] XYZSliderScript[] lookAtSliders = new XYZSliderScript[3]; //camera sliders
     [SerializeField] List<AttributeSliderScript> swingSliders = new List< AttributeSliderScript>(); // golf sliders
     [SerializeField] XYZSliderScript[] lightingSliders = new XYZSliderScript[6]; //rotation sliders
     [SerializeField] XYZSliderScript[] holeSliders = new XYZSliderScript[2]; //rotation sliders
+
 
     void Awake()
     {
@@ -31,9 +35,9 @@ public class SliderManager : MonoBehaviour
 
     public void Reset()
     {
-        for (int i = 0; i < instance.xyzSliders.Length; i++)
+        for (int i = 0; i < instance.nodeSliders.Length; i++)
         {
-            instance.xyzSliders[i].resetData();
+            instance.nodeSliders[i].resetData();
             instance.lookAtSliders[i].resetData();
             instance.lightingSliders[i].resetData();
             instance.lightingSliders[i + 3].resetData();
@@ -45,6 +49,14 @@ public class SliderManager : MonoBehaviour
         }
 
         ResetAttributeSliders();
+    }
+
+    public static void ResetNodeSliders()
+    {
+        for (int i = 0; i < instance.nodeSliders.Length; i++)
+        {
+            instance.nodeSliders[i].resetData();
+        }
     }
 
     public static void ResetCameraSliders()

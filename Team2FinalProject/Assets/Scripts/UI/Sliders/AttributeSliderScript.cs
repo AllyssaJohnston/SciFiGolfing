@@ -91,6 +91,5 @@ public class AttributeSliderScript : SliderScript
                 break;
         }
         UpdateLabel();
-        
     }
 }

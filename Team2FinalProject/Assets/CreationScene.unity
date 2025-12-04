@@ -2995,7 +2995,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1023
+    m_Bits: 3071
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: c976b485b7cd67c478475012602926b0, type: 2}
   m_TargetDisplay: 0
@@ -4305,6 +4305,11 @@ PrefabInstance:
       value: GolfBallTemplate
       objectReference: {fileID: 0}
     - target: {fileID: 2077760999460576296, guid: 17a7d13fc4baf449d99f5045866277a1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2515772308855872469, guid: 17a7d13fc4baf449d99f5045866277a1,
         type: 3}
       propertyPath: m_Layer
       value: 10
@@ -15365,8 +15370,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 629.00195, y: -93.76062}
-  m_SizeDelta: {x: 816.3441, y: 147.8284}
+  m_AnchoredPosition: {x: 637.58093, y: -93.76062}
+  m_SizeDelta: {x: 833.5021, y: 147.8284}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1189798155
 MonoBehaviour:
@@ -16864,13 +16869,13 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Use sliders to adjust values
 
-    Click red toggle to show/hide menus
+    Orbit camera with arrow keys or alt
+    LMB, zoom with alt MMB, pan with alt RMB
 
-    Orbit
-    camera with WASD or alt LMB, zoom with alt MMB, pan with alt RMB
+    Rotate cur node with WASDEQ
 
-    Click play
-    to golf
+    Click
+    play to golf
 
     Click reset to reset all values'
   m_isRightToLeft: 0
@@ -20319,6 +20324,95 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b58ef7b3406d7bd47ac78cd3afacb30f, type: 3}
+--- !u!1 &1426769909
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1426769912}
+  - component: {fileID: 1426769911}
+  - component: {fileID: 1426769910}
+  m_Layer: 0
+  m_Name: RenderBall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!23 &1426769910
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426769909}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: bb6e10b22a631834791ea6c49b73eaf2, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1426769911
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426769909}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1426769912
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426769909}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1432233123
 GameObject:
   m_ObjectHideFlags: 0
@@ -21149,12 +21243,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
         type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
+        type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1472271616}
     - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
         type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1731630366}
+    - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
+        type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
@@ -21164,12 +21273,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
         type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SliderMoved
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
+        type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: AttributeSliderScript, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
         type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: SliderManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
+        type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1179290920208497773, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
@@ -24915,7 +25039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97653aee94c3dc84f95ceb913b686d42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SliderManager
-  xyzSliders:
+  nodeSliders:
   - {fileID: 1160877241}
   - {fileID: 328345168}
   - {fileID: 1111200282}
@@ -25067,6 +25191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0c77b20cd94eea4ab1f025fc3f805f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputManager
+  rotSpeed: 8
 --- !u!114 &1731630375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25746,12 +25871,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
         type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
+        type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1761967353}
     - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
         type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1731630366}
+    - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
+        type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
@@ -25761,12 +25901,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
         type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SliderMoved
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
+        type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: AttributeSliderScript, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
         type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: SliderManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
+        type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146065366216777039, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1179290920208497773, guid: b58ef7b3406d7bd47ac78cd3afacb30f,
@@ -29064,7 +29219,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 599, y: -93.76062}
-  m_SizeDelta: {x: 816.3441, y: 147.8284}
+  m_SizeDelta: {x: 833.5021, y: 147.8284}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1920879350
 MonoBehaviour:
@@ -29623,7 +29778,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 511
+    m_Bits: 2559
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -30857,10 +31012,10 @@ MonoBehaviour:
 
     Click back to go back to setup phase
 
-    Click red toggle to show/hide
-    menus
+    Orbit camera with arrow
+    keys or alt LMB
 
-    Orbit camera with WASD or alt LMB
+    Rotate golfer with WASDEQ
 
 '
   m_isRightToLeft: 0
@@ -31006,7 +31161,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1023
+    m_Bits: 3071
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 337549217ba67b442aa8f7a09ecdb2df, type: 2}
   m_TargetDisplay: 0
@@ -32906,6 +33061,7 @@ SceneRoots:
   - {fileID: 319419832}
   - {fileID: 1877105704}
   - {fileID: 1630463347}
+  - {fileID: 1426769912}
   - {fileID: 1264481562}
   - {fileID: 1888459862}
   - {fileID: 1814794794}
