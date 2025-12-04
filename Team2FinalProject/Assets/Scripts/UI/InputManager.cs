@@ -152,7 +152,7 @@ public class InputManager : MonoBehaviour
             return;
         }
         // move the hole along x and y axes of the mouse. Also have sliders to control sphere's x, y, and z
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundMask))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundMask) && GameManager.GetGameMode() == EGameMode.SETUP)
         {
             GameObject hole = ObjectManager.GetCurHoleObject();            
             if (hole != null)
