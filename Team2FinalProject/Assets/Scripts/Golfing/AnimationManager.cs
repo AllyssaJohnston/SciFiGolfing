@@ -127,8 +127,6 @@ public class AnimationManager : MonoBehaviour
         {
             StopAnimation();
         }
-        
-        Debug.Log("reset");
     }
 
     public static float getRange() { return instance.range; }
